@@ -1,0 +1,61 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import { site } from "@lib/content/repository";
+---
+
+<BaseLayout title="お問い合わせ" description="小城音楽祭へのお問い合わせ先です。">
+  <PageHero
+    eyebrow="Contact"
+    title="お問い合わせ"
+    lead="出演、協賛、取材、その他のお問い合わせはこちらからお願いします。"
+  />
+
+  <section class="section">
+    <div class="section-inner split">
+      <div>
+        <SectionHeader
+          eyebrow="Office"
+          title="お問い合わせ先"
+          lead="内容に応じて確認のうえ、担当よりご連絡します。"
+        />
+        <div class="contact-panel">
+          <p><strong>主催</strong><br />{site.organization}</p>
+          <p>
+            <strong>メール</strong><br />
+            {site.contact.email ? (
+              <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+            ) : (
+              <span>公開準備中</span>
+            )}
+          </p>
+          <p><strong>受付時間</strong><br />{site.contact.hours}</p>
+        </div>
+      </div>
+      <form class="contact-panel" aria-label="お問い合わせフォームデモ">
+        <span class="status-pill">確認画面</span>
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="contact-name">お名前</label>
+            <input id="contact-name" name="name" placeholder="小城 太郎" />
+          </div>
+          <div class="form-field">
+            <label for="contact-type">お問い合わせ種別</label>
+            <select id="contact-type" name="type">
+              <option>一般お問い合わせ</option>
+              <option>協賛について</option>
+              <option>出演について</option>
+              <option>ボランティアについて</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="contact-message">内容</label>
+            <textarea id="contact-message" name="message" placeholder="お問い合わせ内容をご記入ください"></textarea>
+          </div>
+        </div>
+        <button class="button button-primary" type="button">送信内容を確認</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

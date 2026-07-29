@@ -1,0 +1,49 @@
+---
+import type { Event } from "@lib/content/schema";
+
+interface Props {
+  event: Event;
+}
+
+const { event } = Astro.props;
+const mobileHero = event.heroImage.replace("main.webp", "main-mobile.webp");
+---
+
+<section class="hero" data-reveal>
+  <picture class="hero-media" aria-hidden="true">
+    <source srcset={mobileHero} media="(max-width: 680px)" />
+    <img
+      src={event.heroImage}
+      alt=""
+      width="1600"
+      height="757"
+      decoding="async"
+      fetchpriority="high"
+    />
+  </picture>
+  <div class="hero-screen" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p class="hero-kicker">Ogi Music Festival {event.year}</p>
+      <h1>小城音楽祭</h1>
+      <p class="hero-copy">{event.catchcopy}</p>
+      <p class="hero-lead">{event.lead}</p>
+      <div class="button-row">
+        <a class="button button-primary" href={event.cta.primaryHref}>{event.cta.primaryLabel}</a>
+        <a class="button button-secondary" href={event.cta.secondaryHref}>{event.cta.secondaryLabel}</a>
+        <a class="button button-ghost" href="/timetable/">タイムテーブル</a>
+      </div>
+      <div class="hero-meta" aria-label="開催概要">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">開催日</span>
+          <span class="hero-meta-value">{event.dateText}</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">会場</span>
+          <span class="hero-meta-value">{event.venueName}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="hero-scroll" href="#festival-info" aria-label="次のセクションへ移動">Scroll</a>
+</section>

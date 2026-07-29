@@ -1,0 +1,28 @@
+---
+import type { NewsItem } from "@lib/content/schema";
+
+interface Props {
+  items: NewsItem[];
+  limit?: number;
+}
+
+const { items, limit } = Astro.props;
+const displayItems = typeof limit === "number" ? items.slice(0, limit) : items;
+const formatter = new Intl.DateTimeFormat("ja-JP", {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit"
+});
+---
+
+<div class="news-grid">
+  {displayItems.map((item) => (
+    <article class="news-card" data-reveal>
+      <a href={`/news/${item.slug}/`}>
+        <p class="news-meta">{formatter.format(new Date(item.publishedAt))} / {item.category}</p>
+        <h3>{item.title}</h3>
+        <p>{item.excerpt}</p>
+      </a>
+    </article>
+  ))}
+</div>

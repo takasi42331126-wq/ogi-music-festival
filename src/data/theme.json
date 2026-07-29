@@ -1,0 +1,30 @@
+{
+  "name": "Ogi Festival Bright Natural",
+  "colors": {
+    "ink": "#1f2a24",
+    "muted": "#5d6f64",
+    "paper": "#fffdf8",
+    "mist": "#eef7f1",
+    "leaf": "#2f7d4f",
+    "leafDark": "#20583a",
+    "sun": "#f5b84b",
+    "coral": "#e86f51",
+    "sky": "#77b9d6",
+    "gold": "#b88a31",
+    "line": "#d8e4da"
+  },
+  "typography": {
+    "body": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    "display": "'Yu Mincho', 'Hiragino Mincho ProN', serif",
+    "baseSize": "16px"
+  },
+  "layout": {
+    "maxWidth": "1120px",
+    "sectionPadding": "72px",
+    "mobileSectionPadding": "48px"
+  },
+  "radii": {
+    "card": "8px",
+    "pill": "999px"
+  }
+}

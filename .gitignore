@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+.pnpm-store/
+.chrome-lh/
+lighthouse-report*.json
+.env
+.env.*
+!.env.example
+*.log

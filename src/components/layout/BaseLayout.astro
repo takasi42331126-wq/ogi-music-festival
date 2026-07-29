@@ -1,0 +1,231 @@
+---
+import "../../styles/global.css";
+import { absoluteUrl, buildTitle } from "@lib/seo";
+import { config, event, site, theme } from "@lib/content/repository";
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const { title, description = site.description, noindex = false } = Astro.props;
+const pageTitle = buildTitle(title);
+const canonical = absoluteUrl(Astro.url.pathname);
+const ogImage = absoluteUrl("/ogp.jpg");
+const pathname = Astro.url.pathname;
+const toKebab = (value: string) =>
+  value.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+
+const cssVars = [
+  ...Object.entries(theme.colors).map(([key, value]) => `--color-${toKebab(key)}: ${value}`),
+  `--font-body: ${theme.typography.body}`,
+  `--font-display: ${theme.typography.display}`,
+  `--layout-max-width: ${theme.layout.maxWidth}`,
+  `--section-padding: ${theme.layout.sectionPadding}`,
+  `--mobile-section-padding: ${theme.layout.mobileSectionPadding}`,
+  `--radius-card: ${theme.radii.card}`,
+  `--radius-pill: ${theme.radii.pill}`
+].join("; ");
+
+const navItems = [
+  { href: "/about/", label: "音楽祭について" },
+  { href: "/artists/", label: "出演者" },
+  { href: "/timetable/", label: "タイムテーブル" },
+  { href: "/map/", label: "会場マップ" },
+  { href: "/access/", label: "アクセス" },
+  { href: "/sponsors/", label: "協賛企業" },
+  { href: "/news/", label: "お知らせ" },
+  { href: "/gallery/", label: "ギャラリー" },
+  { href: "/contact/", label: "お問い合わせ" }
+];
+
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "MusicEvent",
+  name: event.title,
+  description,
+  startDate: event.dateStart,
+  endDate: event.dateEnd,
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  image: [ogImage, absoluteUrl(event.heroImage)],
+  url: canonical,
+  location: {
+    "@type": "Place",
+    name: event.venueName,
+    address: event.venueAddress
+  },
+  organizer: {
+    "@type": "Organization",
+    name: site.organization
+  }
+};
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={theme.colors.leafDark} />
+    <meta name="format-detection" content="telephone=no" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preload" as="image" href={event.heroImage} fetchpriority="high" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={site.siteName} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <script is:inline>document.documentElement.classList.add("js-enabled");</script>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body style={cssVars}>
+    <a href="#main" class="skip-link">本文へ移動</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label={`${site.siteName} TOP`}>
+          <span class="brand-mark" aria-hidden="true">小</span>
+          <span>{site.siteName}</span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="グローバルナビゲーション">
+          {navItems.map((item) => (
+            <a
+              class="nav-link"
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <button
+          class="hamburger"
+          type="button"
+          aria-label="メニューを開く"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          data-menu-button
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav id="mobile-menu" class="mobile-panel" aria-label="モバイルナビゲーション" data-menu-panel hidden>
+        {navItems.map((item) => (
+          <a
+            class="nav-link"
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+        <a class="button button-primary mobile-cta" href="/contact/">お問い合わせ</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div>
+          <a class="brand" href="/">
+            <span class="brand-mark" aria-hidden="true">小</span>
+            <span>{site.siteName}</span>
+          </a>
+          <p class="copyright">
+            主催: {site.organization} / 公開URL: {config.site.baseUrl}
+          </p>
+        </div>
+        <nav class="footer-nav" aria-label="フッターナビゲーション">
+          {navItems.slice(0, 6).map((item) => <a href={item.href}>{item.label}</a>)}
+          <a href="/admin/">管理デモ</a>
+        </nav>
+      </div>
+    </footer>
+    <script>
+      const menuButton = document.querySelector("[data-menu-button]");
+      const menuPanel = document.querySelector("[data-menu-panel]");
+
+      const setMenuState = (isOpen: boolean) => {
+        if (!(menuButton instanceof HTMLButtonElement) || !(menuPanel instanceof HTMLElement)) {
+          return;
+        }
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+        menuButton.setAttribute("aria-label", isOpen ? "メニューを閉じる" : "メニューを開く");
+        menuPanel.hidden = !isOpen;
+        document.body.toggleAttribute("data-menu-open", isOpen);
+      };
+
+      menuButton?.addEventListener("click", () => {
+        const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+        setMenuState(!isOpen);
+      });
+
+      menuPanel?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => setMenuState(false));
+      });
+
+      document.addEventListener("keydown", (event: KeyboardEvent) => {
+        if (event.key === "Escape") {
+          setMenuState(false);
+        }
+      });
+
+      document.addEventListener("click", (event: MouseEvent) => {
+        if (!(menuPanel instanceof HTMLElement) || !(menuButton instanceof HTMLButtonElement)) {
+          return;
+        }
+        const target = event.target;
+        if (
+          target instanceof Node &&
+          !menuPanel.contains(target) &&
+          !menuButton.contains(target)
+        ) {
+          setMenuState(false);
+        }
+      });
+
+      const revealTargets = document.querySelectorAll("[data-reveal]");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
+        );
+        revealTargets.forEach((target) => observer.observe(target));
+      } else {
+        revealTargets.forEach((target) => target.classList.add("is-visible"));
+      }
+    </script>
+  </body>
+</html>

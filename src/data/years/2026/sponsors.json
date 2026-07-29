@@ -1,0 +1,29 @@
+[
+  {
+    "id": "sponsor-001",
+    "name": "小城サンプル株式会社",
+    "tier": "gold",
+    "logo": "/assets/years/2026/sponsors/sponsor-001.svg",
+    "url": "",
+    "message": "地域の文化活動を応援しています。",
+    "sortOrder": 1
+  },
+  {
+    "id": "sponsor-002",
+    "name": "おぎ未来商店",
+    "tier": "silver",
+    "logo": "/assets/years/2026/sponsors/sponsor-002.svg",
+    "url": "",
+    "message": "",
+    "sortOrder": 2
+  },
+  {
+    "id": "sponsor-003",
+    "name": "Green Field Cafe",
+    "tier": "bronze",
+    "logo": "/assets/years/2026/sponsors/sponsor-003.svg",
+    "url": "",
+    "message": "",
+    "sortOrder": 3
+  }
+]

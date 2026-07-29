@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import TimetableList from "@components/timetable/TimetableList.astro";
+import { stages, timetable } from "@lib/content/repository";
+---
+
+<BaseLayout title="タイムテーブル" description="小城音楽祭のタイムテーブルを掲載しています。">
+  <PageHero
+    eyebrow="Timetable"
+    title="タイムテーブル"
+    lead="ステージ別に当日の流れを確認できます。内容は変更になる場合があります。"
+  />
+
+  <section class="section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Schedule"
+        title="当日の進行"
+        lead="お気に入りの出演者や、気になるステージの時間を事前に確認できます。"
+      />
+      <TimetableList items={timetable} stages={stages} />
+    </div>
+  </section>
+</BaseLayout>

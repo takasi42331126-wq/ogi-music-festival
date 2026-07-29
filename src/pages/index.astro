@@ -1,0 +1,181 @@
+---
+import ArtistCard from "@components/artist/ArtistCard.astro";
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import NewsList from "@components/news/NewsList.astro";
+import SponsorGrid from "@components/sponsor/SponsorGrid.astro";
+import TimetableList from "@components/timetable/TimetableList.astro";
+import Hero from "@components/top/Hero.astro";
+import { event, news, pickupArtists, site, sponsors, stages, timetable, venue } from "@lib/content/repository";
+---
+
+<BaseLayout description={site.description}>
+  <Hero event={event} />
+
+  <section id="festival-info" class="section intro-band">
+    <div class="section-inner">
+      <div class="festival-summary" data-reveal>
+        <div>
+          <p class="eyebrow">Festival Info</p>
+          <h2>{event.title}</h2>
+          <p>{event.lead}</p>
+        </div>
+        <div class="summary-actions">
+          <a class="button button-primary" href="/artists/">出演者を見る</a>
+          <a class="button button-outline" href="/access/">アクセス</a>
+        </div>
+      </div>
+      <div class="fact-grid compact-facts" data-reveal>
+        <div class="fact-tile accent-sun">
+          <span class="fact-label">開催日</span>
+          <span class="fact-value">{event.dateText}</span>
+        </div>
+        <div class="fact-tile accent-leaf">
+          <span class="fact-label">会場</span>
+          <span class="fact-value">{event.venueName}</span>
+        </div>
+        <div class="fact-tile accent-sky">
+          <span class="fact-label">主催</span>
+          <span class="fact-value">{site.organization}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner split">
+      <div data-reveal>
+        <SectionHeader
+          eyebrow="About"
+          title="小城で過ごす、少し特別なフェス時間"
+          lead={event.lead}
+        />
+        <p class="prose">
+          明るいステージ、木々の気配、地域のお店や企業の応援。音楽を中心に、小城らしい一日をゆっくり楽しめる公式サイトとして整えています。
+        </p>
+        <div class="button-row">
+          <a class="button button-outline" href="/about/">音楽祭について</a>
+          <a class="button button-outline" href="/map/">会場マップ</a>
+        </div>
+      </div>
+      <ul class="link-list festival-links" data-reveal>
+        <li><a href="/artists/">出演者紹介</a></li>
+        <li><a href="/timetable/">タイムテーブル</a></li>
+        <li><a href="/access/">アクセス</a></li>
+        <li><a href="/sponsors/">協賛企業</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-mist">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Enjoy"
+        title="今年の楽しみ方"
+        lead="家族で、友人と、ひとりでも。小城音楽祭を心地よく楽しむための見どころです。"
+      />
+      <div class="feature-grid">
+        <article class="feature-card accent-leaf" data-reveal>
+          <span class="feature-number">01</span>
+          <h3>自然の中で聴くライブ</h3>
+          <p>開放感のある会場で、昼から夕方まで音楽の表情が変わっていきます。</p>
+        </article>
+        <article class="feature-card accent-sun" data-reveal>
+          <span class="feature-number">02</span>
+          <h3>地域のにぎわい</h3>
+          <p>地元の企業やお店の応援が集まり、会場全体にあたたかい一体感が生まれます。</p>
+        </article>
+        <article class="feature-card accent-coral" data-reveal>
+          <span class="feature-number">03</span>
+          <h3>スマホで迷わず確認</h3>
+          <p>出演者、時間、会場、アクセスを手元ですぐ見られるよう、スマホ中心に設計しています。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section lineup-section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Artists"
+        title="出演者ピックアップ"
+        lead="今年のステージを彩る出演者を順次公開します。"
+      />
+      <div class="artist-grid">
+        {pickupArtists.map((artist) => <ArtistCard artist={artist} />)}
+      </div>
+      <div class="button-row center-actions" data-reveal>
+        <a class="button button-primary" href="/artists/">出演者一覧へ</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section timetable-preview">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Timetable"
+        title="タイムテーブル"
+        lead="ステージごとの進行を見やすく整理しています。時間は変更になる場合があります。"
+      />
+      <TimetableList items={timetable.slice(0, 4)} stages={stages} />
+      <div class="button-row" style="margin-top: 22px;" data-reveal>
+        <a class="button button-outline" href="/timetable/">すべて見る</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-mist">
+    <div class="section-inner venue-layout">
+      <div data-reveal>
+        <SectionHeader
+          eyebrow="Venue"
+          title="会場マップ"
+          lead={`${venue.name}のステージ、案内所、飲食エリアを確認できます。`}
+        />
+        <div class="map-canvas" aria-label="会場マップの簡易図">
+          <div class="map-zone map-zone-main">Main Stage</div>
+          <div class="map-zone map-zone-garden">Garden Stage</div>
+          <div class="map-zone map-zone-food">Food Area</div>
+          <div class="map-zone map-zone-info">Information</div>
+        </div>
+      </div>
+      <ul class="note-list" data-reveal>
+        {venue.accessNotes.map((note) => <li>{note}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="News"
+        title="お知らせ"
+        lead="開催に向けた最新情報を掲載します。"
+      />
+      <NewsList items={news} limit={3} />
+    </div>
+  </section>
+
+  <section class="section sponsor-showcase">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Sponsors"
+        title="協賛企業"
+        lead="小城音楽祭を支えてくださる企業・団体をご紹介します。"
+      />
+      <SponsorGrid sponsors={sponsors} />
+    </div>
+  </section>
+
+  <section class="section final-cta">
+    <div class="section-inner final-cta-inner" data-reveal>
+      <p class="eyebrow">Join Us</p>
+      <h2>小城の一日を、音楽で楽しもう。</h2>
+      <p>出演情報や当日の案内は随時更新します。来場前に最新のお知らせをご確認ください。</p>
+      <div class="button-row">
+        <a class="button button-primary" href="/news/">最新情報を見る</a>
+        <a class="button button-secondary" href="/contact/">お問い合わせ</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

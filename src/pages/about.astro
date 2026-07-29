@@ -1,0 +1,48 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import { event, site } from "@lib/content/repository";
+---
+
+<BaseLayout title="音楽祭について" description={`${site.siteName}の概要と開催への想いを紹介します。`}>
+  <PageHero
+    eyebrow="About"
+    title="音楽祭について"
+    lead="地域のにぎわい、音楽の力、自然の心地よさをひとつにする、小城らしい音楽祭です。"
+  />
+
+  <section class="section">
+    <div class="section-inner split">
+      <div class="prose">
+        <SectionHeader
+          eyebrow="Concept"
+          title="小城に集い、音楽でつながる"
+          lead={event.lead}
+        />
+        <p>
+          小城音楽祭は、小城市商工会議所青年部が中心となり、地域の魅力を音楽とともに発信するイベントです。
+          毎年の開催情報を積み重ねながら、来場者、出演者、協賛企業、運営メンバーが同じ場所でつながる場を目指します。
+        </p>
+        <p>
+          公式ホームページでは、開催日、出演者、タイムテーブル、会場情報、お知らせをわかりやすく届けます。
+          年度ごとの情報をJSONで管理することで、次回以降の更新も少ない作業で行えるようにしています。
+        </p>
+      </div>
+      <div class="fact-grid" style="grid-template-columns: 1fr;">
+        <div class="fact-tile">
+          <span class="fact-label">イベント名</span>
+          <span class="fact-value">{event.title}</span>
+        </div>
+        <div class="fact-tile">
+          <span class="fact-label">開催日</span>
+          <span class="fact-value">{event.dateText}</span>
+        </div>
+        <div class="fact-tile">
+          <span class="fact-label">主催</span>
+          <span class="fact-value">{site.organization}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

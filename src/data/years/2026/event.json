@@ -1,0 +1,19 @@
+{
+  "year": 2026,
+  "title": "小城音楽祭 2026",
+  "dateText": "2026年 秋開催予定",
+  "dateStart": "2026-10-01",
+  "dateEnd": "2026-10-01",
+  "venueName": "小城市内 特設会場",
+  "venueAddress": "佐賀県小城市",
+  "heroImage": "/assets/years/2026/hero/main.webp",
+  "catchcopy": "自然と音楽が響きあう、小城の一日。",
+  "lead": "地域で活動する人、音楽を愛する人、家族で楽しむ人が集まる、あたたかく上質な野外音楽祭です。",
+  "status": "planning",
+  "cta": {
+    "primaryLabel": "出演者を見る",
+    "primaryHref": "/artists/",
+    "secondaryLabel": "アクセスを確認",
+    "secondaryHref": "/access/"
+  }
+}

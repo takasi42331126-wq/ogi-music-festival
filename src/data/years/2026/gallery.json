@@ -1,0 +1,20 @@
+[
+  {
+    "id": "gallery-001",
+    "title": "会場イメージ",
+    "image": "/assets/years/2026/hero/main.webp",
+    "year": 2026,
+    "category": "会場",
+    "alt": "自然に囲まれた音楽祭会場のイメージ",
+    "sortOrder": 1
+  },
+  {
+    "id": "gallery-002",
+    "title": "ステージイメージ",
+    "image": "/assets/years/2026/hero/main.webp",
+    "year": 2026,
+    "category": "ステージ",
+    "alt": "屋外ステージと照明のイメージ",
+    "sortOrder": 2
+  }
+]

@@ -1,0 +1,43 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import { event, venue } from "@lib/content/repository";
+---
+
+<BaseLayout title="アクセス" description="小城音楽祭の会場アクセス情報を掲載しています。">
+  <PageHero
+    eyebrow="Access"
+    title="アクセス"
+    lead="会場までの行き方、駐車場、来場時の注意事項をまとめています。"
+  />
+
+  <section class="section">
+    <div class="section-inner split">
+      <div>
+        <SectionHeader
+          eyebrow="Location"
+          title={event.venueName}
+          lead={event.venueAddress}
+        />
+        <div class="map-canvas" aria-label="アクセス案内の簡易図">
+          <div class="map-zone map-zone-main">Venue</div>
+          <div class="map-zone map-zone-garden">Parking</div>
+          <div class="map-zone map-zone-food">Bus Stop</div>
+          <div class="map-zone map-zone-info">Info</div>
+        </div>
+      </div>
+      <div class="contact-panel">
+        <h2>来場時のご案内</h2>
+        <ul class="note-list">
+          {venue.accessNotes.map((note) => <li>{note}</li>)}
+        </ul>
+        {venue.googleMapUrl ? (
+          <a class="button button-primary" href={venue.googleMapUrl} target="_blank" rel="noreferrer">Googleマップを開く</a>
+        ) : (
+          <span class="status-pill">地図URL準備中</span>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

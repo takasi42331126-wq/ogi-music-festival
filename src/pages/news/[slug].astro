@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import { news } from "@lib/content/repository";
+import type { NewsItem } from "@lib/content/schema";
+
+export const getStaticPaths = () =>
+  news.map((item) => ({
+    params: { slug: item.slug },
+    props: { item }
+  }));
+
+interface Props {
+  item: NewsItem;
+}
+
+const { item } = Astro.props;
+const formatter = new Intl.DateTimeFormat("ja-JP", {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit"
+});
+---
+
+<BaseLayout title={item.title} description={item.excerpt}>
+  <PageHero
+    eyebrow={item.category}
+    title={item.title}
+    lead={`${formatter.format(new Date(item.publishedAt))} 公開`}
+  />
+
+  <article class="section">
+    <div class="section-inner prose">
+      <p>{item.body}</p>
+      <div class="button-row">
+        <a class="button button-outline" href="/news/">お知らせ一覧へ</a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

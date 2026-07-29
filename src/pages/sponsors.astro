@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import SponsorGrid from "@components/sponsor/SponsorGrid.astro";
+import { sponsors } from "@lib/content/repository";
+---
+
+<BaseLayout title="協賛企業" description="小城音楽祭を支える協賛企業・団体を紹介します。">
+  <PageHero
+    eyebrow="Sponsors"
+    title="協賛企業"
+    lead="小城音楽祭の開催を支えてくださる企業・団体の皆さまです。"
+  />
+
+  <section class="section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Partners"
+        title="協賛一覧"
+        lead="地域のにぎわいと音楽祭の開催を支えてくださる皆さまです。"
+      />
+      <SponsorGrid sponsors={sponsors} />
+    </div>
+  </section>
+</BaseLayout>

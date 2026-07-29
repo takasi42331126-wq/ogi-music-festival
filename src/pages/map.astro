@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import { venue } from "@lib/content/repository";
+---
+
+<BaseLayout title="会場マップ" description="小城音楽祭の会場マップと施設情報を掲載しています。">
+  <PageHero
+    eyebrow="Map"
+    title="会場マップ"
+    lead="ステージ、飲食エリア、案内所など、当日必要な場所を確認できます。"
+  />
+
+  <section class="section">
+    <div class="section-inner venue-layout">
+      <div>
+        <SectionHeader
+          eyebrow="Venue"
+          title={venue.name}
+          lead="ステージ、飲食エリア、案内所の位置を確認して、当日をゆっくり楽しめるように準備できます。"
+        />
+        <div class="map-canvas" aria-label="会場マップの簡易図">
+          <div class="map-zone map-zone-main">Main Stage</div>
+          <div class="map-zone map-zone-garden">Garden Stage</div>
+          <div class="map-zone map-zone-food">Food Area</div>
+          <div class="map-zone map-zone-info">Information</div>
+        </div>
+      </div>
+      <div class="contact-panel">
+        <h2>施設情報</h2>
+        <ul class="note-list">
+          {venue.facilities.map((facility) => (
+            <li><strong>{facility.name}</strong><br />{facility.description}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

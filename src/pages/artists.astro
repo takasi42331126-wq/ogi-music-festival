@@ -1,0 +1,28 @@
+---
+import ArtistCard from "@components/artist/ArtistCard.astro";
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import { artists } from "@lib/content/repository";
+---
+
+<BaseLayout title="出演者紹介" description="小城音楽祭の出演者情報を紹介します。">
+  <PageHero
+    eyebrow="Artists"
+    title="出演者紹介"
+    lead="ジャンルも雰囲気も異なる出演者が、小城の一日を彩ります。"
+  />
+
+  <section class="section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Lineup"
+        title="ラインナップ"
+        lead="出演者情報は確定次第、順次更新します。"
+      />
+      <div class="artist-grid">
+        {artists.map((artist) => <ArtistCard artist={artist} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import NewsList from "@components/news/NewsList.astro";
+import { news } from "@lib/content/repository";
+---
+
+<BaseLayout title="お知らせ" description="小城音楽祭からのお知らせ一覧です。">
+  <PageHero
+    eyebrow="News"
+    title="お知らせ"
+    lead="開催に向けた最新情報、協賛、出演者、アクセスに関するお知らせを掲載します。"
+  />
+
+  <section class="section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Updates"
+        title="最新情報"
+        lead="開催準備、出演者、アクセス、協賛に関する情報を順次お知らせします。"
+      />
+      <NewsList items={news} />
+    </div>
+  </section>
+</BaseLayout>

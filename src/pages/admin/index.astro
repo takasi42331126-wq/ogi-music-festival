@@ -1,0 +1,23 @@
+---
+import AdminDemo from "@components/admin/AdminDemo.astro";
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+---
+
+<BaseLayout
+  title="管理画面デモ"
+  description="小城音楽祭公式ホームページの将来CMSを想定した管理画面デモです。"
+  noindex
+>
+  <PageHero
+    eyebrow="Admin"
+    title="管理画面デモ"
+    lead="トップバナー、開催情報、出演者、タイムテーブル、協賛企業、お知らせ、ギャラリーを更新する将来画面のUIです。"
+  />
+
+  <section class="section">
+    <div class="section-inner">
+      <AdminDemo />
+    </div>
+  </section>
+</BaseLayout>

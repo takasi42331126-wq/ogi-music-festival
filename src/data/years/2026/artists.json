@@ -1,0 +1,58 @@
+[
+  {
+    "id": "artist-001",
+    "name": "Ogi Green Band",
+    "genre": "Acoustic / Pop",
+    "profile": "爽やかなアコースティックサウンドで、会場を明るく包み込む地元ゆかりのバンド。",
+    "image": "/assets/years/2026/hero/main.webp",
+    "stage": "Main Stage",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 1,
+    "pickup": true
+  },
+  {
+    "id": "artist-002",
+    "name": "Komorebi Quartet",
+    "genre": "Jazz / Instrumental",
+    "profile": "木漏れ日のように心地よい音色で、昼下がりの会場に上品な余韻を届けます。",
+    "image": "/assets/years/2026/hero/main.webp",
+    "stage": "Garden Stage",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 2,
+    "pickup": true
+  },
+  {
+    "id": "artist-003",
+    "name": "Sunny Kids Choir",
+    "genre": "Choir",
+    "profile": "子どもたちの伸びやかな歌声が、小城の空に広がるファミリー向けステージ。",
+    "image": "/assets/years/2026/hero/main.webp",
+    "stage": "Main Stage",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 3,
+    "pickup": false
+  },
+  {
+    "id": "artist-004",
+    "name": "Yamahikari Session",
+    "genre": "Rock / Soul",
+    "profile": "夕暮れの時間帯を力強く彩る、躍動感あるライブセッション。",
+    "image": "/assets/years/2026/hero/main.webp",
+    "stage": "Main Stage",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 4,
+    "pickup": false
+  }
+]

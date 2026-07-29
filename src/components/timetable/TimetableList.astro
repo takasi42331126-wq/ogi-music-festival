@@ -1,0 +1,40 @@
+---
+import type { TimetableItem } from "@lib/content/schema";
+import { getArtistById } from "@lib/content/repository";
+
+interface Props {
+  items: TimetableItem[];
+  stages: string[];
+}
+
+const { items, stages } = Astro.props;
+const grouped = stages.map((stage) => ({
+  stage,
+  items: items
+    .filter((item) => item.stage === stage)
+    .sort((a, b) => `${a.date}${a.startTime}`.localeCompare(`${b.date}${b.startTime}`))
+}));
+---
+
+<div class="timetable">
+  {grouped.map(({ stage, items }) => (
+    <section class="stage-block" aria-labelledby={`${stage}-heading`} data-reveal>
+      <h3 id={`${stage}-heading`} class="stage-title">{stage}</h3>
+      <ul class="time-list">
+        {items.map((item) => {
+          const artist = item.artistId ? getArtistById(item.artistId) : undefined;
+          return (
+            <li class="time-item">
+              <div class="time-range">{item.startTime} - {item.endTime}</div>
+              <div>
+                <span class="time-title">{item.title}</span>
+                {artist && <span class="time-note">{artist.genre}</span>}
+                {item.note && <span class="time-note">{item.note}</span>}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+</div>

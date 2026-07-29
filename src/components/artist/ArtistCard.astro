@@ -1,0 +1,28 @@
+---
+import type { Artist } from "@lib/content/schema";
+
+interface Props {
+  artist: Artist;
+}
+
+const { artist } = Astro.props;
+---
+
+<article class="artist-card" data-reveal>
+  <figure class="artist-visual">
+    <img
+      src={artist.image}
+      alt={`${artist.name}のイメージ`}
+      width="640"
+      height="480"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>{artist.stage}</figcaption>
+  </figure>
+  <div class="artist-card-body">
+    <div class="artist-meta">{artist.genre}</div>
+    <h3>{artist.name}</h3>
+    <p>{artist.profile}</p>
+  </div>
+</article>

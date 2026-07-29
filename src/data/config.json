@@ -1,0 +1,39 @@
+{
+  "site": {
+    "baseUrl": "https://ogi-music-festival.pages.dev",
+    "futureCustomDomain": "",
+    "language": "ja",
+    "timezone": "Asia/Tokyo",
+    "organization": "小城市商工会議所青年部",
+    "repository": "github"
+  },
+  "deployment": {
+    "provider": "cloudflare-pages",
+    "productionBranch": "main",
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
+    "previewDeployments": true
+  },
+  "content": {
+    "currentYear": 2026,
+    "yearDirectoryPattern": "src/data/years/{year}",
+    "assetsDirectoryPattern": "public/assets/years/{year}",
+    "documentsDirectory": "src/data/documents"
+  },
+  "features": {
+    "adminDemo": true,
+    "contactForm": false,
+    "sponsorApplication": false,
+    "artistApplication": false,
+    "volunteerApplication": false,
+    "aiChat": false,
+    "documentSearch": false,
+    "archiveYears": false
+  },
+  "futureServices": {
+    "database": "cloudflare-d1",
+    "assetStorage": "cloudflare-r2",
+    "aiRuntime": "cloudflare-workers",
+    "vectorSearch": "cloudflare-vectorize"
+  }
+}

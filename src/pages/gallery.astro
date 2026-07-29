@@ -1,0 +1,35 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import { gallery } from "@lib/content/repository";
+---
+
+<BaseLayout title="ギャラリー" description="小城音楽祭の写真ギャラリーです。">
+  <PageHero
+    eyebrow="Gallery"
+    title="ギャラリー"
+    lead="会場の雰囲気、ステージ、来場者の思い出を年別に残していきます。"
+  />
+
+  <section class="section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Photos"
+        title="写真一覧"
+        lead="小城音楽祭の空気感を、写真で少しずつ残していきます。"
+      />
+      <div class="gallery-grid">
+        {gallery.map((item) => (
+          <article class="gallery-card">
+            <img src={item.image} alt={item.alt} loading="lazy" />
+            <div class="gallery-card-body">
+              <p class="gallery-meta">{item.year} / {item.category}</p>
+              <h3>{item.title}</h3>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

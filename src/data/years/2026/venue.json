@@ -1,0 +1,25 @@
+{
+  "name": "小城市内 特設会場",
+  "address": "佐賀県小城市",
+  "mapImage": "",
+  "googleMapUrl": "",
+  "accessNotes": [
+    "会場周辺は混雑が予想されます。時間に余裕を持ってお越しください。",
+    "駐車場情報は確定次第、お知らせページでご案内します。",
+    "公共交通機関をご利用の場合は、最新の時刻表をご確認ください。"
+  ],
+  "facilities": [
+    {
+      "name": "Main Stage",
+      "description": "主要アーティストが出演するメインステージ"
+    },
+    {
+      "name": "Garden Stage",
+      "description": "自然の雰囲気を楽しめるサブステージ"
+    },
+    {
+      "name": "Information",
+      "description": "落とし物、迷子、救護などの総合案内"
+    }
+  ]
+}
