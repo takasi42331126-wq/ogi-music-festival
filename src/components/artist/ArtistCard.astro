@@ -12,16 +12,16 @@ const { artist } = Astro.props;
   <figure class="artist-visual">
     <img
       src={artist.image}
-      alt={`${artist.name}のイメージ`}
-      width="640"
-      height="480"
+      alt={`${artist.name}の写真`}
+      width="720"
+      height="900"
       loading="lazy"
       decoding="async"
     />
     <figcaption>{artist.stage}</figcaption>
   </figure>
   <div class="artist-card-body">
-    <div class="artist-meta">{artist.genre}</div>
+    <div class="artist-meta">{artist.role}</div>
     <h3>{artist.name}</h3>
     <p>{artist.profile}</p>
   </div>

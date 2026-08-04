@@ -1,11 +1,12 @@
 [
   {
     "id": "artist-001",
-    "name": "Ogi Green Band",
-    "genre": "Acoustic / Pop",
-    "profile": "爽やかなアコースティックサウンドで、会場を明るく包み込む地元ゆかりのバンド。",
-    "image": "/assets/years/2026/hero/main.webp",
-    "stage": "Main Stage",
+    "name": "徳丸 英器",
+    "role": "司会",
+    "genre": "音楽活動 / MC",
+    "profile": "鹿児島県薩摩川内市出身。佐賀大学文化教育学部卒業。現在はソロ名義での音楽活動の他、佐賀県を中心にローカルタレントとしてテレビ・ラジオ・イベントMCとして活動中。",
+    "image": "/assets/years/2026/artists/tokumaru-hideki.webp",
+    "stage": "メインステージ",
     "links": {
       "official": "",
       "instagram": ""
@@ -15,11 +16,12 @@
   },
   {
     "id": "artist-002",
-    "name": "Komorebi Quartet",
-    "genre": "Jazz / Instrumental",
-    "profile": "木漏れ日のように心地よい音色で、昼下がりの会場に上品な余韻を届けます。",
-    "image": "/assets/years/2026/hero/main.webp",
-    "stage": "Garden Stage",
+    "name": "山口 あんず",
+    "role": "アシスタント",
+    "genre": "タレント / MC / モデル",
+    "profile": "佐賀を中心に全国でタレント、MC、モデルとして活動中。MCの講師やSNSの講師としても活動している。",
+    "image": "/assets/years/2026/artists/yamaguchi-anzu.webp",
+    "stage": "メインステージ",
     "links": {
       "official": "",
       "instagram": ""
@@ -29,30 +31,32 @@
   },
   {
     "id": "artist-003",
-    "name": "Sunny Kids Choir",
-    "genre": "Choir",
-    "profile": "子どもたちの伸びやかな歌声が、小城の空に広がるファミリー向けステージ。",
-    "image": "/assets/years/2026/hero/main.webp",
-    "stage": "Main Stage",
+    "name": "江頭 勇哉",
+    "role": "ゲスト",
+    "genre": "シンガーソングライター",
+    "profile": "佐賀県出身のシンガーソングライター。YouTubeチャンネル「釣りよかでしょう。」のテーマソングや、「情報ライブ ミヤネ屋」のエンディング曲を担当。幅広い層から支持されている。",
+    "image": "/assets/years/2026/artists/egashira-yuya.webp",
+    "stage": "メインステージ",
     "links": {
       "official": "",
       "instagram": ""
     },
     "sortOrder": 3,
-    "pickup": false
+    "pickup": true
   },
   {
     "id": "artist-004",
-    "name": "Yamahikari Session",
-    "genre": "Rock / Soul",
-    "profile": "夕暮れの時間帯を力強く彩る、躍動感あるライブセッション。",
-    "image": "/assets/years/2026/hero/main.webp",
-    "stage": "Main Stage",
+    "name": "野副 一喜",
+    "role": "ゲスト",
+    "genre": "シンガーソングライター",
+    "profile": "佐賀県のシンガーソングライター。ボーカルコーチ、CMソング・社歌制作、楽曲提供、いのちの講演など幅広く活動している。",
+    "image": "/assets/years/2026/artists/nozoe-kazuki.webp",
+    "stage": "メインステージ",
     "links": {
       "official": "",
       "instagram": ""
     },
     "sortOrder": 4,
-    "pickup": false
+    "pickup": true
   }
 ]

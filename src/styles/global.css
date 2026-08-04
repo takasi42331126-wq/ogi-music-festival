@@ -611,7 +611,13 @@ select {
   padding: 5px 9px;
 }
 
-.artist-card img,
+.artist-card img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center top;
+}
+
 .gallery-card img {
   width: 100%;
   aspect-ratio: 4 / 3;

@@ -89,6 +89,7 @@ export const EventSchema = z.object({
 export const ArtistSchema = z.object({
   id: z.string(),
   name: z.string(),
+  role: z.string(),
   genre: z.string(),
   profile: z.string(),
   image: z.string(),
