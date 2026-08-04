@@ -1,7 +1,7 @@
 {
-  "name": "小城音楽祭",
-  "short_name": "小城音楽祭",
-  "description": "小城市商工会議所青年部が開催する小城音楽祭の公式ホームページです。",
+  "name": "第35回おぎアマチュア音楽祭DX2026",
+  "short_name": "第35回おぎアマチュア音楽祭DX2026",
+  "description": "第35回おぎアマチュア音楽祭DX2026の公式ホームページです。",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fffdf8",

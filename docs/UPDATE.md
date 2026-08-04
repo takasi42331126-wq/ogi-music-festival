@@ -16,7 +16,7 @@
 - スマホ用トップバナー: `public/assets/years/YYYY/hero/main-mobile.webp`
 - 出演者: `public/assets/years/YYYY/artists/`
 - ギャラリー: `public/assets/years/YYYY/gallery/`
-- 協賛ロゴ: `public/assets/years/YYYY/sponsors/`
+- 特別協賛・後援ロゴ: `public/assets/years/YYYY/sponsors/`
 - 会場マップ: `public/assets/years/YYYY/map/`
 - OGP画像: `public/ogp.jpg`
 - favicon: `public/favicon.svg`

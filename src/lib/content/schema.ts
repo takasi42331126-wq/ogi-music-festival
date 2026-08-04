@@ -115,7 +115,7 @@ export const TimetableItemSchema = z.object({
 export const SponsorSchema = z.object({
   id: z.string(),
   name: z.string(),
-  tier: z.enum(["gold", "silver", "bronze", "partner"]),
+  category: z.enum(["特別協賛", "後援"]),
   logo: z.string(),
   url: z.string(),
   message: z.string(),

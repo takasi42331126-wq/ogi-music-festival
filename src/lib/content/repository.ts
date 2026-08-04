@@ -55,5 +55,5 @@ export const getTimetableByStage = (stage: string) =>
     .filter((item) => item.stage === stage)
     .sort((a, b) => `${a.date}${a.startTime}`.localeCompare(`${b.date}${b.startTime}`));
 
-export const getSponsorsByTier = (tier: string) =>
-  sponsors.filter((sponsor) => sponsor.tier === tier);
+export const getSponsorsByCategory = (category: string) =>
+  sponsors.filter((sponsor) => sponsor.category === category);

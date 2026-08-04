@@ -34,7 +34,7 @@ const navItems = [
   { href: "/timetable/", label: "タイムテーブル" },
   { href: "/map/", label: "会場マップ" },
   { href: "/access/", label: "アクセス" },
-  { href: "/sponsors/", label: "協賛企業" },
+  { href: "/sponsors/", label: "特別協賛・後援" },
   { href: "/news/", label: "お知らせ" },
   { href: "/gallery/", label: "ギャラリー" },
   { href: "/contact/", label: "お問い合わせ" }
@@ -102,8 +102,8 @@ const structuredData = {
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="/" aria-label={`${site.siteName} TOP`}>
-          <span class="brand-mark" aria-hidden="true">小</span>
-          <span>{site.siteName}</span>
+          <img class="brand-logo" src="/assets/brand/yeg-logo.webp" alt="" width="44" height="44" decoding="async" />
+          <span class="brand-text">{site.siteName}</span>
         </a>
 
         <nav class="desktop-nav" aria-label="グローバルナビゲーション">
@@ -153,8 +153,8 @@ const structuredData = {
       <div class="footer-inner">
         <div>
           <a class="brand" href="/">
-            <span class="brand-mark" aria-hidden="true">小</span>
-            <span>{site.siteName}</span>
+            <img class="brand-logo" src="/assets/brand/yeg-logo.webp" alt="" width="44" height="44" loading="lazy" decoding="async" />
+            <span class="brand-text">{site.siteName}</span>
           </a>
           <p class="copyright">
             主催: {site.organization} / 公開URL: {config.site.baseUrl}

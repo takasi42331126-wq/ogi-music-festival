@@ -5,7 +5,7 @@ import SectionHeader from "@components/layout/SectionHeader.astro";
 import { gallery } from "@lib/content/repository";
 ---
 
-<BaseLayout title="ギャラリー" description="小城音楽祭の写真ギャラリーです。">
+<BaseLayout title="ギャラリー" description="第35回おぎアマチュア音楽祭DX2026の写真ギャラリーです。">
   <PageHero
     eyebrow="Gallery"
     title="ギャラリー"
@@ -17,7 +17,7 @@ import { gallery } from "@lib/content/repository";
       <SectionHeader
         eyebrow="Photos"
         title="写真一覧"
-        lead="小城音楽祭の空気感を、写真で少しずつ残していきます。"
+    lead="第35回おぎアマチュア音楽祭DX2026の空気感を、写真で少しずつ残していきます。"
       />
       <div class="gallery-grid">
         {gallery.map((item) => (

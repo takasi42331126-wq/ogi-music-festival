@@ -6,40 +6,55 @@ interface Props {
 }
 
 const { sponsors } = Astro.props;
-const tierLabels: Record<string, string> = {
-  gold: "Gold Sponsor",
-  silver: "Silver Sponsor",
-  bronze: "Bronze Sponsor",
-  partner: "Partner"
+const categoryOrder = ["特別協賛", "後援"] as const;
+const categoryClass: Record<string, string> = {
+  特別協賛: "special-sponsor",
+  後援: "support"
 };
+
+const groupedSponsors = categoryOrder
+  .map((category) => ({
+    category,
+    items: sponsors.filter((sponsor) => sponsor.category === category)
+  }))
+  .filter((group) => group.items.length > 0);
 ---
 
-<div class="sponsor-grid">
-  {sponsors.map((sponsor) => (
-    <article class={`sponsor-card ${sponsor.tier}`} data-reveal>
-      {sponsor.url ? (
-        <a href={sponsor.url} target="_blank" rel="noreferrer">
-          <div class="sponsor-logo">
-            {sponsor.logo ? (
-              <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
-            ) : sponsor.name}
-          </div>
-          <p class="sponsor-tier">{tierLabels[sponsor.tier]}</p>
-          <h3>{sponsor.name}</h3>
-          {sponsor.message && <p>{sponsor.message}</p>}
-        </a>
-      ) : (
-        <>
-          <div class="sponsor-logo">
-            {sponsor.logo ? (
-              <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
-            ) : sponsor.name}
-          </div>
-          <p class="sponsor-tier">{tierLabels[sponsor.tier]}</p>
-          <h3>{sponsor.name}</h3>
-          {sponsor.message && <p>{sponsor.message}</p>}
-        </>
-      )}
-    </article>
+<div class="sponsor-groups">
+  {groupedSponsors.map((group) => (
+    <section class="sponsor-group" aria-labelledby={`sponsor-${categoryClass[group.category]}`}>
+      <h3 id={`sponsor-${categoryClass[group.category]}`} class="sponsor-category-title">
+        {group.category}
+      </h3>
+      <div class="sponsor-grid">
+        {group.items.map((sponsor) => (
+          <article class={`sponsor-card ${categoryClass[sponsor.category]}`} data-reveal>
+            {sponsor.url ? (
+              <a href={sponsor.url} target="_blank" rel="noreferrer">
+                <div class="sponsor-logo">
+                  {sponsor.logo ? (
+                    <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
+                  ) : sponsor.name}
+                </div>
+                <p class="sponsor-category">{sponsor.category}</p>
+                <h4>{sponsor.name}</h4>
+                {sponsor.message && <p>{sponsor.message}</p>}
+              </a>
+            ) : (
+              <>
+                <div class="sponsor-logo">
+                  {sponsor.logo ? (
+                    <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
+                  ) : sponsor.name}
+                </div>
+                <p class="sponsor-category">{sponsor.category}</p>
+                <h4>{sponsor.name}</h4>
+                {sponsor.message && <p>{sponsor.message}</p>}
+              </>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
   ))}
 </div>
