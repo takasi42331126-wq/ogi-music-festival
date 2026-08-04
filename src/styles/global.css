@@ -587,8 +587,10 @@ select {
 
 .artist-visual {
   position: relative;
+  aspect-ratio: 1 / 1;
   margin: 0;
   overflow: hidden;
+  background: var(--color-mist);
 }
 
 .artist-visual::after {
@@ -613,7 +615,7 @@ select {
 
 .artist-card img {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   object-fit: cover;
   object-position: center top;
 }
@@ -650,6 +652,10 @@ select {
   padding: 18px;
 }
 
+.artist-card-body {
+  padding: 16px;
+}
+
 .artist-meta,
 .news-meta,
 .gallery-meta,
@@ -657,6 +663,17 @@ select {
   color: var(--color-coral);
   font-size: 0.78rem;
   font-weight: 900;
+}
+
+.artist-card .artist-meta {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  background: #fff3cf;
+  color: var(--color-leaf-dark);
+  line-height: 1.2;
+  padding: 4px 9px;
 }
 
 .artist-card h3,
@@ -679,6 +696,14 @@ select {
   margin: 0;
   color: var(--color-muted);
   font-size: 0.95rem;
+}
+
+.artist-card p {
+  display: -webkit-box;
+  overflow: hidden;
+  line-height: 1.62;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
 }
 
 .timetable {
@@ -1353,6 +1378,30 @@ select {
   .admin-grid,
   .feature-grid {
     grid-template-columns: 1fr;
+  }
+
+  .artist-grid {
+    gap: 16px;
+  }
+
+  .artist-card-body {
+    padding: 14px;
+  }
+
+  .artist-card .artist-meta {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+
+  .artist-card h3 {
+    margin: 4px 0 6px;
+    font-size: 1.08rem;
+  }
+
+  .artist-card p {
+    font-size: 0.88rem;
+    line-height: 1.52;
+    -webkit-line-clamp: 3;
   }
 
   .button-row {
