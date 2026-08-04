@@ -6,7 +6,24 @@
   "dateEnd": "2026-09-22",
   "venueName": "小城公園 自楽園",
   "venueAddress": "佐賀県小城市",
-  "heroImage": "/assets/years/2026/hero/main.webp",
+  "heroImage": "/assets/years/2026/hero/slide-01.webp",
+  "heroImages": [
+    {
+      "src": "/assets/years/2026/hero/slide-01.webp",
+      "mobileSrc": "/assets/years/2026/hero/slide-01-mobile.webp",
+      "alt": "夜の音楽祭ステージ全景"
+    },
+    {
+      "src": "/assets/years/2026/hero/slide-02.webp",
+      "mobileSrc": "/assets/years/2026/hero/slide-02-mobile.webp",
+      "alt": "音楽祭ステージでの集合写真"
+    },
+    {
+      "src": "/assets/years/2026/hero/slide-03.webp",
+      "mobileSrc": "/assets/years/2026/hero/slide-03-mobile.webp",
+      "alt": "音楽祭グッズを持つ出演者"
+    }
+  ],
   "catchcopy": "自然と音楽が響きあう、小城の一日。",
   "lead": "地域で活動する人、音楽を愛する人、家族で楽しむ人が集まる、あたたかく上質な野外音楽祭です。",
   "status": "planning",

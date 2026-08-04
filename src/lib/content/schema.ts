@@ -75,6 +75,15 @@ export const EventSchema = z.object({
   venueName: z.string(),
   venueAddress: z.string(),
   heroImage: z.string(),
+  heroImages: z
+    .array(
+      z.object({
+        src: z.string(),
+        mobileSrc: z.string(),
+        alt: z.string()
+      })
+    )
+    .optional(),
   catchcopy: z.string(),
   lead: z.string(),
   status: z.string(),

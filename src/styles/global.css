@@ -291,6 +291,19 @@ select {
 
 .hero-media {
   z-index: 0;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+  opacity: 0;
+  transition: opacity 1200ms ease;
+}
+
+.hero-slide.is-active {
+  opacity: 1;
 }
 
 .hero-media img {
@@ -1638,5 +1651,9 @@ select {
   .js-enabled [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+
+  .hero-slide {
+    transition: none;
   }
 }

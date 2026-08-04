@@ -6,21 +6,34 @@ interface Props {
 }
 
 const { event } = Astro.props;
-const mobileHero = event.heroImage.replace("main.webp", "main-mobile.webp");
+const fallbackMobileSrc = event.heroImage.includes("main.webp")
+  ? event.heroImage.replace("main.webp", "main-mobile.webp")
+  : event.heroImage;
+const fallbackSlide = {
+  src: event.heroImage,
+  mobileSrc: fallbackMobileSrc,
+  alt: `${event.title} メインビジュアル`
+};
+const heroSlides = event.heroImages?.length ? event.heroImages : [fallbackSlide];
 ---
 
-<section class="hero" data-reveal>
-  <picture class="hero-media" aria-hidden="true">
-    <source srcset={mobileHero} media="(max-width: 680px)" />
-    <img
-      src={event.heroImage}
-      alt=""
-      width="1600"
-      height="757"
-      decoding="async"
-      fetchpriority="high"
-    />
-  </picture>
+<section class="hero" data-reveal data-hero-carousel>
+  <div class="hero-media" aria-hidden="true">
+    {heroSlides.map((slide, index) => (
+      <picture class={`hero-slide${index === 0 ? " is-active" : ""}`} data-hero-slide>
+        <source srcset={slide.mobileSrc} media="(max-width: 680px)" />
+        <img
+          src={slide.src}
+          alt=""
+          width="1600"
+          height="900"
+          loading={index === 0 ? "eager" : "lazy"}
+          decoding="async"
+          fetchpriority={index === 0 ? "high" : "low"}
+        />
+      </picture>
+    ))}
+  </div>
   <div class="hero-screen" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="hero-content">
@@ -46,4 +59,25 @@ const mobileHero = event.heroImage.replace("main.webp", "main-mobile.webp");
     </div>
   </div>
   <a class="hero-scroll" href="#festival-info" aria-label="次のセクションへ移動">Scroll</a>
+  <script>
+    (() => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      document.querySelectorAll("[data-hero-carousel]").forEach((carousel) => {
+        const slides = Array.from(carousel.querySelectorAll("[data-hero-slide]"));
+        if (slides.length <= 1) {
+          return;
+        }
+
+        let currentIndex = 0;
+        window.setInterval(() => {
+          slides[currentIndex]?.classList.remove("is-active");
+          currentIndex = (currentIndex + 1) % slides.length;
+          slides[currentIndex]?.classList.add("is-active");
+        }, 3000);
+      });
+    })();
+  </script>
 </section>
