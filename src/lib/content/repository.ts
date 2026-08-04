@@ -4,6 +4,7 @@ import themeRaw from "@data/theme.json";
 import currentRaw from "@data/current.json";
 import eventRaw from "@data/years/2026/event.json";
 import artistsRaw from "@data/years/2026/artists.json";
+import mascotsRaw from "@data/years/2026/mascots.json";
 import timetableRaw from "@data/years/2026/timetable.json";
 import sponsorsRaw from "@data/years/2026/sponsors.json";
 import newsRaw from "@data/years/2026/news.json";
@@ -15,6 +16,7 @@ import {
   CurrentSchema,
   EventSchema,
   GalleryItemSchema,
+  MascotSchema,
   NewsSchema,
   SiteSchema,
   SponsorSchema,
@@ -35,6 +37,7 @@ export const theme = ThemeSchema.parse(themeRaw);
 export const current = CurrentSchema.parse(currentRaw);
 export const event = EventSchema.parse(eventRaw);
 export const artists = bySortOrder(ArtistSchema.array().parse(artistsRaw));
+export const mascots = bySortOrder(MascotSchema.array().parse(mascotsRaw));
 export const timetable = TimetableItemSchema.array().parse(timetableRaw);
 export const sponsors = bySortOrder(SponsorSchema.array().parse(sponsorsRaw));
 export const news = byDateDesc(NewsSchema.array().parse(newsRaw).filter((item) => item.visible));

@@ -1,0 +1,34 @@
+---
+import type { Mascot } from "@lib/content/schema";
+
+interface Props {
+  mascots: Mascot[];
+}
+
+const { mascots } = Astro.props;
+---
+
+<div class="mascot-spotlight" data-reveal>
+  <div class="mascot-copy">
+    <p class="eyebrow">Mascot</p>
+    <h2>おぎーた・おぎりんも音楽祭を応援</h2>
+    <p>
+      第35回おぎアマチュア音楽祭DX2026を盛り上げるマスコットキャラクターです。
+      会場の案内やお知らせにも、これから少しずつ登場していきます。
+    </p>
+  </div>
+  <div class="mascot-grid">
+    {mascots.map((mascot) => (
+      <article class="mascot-card">
+        <figure class="mascot-visual">
+          <img src={mascot.image} alt={mascot.alt} width="720" height="720" loading="lazy" decoding="async" />
+        </figure>
+        <div class="mascot-card-body">
+          <span class="status-pill">{mascot.role}</span>
+          <h3>{mascot.name}</h3>
+          <p>{mascot.profile}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>

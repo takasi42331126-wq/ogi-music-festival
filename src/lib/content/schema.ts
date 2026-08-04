@@ -102,6 +102,16 @@ export const ArtistSchema = z.object({
   pickup: z.boolean()
 });
 
+export const MascotSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  role: z.string(),
+  profile: z.string(),
+  image: z.string(),
+  alt: z.string(),
+  sortOrder: z.number()
+});
+
 export const TimetableItemSchema = z.object({
   id: z.string(),
   date: z.string(),
@@ -162,6 +172,7 @@ export const VenueSchema = z.object({
 export type Site = z.infer<typeof SiteSchema>;
 export type Event = z.infer<typeof EventSchema>;
 export type Artist = z.infer<typeof ArtistSchema>;
+export type Mascot = z.infer<typeof MascotSchema>;
 export type TimetableItem = z.infer<typeof TimetableItemSchema>;
 export type Sponsor = z.infer<typeof SponsorSchema>;
 export type NewsItem = z.infer<typeof NewsSchema>;

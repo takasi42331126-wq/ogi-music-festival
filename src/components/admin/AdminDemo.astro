@@ -1,5 +1,5 @@
 ---
-import { artists, config, event, gallery, news, sponsors, timetable } from "@lib/content/repository";
+import { artists, config, event, gallery, mascots, news, sponsors, timetable } from "@lib/content/repository";
 
 const panels = [
   {
@@ -20,6 +20,13 @@ const panels = [
     title: "出演者管理",
     fields: artists.map((artist) => ({ label: artist.name, value: artist.role })),
     json: artists
+  },
+  {
+    id: "mascots",
+    label: "マスコット",
+    title: "マスコット管理",
+    fields: mascots.map((mascot) => ({ label: mascot.name, value: mascot.role })),
+    json: mascots
   },
   {
     id: "timetable",

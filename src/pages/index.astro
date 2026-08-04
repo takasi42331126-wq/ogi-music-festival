@@ -6,7 +6,8 @@ import NewsList from "@components/news/NewsList.astro";
 import SponsorGrid from "@components/sponsor/SponsorGrid.astro";
 import TimetableList from "@components/timetable/TimetableList.astro";
 import Hero from "@components/top/Hero.astro";
-import { event, news, pickupArtists, site, sponsors, stages, timetable, venue } from "@lib/content/repository";
+import MascotSpotlight from "@components/mascot/MascotSpotlight.astro";
+import { event, mascots, news, pickupArtists, site, sponsors, stages, timetable, venue } from "@lib/content/repository";
 ---
 
 <BaseLayout description={site.description}>
@@ -64,6 +65,12 @@ import { event, news, pickupArtists, site, sponsors, stages, timetable, venue } 
         <li><a href="/access/">アクセス</a></li>
         <li><a href="/sponsors/">特別協賛・後援</a></li>
       </ul>
+    </div>
+  </section>
+
+  <section class="section mascot-section">
+    <div class="section-inner">
+      <MascotSpotlight mascots={mascots} />
     </div>
   </section>
 

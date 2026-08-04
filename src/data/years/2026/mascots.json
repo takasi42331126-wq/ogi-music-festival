@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ogita",
+    "name": "おぎーた",
+    "role": "音楽祭マスコット",
+    "profile": "音楽祭を元気に盛り上げる男の子のマスコット。会場のにぎわいと小城らしい楽しさを届けます。",
+    "image": "/assets/years/2026/mascots/ogita.webp",
+    "alt": "おぎーたのイラスト",
+    "sortOrder": 1
+  },
+  {
+    "id": "ogirin",
+    "name": "おぎりん",
+    "role": "音楽祭マスコット",
+    "profile": "明るい笑顔で来場者を迎える女の子のマスコット。音楽祭に親しみやすい彩りを添えます。",
+    "image": "/assets/years/2026/mascots/ogirin.webp",
+    "alt": "おぎりんのイラスト",
+    "sortOrder": 2
+  }
+]
