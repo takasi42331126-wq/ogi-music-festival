@@ -307,7 +307,7 @@ select {
 }
 
 .hero-media.is-carousel .hero-slide {
-  animation-delay: calc(var(--hero-slide-index) * 3s);
+  animation-delay: calc((var(--hero-slide-count) - var(--hero-slide-index)) * -3s);
   animation-duration: calc(var(--hero-slide-count) * 3s);
   animation-iteration-count: infinite;
   animation-name: hero-slide-fade;
@@ -323,29 +323,17 @@ select {
 
 @keyframes hero-slide-fade {
   0%,
-  27% {
+  20% {
     opacity: 1;
   }
 
-  33%,
-  94% {
+  33.333%,
+  86.667% {
     opacity: 0;
   }
 
   100% {
     opacity: 1;
-  }
-}
-
-@keyframes hero-slide-step {
-  0%,
-  32.99% {
-    opacity: 1;
-  }
-
-  33%,
-  100% {
-    opacity: 0;
   }
 }
 
@@ -1690,10 +1678,10 @@ select {
   }
 
   .hero-media.is-carousel .hero-slide {
-    animation-delay: calc(var(--hero-slide-index) * 3s) !important;
+    animation-delay: calc((var(--hero-slide-count) - var(--hero-slide-index)) * -3s) !important;
     animation-duration: calc(var(--hero-slide-count) * 3s) !important;
     animation-iteration-count: infinite !important;
-    animation-name: hero-slide-step !important;
-    animation-timing-function: step-end !important;
+    animation-name: hero-slide-fade !important;
+    animation-timing-function: linear !important;
   }
 }
