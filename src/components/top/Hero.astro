@@ -61,10 +61,6 @@ const heroSlides = event.heroImages?.length ? event.heroImages : [fallbackSlide]
   <a class="hero-scroll" href="#festival-info" aria-label="次のセクションへ移動">Scroll</a>
   <script>
     (() => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-      }
-
       document.querySelectorAll("[data-hero-carousel]").forEach((carousel) => {
         const slides = Array.from(carousel.querySelectorAll("[data-hero-slide]"));
         if (slides.length <= 1) {
