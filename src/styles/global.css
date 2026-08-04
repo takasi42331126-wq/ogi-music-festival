@@ -892,6 +892,10 @@ select {
   padding: 24px;
 }
 
+.contact-form {
+  align-self: start;
+}
+
 .form-grid {
   display: grid;
   gap: 14px;
@@ -921,6 +925,52 @@ select {
 .form-field textarea {
   min-height: 118px;
   resize: vertical;
+}
+
+.form-message {
+  margin: 0;
+  border-left: 4px solid var(--color-coral);
+  border-radius: var(--radius-card);
+  background: #fff3cf;
+  color: var(--color-ink);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 10px 12px;
+}
+
+.contact-confirmation {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--color-line);
+  padding-top: 18px;
+}
+
+.contact-confirmation[hidden] {
+  display: none;
+}
+
+.contact-confirmation dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.contact-confirmation dl > div {
+  display: grid;
+  gap: 4px;
+}
+
+.contact-confirmation dt {
+  color: var(--color-leaf-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.contact-confirmation dd {
+  margin: 0;
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .admin-shell {

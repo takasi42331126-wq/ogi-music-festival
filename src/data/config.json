@@ -22,7 +22,7 @@
   },
   "features": {
     "adminDemo": true,
-    "contactForm": false,
+    "contactForm": true,
     "sponsorApplication": false,
     "artistApplication": false,
     "volunteerApplication": false,

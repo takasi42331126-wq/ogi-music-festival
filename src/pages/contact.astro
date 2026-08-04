@@ -3,6 +3,8 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
 import PageHero from "@components/layout/PageHero.astro";
 import SectionHeader from "@components/layout/SectionHeader.astro";
 import { site } from "@lib/content/repository";
+
+const contactEmail = site.contact.email;
 ---
 
 <BaseLayout title="お問い合わせ" description="第35回おぎアマチュア音楽祭DX2026へのお問い合わせ先です。">
@@ -33,29 +35,144 @@ import { site } from "@lib/content/repository";
           <p><strong>受付時間</strong><br />{site.contact.hours}</p>
         </div>
       </div>
-      <form class="contact-panel" aria-label="お問い合わせフォームデモ">
-        <span class="status-pill">確認画面</span>
+      <form class="contact-panel contact-form" aria-label="お問い合わせフォーム" data-contact-form data-contact-email={contactEmail} novalidate>
+        <span class="status-pill">メール送信</span>
         <div class="form-grid">
           <div class="form-field">
             <label for="contact-name">お名前</label>
-            <input id="contact-name" name="name" placeholder="小城 太郎" />
+            <input id="contact-name" name="name" autocomplete="name" placeholder="小城 太郎" required />
+          </div>
+          <div class="form-field">
+            <label for="contact-email">メールアドレス</label>
+            <input id="contact-email" name="email" type="email" autocomplete="email" placeholder="example@example.com" required />
           </div>
           <div class="form-field">
             <label for="contact-type">お問い合わせ種別</label>
-            <select id="contact-type" name="type">
+            <select id="contact-type" name="type" required>
               <option>一般お問い合わせ</option>
-            <option>特別協賛・後援について</option>
+              <option>特別協賛・後援について</option>
               <option>出演について</option>
               <option>ボランティアについて</option>
             </select>
           </div>
           <div class="form-field">
             <label for="contact-message">内容</label>
-            <textarea id="contact-message" name="message" placeholder="お問い合わせ内容をご記入ください"></textarea>
+            <textarea id="contact-message" name="message" rows="6" placeholder="お問い合わせ内容をご記入ください" required></textarea>
           </div>
         </div>
-        <button class="button button-primary" type="button">送信内容を確認</button>
+        <p class="form-message" data-contact-error hidden></p>
+        <div class="contact-confirmation" data-contact-confirmation hidden>
+          <span class="status-pill">確認内容</span>
+          <dl>
+            <div>
+              <dt>お名前</dt>
+              <dd data-confirm-name></dd>
+            </div>
+            <div>
+              <dt>メールアドレス</dt>
+              <dd data-confirm-email></dd>
+            </div>
+            <div>
+              <dt>お問い合わせ種別</dt>
+              <dd data-confirm-type></dd>
+            </div>
+            <div>
+              <dt>内容</dt>
+              <dd data-confirm-message></dd>
+            </div>
+          </dl>
+          <div class="button-row">
+            <a class="button button-primary" href={`mailto:${contactEmail}`} data-contact-send>この内容で送信</a>
+            <button class="button button-outline" type="button" data-contact-edit>修正する</button>
+          </div>
+        </div>
+        <button class="button button-primary" type="button" data-contact-confirm>送信内容を確認</button>
       </form>
     </div>
   </section>
+  <script>
+  const contactForm = document.querySelector("[data-contact-form]");
+
+  if (contactForm instanceof HTMLFormElement) {
+    const contactEmail = contactForm.dataset.contactEmail ?? "";
+    const confirmButton = contactForm.querySelector("[data-contact-confirm]");
+    const editButton = contactForm.querySelector("[data-contact-edit]");
+    const sendLink = contactForm.querySelector("[data-contact-send]");
+    const confirmation = contactForm.querySelector("[data-contact-confirmation]");
+    const errorMessage = contactForm.querySelector("[data-contact-error]");
+
+    const nameInput = contactForm.querySelector<HTMLInputElement>("#contact-name");
+    const emailInput = contactForm.querySelector<HTMLInputElement>("#contact-email");
+    const typeInput = contactForm.querySelector<HTMLSelectElement>("#contact-type");
+    const messageInput = contactForm.querySelector<HTMLTextAreaElement>("#contact-message");
+
+    const setText = (selector: string, value: string) => {
+      const target = contactForm.querySelector(selector);
+      if (target instanceof HTMLElement) {
+        target.textContent = value;
+      }
+    };
+
+    const setError = (message: string) => {
+      if (errorMessage instanceof HTMLElement) {
+        errorMessage.textContent = message;
+        errorMessage.hidden = !message;
+      }
+    };
+
+    const hideConfirmation = () => {
+      if (confirmation instanceof HTMLElement) {
+        confirmation.hidden = true;
+      }
+      if (confirmButton instanceof HTMLButtonElement) {
+        confirmButton.hidden = false;
+      }
+    };
+
+    contactForm.addEventListener("submit", (event) => event.preventDefault());
+
+    confirmButton?.addEventListener("click", () => {
+      if (!contactForm.reportValidity()) {
+        setError("必須項目をご確認ください。");
+        return;
+      }
+
+      const name = nameInput?.value.trim() ?? "";
+      const replyEmail = emailInput?.value.trim() ?? "";
+      const type = typeInput?.value.trim() ?? "";
+      const message = messageInput?.value.trim() ?? "";
+      const subject = `【第35回おぎアマチュア音楽祭DX2026】${type}`;
+      const body = [
+        "第35回おぎアマチュア音楽祭DX2026 お問い合わせ",
+        "",
+        `お名前: ${name}`,
+        `メールアドレス: ${replyEmail}`,
+        `お問い合わせ種別: ${type}`,
+        "",
+        "内容:",
+        message
+      ].join("\n");
+
+      setText("[data-confirm-name]", name);
+      setText("[data-confirm-email]", replyEmail);
+      setText("[data-confirm-type]", type);
+      setText("[data-confirm-message]", message);
+      setError("");
+
+      if (sendLink instanceof HTMLAnchorElement) {
+        sendLink.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      }
+      if (confirmation instanceof HTMLElement) {
+        confirmation.hidden = false;
+        confirmation.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+      if (confirmButton instanceof HTMLButtonElement) {
+        confirmButton.hidden = true;
+      }
+    });
+
+    editButton?.addEventListener("click", hideConfirmation);
+    contactForm.addEventListener("input", hideConfirmation);
+  }
+  </script>
 </BaseLayout>
