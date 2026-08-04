@@ -15,19 +15,22 @@ const fallbackSlide = {
   alt: `${event.title} メインビジュアル`
 };
 const heroSlides = event.heroImages?.length ? event.heroImages : [fallbackSlide];
+const isCarousel = heroSlides.length > 1;
+const heroMediaStyle = isCarousel ? `--hero-slide-count: ${heroSlides.length};` : undefined;
+const getSlideStyle = (index: number) => isCarousel ? `--hero-slide-index: ${index};` : undefined;
 ---
 
-<section class="hero" data-reveal data-hero-carousel>
-  <div class="hero-media" aria-hidden="true">
+<section class="hero" data-reveal>
+  <div class={`hero-media${isCarousel ? " is-carousel" : " is-static"}`} style={heroMediaStyle} aria-hidden="true">
     {heroSlides.map((slide, index) => (
-      <picture class={`hero-slide${index === 0 ? " is-active" : ""}`} data-hero-slide>
+      <picture class={`hero-slide${index === 0 ? " is-active" : ""}`} style={getSlideStyle(index)} data-hero-slide>
         <source srcset={slide.mobileSrc} media="(max-width: 680px)" />
         <img
           src={slide.src}
           alt=""
           width="1600"
           height="900"
-          loading={index === 0 ? "eager" : "lazy"}
+          loading="eager"
           decoding="async"
           fetchpriority={index === 0 ? "high" : "low"}
         />
@@ -59,21 +62,4 @@ const heroSlides = event.heroImages?.length ? event.heroImages : [fallbackSlide]
     </div>
   </div>
   <a class="hero-scroll" href="#festival-info" aria-label="次のセクションへ移動">Scroll</a>
-  <script>
-    (() => {
-      document.querySelectorAll("[data-hero-carousel]").forEach((carousel) => {
-        const slides = Array.from(carousel.querySelectorAll("[data-hero-slide]"));
-        if (slides.length <= 1) {
-          return;
-        }
-
-        let currentIndex = 0;
-        window.setInterval(() => {
-          slides[currentIndex]?.classList.remove("is-active");
-          currentIndex = (currentIndex + 1) % slides.length;
-          slides[currentIndex]?.classList.add("is-active");
-        }, 3000);
-      });
-    })();
-  </script>
 </section>

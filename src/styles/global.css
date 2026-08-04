@@ -299,11 +299,19 @@ select {
   inset: 0;
   display: block;
   opacity: 0;
-  transition: opacity 1200ms ease;
 }
 
+.hero-media.is-static .hero-slide,
 .hero-slide.is-active {
   opacity: 1;
+}
+
+.hero-media.is-carousel .hero-slide {
+  animation-delay: calc(var(--hero-slide-index) * 3s);
+  animation-duration: calc(var(--hero-slide-count) * 3s);
+  animation-iteration-count: infinite;
+  animation-name: hero-slide-fade;
+  animation-timing-function: linear;
 }
 
 .hero-media img {
@@ -311,6 +319,34 @@ select {
   height: 100%;
   object-fit: cover;
   object-position: center right;
+}
+
+@keyframes hero-slide-fade {
+  0%,
+  27% {
+    opacity: 1;
+  }
+
+  33%,
+  94% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-slide-step {
+  0%,
+  32.99% {
+    opacity: 1;
+  }
+
+  33%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .hero-screen {
@@ -1653,7 +1689,11 @@ select {
     transform: none;
   }
 
-  .hero-slide {
-    transition: none;
+  .hero-media.is-carousel .hero-slide {
+    animation-delay: calc(var(--hero-slide-index) * 3s) !important;
+    animation-duration: calc(var(--hero-slide-count) * 3s) !important;
+    animation-iteration-count: infinite !important;
+    animation-name: hero-slide-step !important;
+    animation-timing-function: step-end !important;
   }
 }
