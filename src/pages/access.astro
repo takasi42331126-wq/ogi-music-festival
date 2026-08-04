@@ -2,41 +2,70 @@
 import BaseLayout from "@components/layout/BaseLayout.astro";
 import PageHero from "@components/layout/PageHero.astro";
 import SectionHeader from "@components/layout/SectionHeader.astro";
-import { event, venue } from "@lib/content/repository";
+import { venue } from "@lib/content/repository";
+import type { VenueLocation } from "@lib/content/schema";
+
+const locations = [...venue.locations].sort((a, b) => a.sortOrder - b.sortOrder);
+
+const getCoordinateQuery = (location: VenueLocation) =>
+  `${location.coordinates.lat},${location.coordinates.lng}`;
+
+const getMapEmbedUrl = (location: VenueLocation) =>
+  `https://www.google.com/maps?q=${encodeURIComponent(getCoordinateQuery(location))}&z=${location.mapZoom}&output=embed`;
+
+const getGoogleMapUrl = (location: VenueLocation) =>
+  `https://www.google.com/maps?q=${encodeURIComponent(getCoordinateQuery(location))}`;
 ---
 
 <BaseLayout title="アクセス" description="第35回おぎアマチュア音楽祭DX2026の会場アクセス情報を掲載しています。">
   <PageHero
     eyebrow="Access"
     title="アクセス"
-    lead="会場までの行き方、駐車場、来場時の注意事項をまとめています。"
+    lead="メイン会場と周辺施設の位置を、Googleマップで確認できます。"
   />
 
   <section class="section">
-    <div class="section-inner split">
-      <div>
+    <div class="section-inner">
+      <div class="section-stack">
         <SectionHeader
-          eyebrow="Location"
-          title={event.venueName}
-          lead={event.venueAddress}
+          eyebrow="Map"
+          title="会場・周辺施設"
+          lead={`${venue.name}を中心に、当日の移動で確認しやすい施設をまとめています。`}
         />
-        <div class="map-canvas" aria-label="アクセス案内の簡易図">
-          <div class="map-zone map-zone-main">Venue</div>
-          <div class="map-zone map-zone-garden">Parking</div>
-          <div class="map-zone map-zone-food">Bus Stop</div>
-          <div class="map-zone map-zone-info">Info</div>
+
+        <div class="access-location-grid">
+          {locations.map((location) => (
+            <article class="access-location-card" data-reveal>
+              <div class="access-location-body">
+                <span class="status-pill">{location.label}</span>
+                <h2>{location.name}</h2>
+                <p class="access-address">
+                  <span>{location.postalCode}</span>
+                  <span>{location.address}</span>
+                </p>
+                <a class="button button-outline" href={getGoogleMapUrl(location)} target="_blank" rel="noreferrer">
+                  Googleマップで見る
+                </a>
+              </div>
+              <div class="access-map-frame">
+                <iframe
+                  title={`${location.name}のGoogleマップ`}
+                  src={getMapEmbedUrl(location)}
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
-      <div class="contact-panel">
+
+      <div class="contact-panel access-note-panel" data-reveal>
         <h2>来場時のご案内</h2>
         <ul class="note-list">
           {venue.accessNotes.map((note) => <li>{note}</li>)}
         </ul>
-        {venue.googleMapUrl ? (
-          <a class="button button-primary" href={venue.googleMapUrl} target="_blank" rel="noreferrer">Googleマップを開く</a>
-        ) : (
-          <span class="status-pill">地図URL準備中</span>
-        )}
       </div>
     </div>
   </section>

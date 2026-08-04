@@ -1,12 +1,12 @@
 {
   "name": "小城公園 自楽園",
-  "address": "佐賀県小城市",
+  "address": "〒845-0001 佐賀県小城市小城町185番地",
   "mapImage": "",
-  "googleMapUrl": "",
+  "googleMapUrl": "https://www.google.com/maps?q=33.288233,130.195982",
   "accessNotes": [
     "会場周辺は混雑が予想されます。時間に余裕を持ってお越しください。",
-    "駐車場情報は確定次第、お知らせページでご案内します。",
-    "公共交通機関をご利用の場合は、最新の時刻表をご確認ください。"
+    "駐車場や周辺施設の利用案内は、当日の会場案内・お知らせをご確認ください。",
+    "Googleマップは各施設の座標をもとに表示しています。経路案内は最新の交通状況をご確認ください。"
   ],
   "facilities": [
     {
@@ -20,6 +20,86 @@
     {
       "name": "Information",
       "description": "落とし物、迷子、救護などの総合案内"
+    }
+  ],
+  "locations": [
+    {
+      "id": "ogi-park-jirakuen",
+      "name": "小城公園 自楽園",
+      "label": "メイン会場",
+      "postalCode": "〒845-0001",
+      "address": "佐賀県小城市小城町185番地",
+      "coordinates": {
+        "lat": 33.288233,
+        "lng": 130.195982
+      },
+      "mapZoom": 17,
+      "sortOrder": 1
+    },
+    {
+      "id": "yumeplat-ogi",
+      "name": "ゆめぷらっと小城",
+      "label": "周辺施設",
+      "postalCode": "〒845-0001",
+      "address": "佐賀県小城市小城町253-21",
+      "coordinates": {
+        "lat": 33.293778,
+        "lng": 130.199083
+      },
+      "mapZoom": 17,
+      "sortOrder": 2
+    },
+    {
+      "id": "ogi-station",
+      "name": "小城駅",
+      "label": "最寄駅",
+      "postalCode": "〒845-0022",
+      "address": "佐賀県小城市三日月町久米2083",
+      "coordinates": {
+        "lat": 33.285599,
+        "lng": 130.1986722
+      },
+      "mapZoom": 17,
+      "sortOrder": 3
+    },
+    {
+      "id": "ogi-high-school",
+      "name": "小城高校",
+      "label": "周辺施設",
+      "postalCode": "〒845-0001",
+      "address": "佐賀県小城市小城町176",
+      "coordinates": {
+        "lat": 33.292382,
+        "lng": 130.196996
+      },
+      "mapZoom": 17,
+      "sortOrder": 4
+    },
+    {
+      "id": "nishikyushu-university-ogi",
+      "name": "西九州大学 小城キャンパス",
+      "label": "周辺施設",
+      "postalCode": "〒845-0001",
+      "address": "佐賀県小城市小城町176-27",
+      "coordinates": {
+        "lat": 33.291259,
+        "lng": 130.1975023
+      },
+      "mapZoom": 17,
+      "sortOrder": 5
+    },
+    {
+      "id": "sakuraoka-elementary-school",
+      "name": "桜岡小学校",
+      "label": "周辺施設",
+      "postalCode": "〒845-0001",
+      "address": "佐賀県小城市小城町166",
+      "coordinates": {
+        "lat": 33.291292,
+        "lng": 130.198524
+      },
+      "mapZoom": 17,
+      "sortOrder": 6
     }
   ]
 }

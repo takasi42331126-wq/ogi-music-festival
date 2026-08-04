@@ -164,6 +164,20 @@ export const GalleryItemSchema = z.object({
   sortOrder: z.number()
 });
 
+export const VenueLocationSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  label: z.string(),
+  postalCode: z.string(),
+  address: z.string(),
+  coordinates: z.object({
+    lat: z.number(),
+    lng: z.number()
+  }),
+  mapZoom: z.number(),
+  sortOrder: z.number()
+});
+
 export const VenueSchema = z.object({
   name: z.string(),
   address: z.string(),
@@ -175,7 +189,8 @@ export const VenueSchema = z.object({
       name: z.string(),
       description: z.string()
     })
-  )
+  ),
+  locations: z.array(VenueLocationSchema)
 });
 
 export type Site = z.infer<typeof SiteSchema>;
@@ -187,3 +202,4 @@ export type Sponsor = z.infer<typeof SponsorSchema>;
 export type NewsItem = z.infer<typeof NewsSchema>;
 export type GalleryItem = z.infer<typeof GalleryItemSchema>;
 export type Venue = z.infer<typeof VenueSchema>;
+export type VenueLocation = z.infer<typeof VenueLocationSchema>;
