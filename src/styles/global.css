@@ -782,8 +782,17 @@ select {
 }
 
 .time-range {
+  display: grid;
+  gap: 4px;
+  align-content: start;
   color: var(--color-leaf-dark);
   font-weight: 900;
+}
+
+.time-duration {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
 }
 
 .time-title {
@@ -791,10 +800,23 @@ select {
   font-weight: 900;
 }
 
+.time-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
 .time-note {
-  display: block;
-  color: var(--color-muted);
-  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--color-mist);
+  color: var(--color-leaf-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.4;
+  padding: 3px 9px;
 }
 
 .sponsor-grid {

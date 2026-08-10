@@ -123,11 +123,15 @@ export const MascotSchema = z.object({
 
 export const TimetableItemSchema = z.object({
   id: z.string(),
+  order: z.number().optional(),
   date: z.string(),
   startTime: z.string(),
   endTime: z.string(),
+  durationMinutes: z.number().optional(),
   stage: z.string(),
   title: z.string(),
+  category: z.string().optional(),
+  progress: z.string().optional(),
   artistId: z.string(),
   note: z.string()
 });

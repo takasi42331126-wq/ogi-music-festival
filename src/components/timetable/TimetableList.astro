@@ -12,7 +12,11 @@ const grouped = stages.map((stage) => ({
   stage,
   items: items
     .filter((item) => item.stage === stage)
-    .sort((a, b) => `${a.date}${a.startTime}`.localeCompare(`${b.date}${b.startTime}`))
+    .sort((a, b) =>
+      `${a.date}${a.startTime}${String(a.order ?? 0).padStart(3, "0")}`.localeCompare(
+        `${b.date}${b.startTime}${String(b.order ?? 0).padStart(3, "0")}`
+      )
+    )
 }));
 ---
 
@@ -23,13 +27,22 @@ const grouped = stages.map((stage) => ({
       <ul class="time-list">
         {items.map((item) => {
           const artist = item.artistId ? getArtistById(item.artistId) : undefined;
+          const meta = Array.from(
+            new Set([artist?.role, item.category, item.progress, item.note].filter((label): label is string => Boolean(label)))
+          );
           return (
             <li class="time-item">
-              <div class="time-range">{item.startTime} - {item.endTime}</div>
+              <div class="time-range">
+                <span>{item.startTime} - {item.endTime}</span>
+                {typeof item.durationMinutes === "number" && <span class="time-duration">{item.durationMinutes}分</span>}
+              </div>
               <div>
                 <span class="time-title">{item.title}</span>
-                {artist && <span class="time-note">{artist.role}</span>}
-                {item.note && <span class="time-note">{item.note}</span>}
+                {meta.length > 0 && (
+                  <div class="time-meta">
+                    {meta.map((label) => <span class="time-note">{label}</span>)}
+                  </div>
+                )}
               </div>
             </li>
           );
