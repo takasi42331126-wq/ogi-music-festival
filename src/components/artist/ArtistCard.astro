@@ -6,7 +6,8 @@ interface Props {
 }
 
 const { artist } = Astro.props;
-const isLongProfile = artist.profile.length > 95 || artist.profile.includes("\n");
+const profileCollapseThreshold = 70;
+const isLongProfile = artist.profile.length > profileCollapseThreshold || artist.profile.includes("\n");
 const profileId = `${artist.id}-profile`;
 ---
 
