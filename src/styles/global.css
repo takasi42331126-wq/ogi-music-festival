@@ -740,12 +740,44 @@ select {
   font-size: 0.95rem;
 }
 
-.artist-card p {
+.artist-card .artist-profile {
   display: -webkit-box;
   overflow: hidden;
   line-height: 1.62;
+  white-space: pre-line;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+}
+
+.artist-card .artist-profile.is-expanded {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+}
+
+.artist-profile-toggle {
+  width: fit-content;
+  margin-top: 12px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-mist);
+  color: var(--color-leaf-dark);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.2;
+  padding: 8px 12px;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.artist-profile-toggle:hover {
+  background: #fff3cf;
+  transform: translateY(-1px);
+}
+
+.artist-profile-toggle:focus-visible {
+  outline: 3px solid rgba(245, 184, 75, 0.74);
+  outline-offset: 3px;
 }
 
 .timetable {
@@ -1707,10 +1739,18 @@ select {
     font-size: 1.08rem;
   }
 
-  .artist-card p {
+  .artist-card .artist-profile {
     font-size: 0.88rem;
     line-height: 1.52;
     -webkit-line-clamp: 3;
+  }
+
+  .artist-card .artist-profile.is-expanded {
+    -webkit-line-clamp: unset;
+  }
+
+  .artist-profile-toggle {
+    width: 100%;
   }
 
   .button-row {

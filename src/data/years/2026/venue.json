@@ -50,19 +50,6 @@
       "sortOrder": 2
     },
     {
-      "id": "ogi-station",
-      "name": "小城駅",
-      "label": "最寄駅",
-      "postalCode": "〒845-0022",
-      "address": "佐賀県小城市三日月町久米2083",
-      "coordinates": {
-        "lat": 33.285599,
-        "lng": 130.1986722
-      },
-      "mapZoom": 17,
-      "sortOrder": 3
-    },
-    {
       "id": "ogi-high-school",
       "name": "小城高校",
       "label": "周辺施設",
@@ -73,7 +60,7 @@
         "lng": 130.196996
       },
       "mapZoom": 17,
-      "sortOrder": 4
+      "sortOrder": 3
     },
     {
       "id": "nishikyushu-university-ogi",
@@ -86,7 +73,7 @@
         "lng": 130.1975023
       },
       "mapZoom": 17,
-      "sortOrder": 5
+      "sortOrder": 4
     },
     {
       "id": "sakuraoka-elementary-school",
@@ -99,7 +86,7 @@
         "lng": 130.198524
       },
       "mapZoom": 17,
-      "sortOrder": 6
+      "sortOrder": 5
     }
   ]
 }

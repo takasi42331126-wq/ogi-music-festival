@@ -6,6 +6,8 @@ interface Props {
 }
 
 const { artist } = Astro.props;
+const isLongProfile = artist.profile.length > 95 || artist.profile.includes("\n");
+const profileId = `${artist.id}-profile`;
 ---
 
 <article class="artist-card" data-reveal>
@@ -23,6 +25,35 @@ const { artist } = Astro.props;
   <div class="artist-card-body">
     <div class="artist-meta">{artist.role}</div>
     <h3>{artist.name}</h3>
-    <p>{artist.profile}</p>
+    <p id={profileId} class={`artist-profile${isLongProfile ? " is-collapsible" : ""}`} data-artist-profile>{artist.profile}</p>
+    {isLongProfile && (
+      <button
+        class="artist-profile-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls={profileId}
+        data-profile-toggle
+      >
+        続きを読む
+      </button>
+    )}
   </div>
 </article>
+
+<script>
+  document.querySelectorAll("[data-profile-toggle]").forEach((button) => {
+    const targetId = button.getAttribute("aria-controls");
+    const profile = targetId ? document.getElementById(targetId) : null;
+
+    if (!profile) {
+      return;
+    }
+
+    button.addEventListener("click", () => {
+      const isExpanded = button.getAttribute("aria-expanded") === "true";
+      button.setAttribute("aria-expanded", String(!isExpanded));
+      profile.classList.toggle("is-expanded", !isExpanded);
+      button.textContent = isExpanded ? "続きを読む" : "閉じる";
+    });
+  });
+</script>
