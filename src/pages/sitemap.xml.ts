@@ -1,10 +1,17 @@
 import { config, news } from "@lib/content/repository";
 
+type SitemapUrl = {
+  loc: string;
+  priority: string;
+  lastmod?: string;
+};
+
 const staticPages = [
   "",
   "about/",
   "artists/",
   "timetable/",
+  "applications/",
   "map/",
   "access/",
   "sponsors/",
@@ -13,7 +20,7 @@ const staticPages = [
   "contact/"
 ];
 
-const urls = [
+const urls: SitemapUrl[] = [
   ...staticPages.map((path) => ({
     loc: new URL(path, config.site.baseUrl).toString(),
     priority: path === "" ? "1.0" : "0.8"

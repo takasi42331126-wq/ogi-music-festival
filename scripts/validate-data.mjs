@@ -7,6 +7,7 @@ const requiredFiles = [
   "src/data/theme.json",
   "src/data/site.json",
   "src/data/current.json",
+  "src/data/years/2026/applications.json",
   "src/data/years/2026/event.json",
   "src/data/years/2026/artists.json",
   "src/data/years/2026/mascots.json",

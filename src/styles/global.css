@@ -140,7 +140,9 @@ select {
 
 .desktop-nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 2px;
 }
 
@@ -257,6 +259,13 @@ select {
   border-color: rgba(47, 125, 79, 0.32);
   background: var(--color-mist);
   transform: translateY(-1px);
+}
+
+.button-disabled {
+  border-color: var(--color-line);
+  background: #edf1ee;
+  color: var(--color-muted);
+  cursor: not-allowed;
 }
 
 .button-ghost {
@@ -778,6 +787,100 @@ select {
 .artist-profile-toggle:focus-visible {
   outline: 3px solid rgba(245, 184, 75, 0.74);
   outline-offset: 3px;
+}
+
+.application-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 20px;
+}
+
+.application-card {
+  display: grid;
+  gap: 18px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(31, 42, 36, 0.08);
+  padding: 24px;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.application-card:hover {
+  border-color: rgba(245, 184, 75, 0.62);
+  box-shadow: 0 24px 62px rgba(31, 42, 36, 0.15);
+  transform: translateY(-3px);
+}
+
+.application-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.application-status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.2;
+  padding: 5px 10px;
+}
+
+.application-status-open {
+  background: #fff3cf;
+  color: var(--color-leaf-dark);
+}
+
+.application-status-closed,
+.application-status-preparing {
+  background: #edf1ee;
+  color: var(--color-muted);
+}
+
+.application-card h2 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  line-height: 1.25;
+}
+
+.application-detail-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.application-detail-list div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 14px;
+  border-top: 1px solid var(--color-line);
+  padding-top: 10px;
+}
+
+.application-detail-list dt {
+  color: var(--color-muted);
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.application-detail-list dd {
+  margin: 0;
+  color: var(--color-ink);
+  font-weight: 800;
+}
+
+.application-card p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.application-card .button {
+  width: fit-content;
 }
 
 .timetable {
@@ -1750,6 +1853,20 @@ select {
   }
 
   .artist-profile-toggle {
+    width: 100%;
+  }
+
+  .application-card {
+    gap: 14px;
+    padding: 18px;
+  }
+
+  .application-detail-list div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .application-card .button {
     width: 100%;
   }
 

@@ -23,6 +23,7 @@
   "features": {
     "adminDemo": true,
     "contactForm": true,
+    "eventApplications": true,
     "sponsorApplication": false,
     "artistApplication": false,
     "volunteerApplication": false,

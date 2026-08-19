@@ -32,6 +32,7 @@ const navItems = [
   { href: "/about/", label: "音楽祭について" },
   { href: "/artists/", label: "出演者" },
   { href: "/timetable/", label: "タイムテーブル" },
+  { href: "/applications/", label: "イベント申し込み" },
   { href: "/map/", label: "会場マップ" },
   { href: "/access/", label: "アクセス" },
   { href: "/sponsors/", label: "特別協賛・後援" },
@@ -161,7 +162,7 @@ const structuredData = {
           </p>
         </div>
         <nav class="footer-nav" aria-label="フッターナビゲーション">
-          {navItems.slice(0, 6).map((item) => <a href={item.href}>{item.label}</a>)}
+          {navItems.slice(0, 7).map((item) => <a href={item.href}>{item.label}</a>)}
         </nav>
       </div>
     </footer>

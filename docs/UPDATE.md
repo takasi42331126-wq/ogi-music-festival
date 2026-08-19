@@ -4,7 +4,7 @@
 
 1. `src/data/years/2026/` をコピーして `src/data/years/2027/` を作成する
 2. `event.json` の `year`、`title`、`dateText`、`dateStart`、`dateEnd`、`venueName` を更新する
-3. `artists.json`、`timetable.json`、`sponsors.json`、`news.json`、`gallery.json` を更新する
+3. `applications.json`、`artists.json`、`timetable.json`、`sponsors.json`、`news.json`、`gallery.json` を更新する
 4. `public/assets/years/2027/` に画像を配置する
 5. `src/data/current.json` の `year` を新年度へ変更する
 6. `src/data/config.json` の `content.currentYear` も同じ年度に変更する
@@ -42,6 +42,30 @@ JSON内の画像パスは `/assets/years/YYYY/...` の形式にします。
 ```
 
 `slug` はURLになるため、半角英数字とハイフンを推奨します。
+
+## イベント申し込みを更新する
+
+`src/data/years/YYYY/applications.json` にイベントを追加します。GoogleフォームURLや受付状態もこのJSONで管理します。
+
+```json
+{
+  "id": "event-001",
+  "title": "イベント名",
+  "label": "関連イベント",
+  "dateTimeText": "2026年9月22日（火）",
+  "venue": "会場名",
+  "postalCode": "〒000-0000",
+  "address": "住所",
+  "description": "イベント概要",
+  "receptionPeriod": "",
+  "formUrl": "https://docs.google.com/forms/...",
+  "buttonLabel": "申し込みフォームはこちら",
+  "status": "open",
+  "sortOrder": 1
+}
+```
+
+`status` は `open`、`closed`、`preparing` のいずれかを指定します。受付終了にする場合は `closed` に変更します。
 
 ## 確認
 

@@ -2,6 +2,7 @@ import siteRaw from "@data/site.json";
 import configRaw from "@data/config.json";
 import themeRaw from "@data/theme.json";
 import currentRaw from "@data/current.json";
+import applicationsRaw from "@data/years/2026/applications.json";
 import eventRaw from "@data/years/2026/event.json";
 import artistsRaw from "@data/years/2026/artists.json";
 import mascotsRaw from "@data/years/2026/mascots.json";
@@ -11,6 +12,7 @@ import newsRaw from "@data/years/2026/news.json";
 import galleryRaw from "@data/years/2026/gallery.json";
 import venueRaw from "@data/years/2026/venue.json";
 import {
+  ApplicationEventSchema,
   ArtistSchema,
   ConfigSchema,
   CurrentSchema,
@@ -36,6 +38,7 @@ export const config = ConfigSchema.parse(configRaw);
 export const theme = ThemeSchema.parse(themeRaw);
 export const current = CurrentSchema.parse(currentRaw);
 export const event = EventSchema.parse(eventRaw);
+export const applicationEvents = bySortOrder(ApplicationEventSchema.array().parse(applicationsRaw));
 export const artists = bySortOrder(ArtistSchema.array().parse(artistsRaw));
 export const mascots = bySortOrder(MascotSchema.array().parse(mascotsRaw));
 export const timetable = TimetableItemSchema.array().parse(timetableRaw);

@@ -7,7 +7,7 @@ import SponsorGrid from "@components/sponsor/SponsorGrid.astro";
 import TimetableList from "@components/timetable/TimetableList.astro";
 import Hero from "@components/top/Hero.astro";
 import MascotSpotlight from "@components/mascot/MascotSpotlight.astro";
-import { event, mascots, news, pickupArtists, site, sponsors, stages, timetable, venue } from "@lib/content/repository";
+import { applicationEvents, event, mascots, news, pickupArtists, site, sponsors, stages, timetable, venue } from "@lib/content/repository";
 ---
 
 <BaseLayout description={site.description}>
@@ -23,6 +23,7 @@ import { event, mascots, news, pickupArtists, site, sponsors, stages, timetable,
         </div>
         <div class="summary-actions">
           <a class="button button-primary" href="/artists/">出演者を見る</a>
+          <a class="button button-outline" href="/applications/">イベント申し込み</a>
           <a class="button button-outline" href="/access/">アクセス</a>
         </div>
       </div>
@@ -62,6 +63,7 @@ import { event, mascots, news, pickupArtists, site, sponsors, stages, timetable,
       <ul class="link-list festival-links" data-reveal>
         <li><a href="/artists/">出演者紹介</a></li>
         <li><a href="/timetable/">タイムテーブル</a></li>
+        <li><a href="/applications/">イベント申し込み</a></li>
         <li><a href="/access/">アクセス</a></li>
         <li><a href="/sponsors/">特別協賛・後援</a></li>
       </ul>
@@ -130,6 +132,25 @@ import { event, mascots, news, pickupArtists, site, sponsors, stages, timetable,
       </div>
     </div>
   </section>
+
+  {applicationEvents.length > 0 && (
+    <section class="section">
+      <div class="section-inner split">
+        <div data-reveal>
+          <SectionHeader
+            eyebrow="Entry"
+            title="イベント申し込み"
+            lead="音楽祭に関連して開催するイベントの申し込み情報を掲載しています。"
+          />
+        </div>
+        <ul class="link-list festival-links" data-reveal>
+          {applicationEvents.slice(0, 3).map((item) => (
+            <li><a href="/applications/">{item.title}</a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   <section class="section section-mist">
     <div class="section-inner venue-layout">

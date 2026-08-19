@@ -1,0 +1,36 @@
+---
+import ApplicationEventCard from "@components/application/ApplicationEventCard.astro";
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import PageHero from "@components/layout/PageHero.astro";
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import { applicationEvents } from "@lib/content/repository";
+---
+
+<BaseLayout title="イベント申し込み" description="第35回おぎアマチュア音楽祭DX2026に関連するイベント申し込み一覧です。">
+  <PageHero
+    eyebrow="Entry"
+    title="イベント申し込み"
+    lead="音楽祭に関連して開催するイベントの申し込み情報を掲載しています。"
+  />
+
+  <section class="section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Applications"
+        title="イベント申し込み一覧"
+        lead="参加したいイベントの詳細を確認し、Googleフォームからお申し込みください。"
+      />
+      {applicationEvents.length > 0 ? (
+        <div class="application-grid">
+          {applicationEvents.map((event) => <ApplicationEventCard event={event} />)}
+        </div>
+      ) : (
+        <div class="contact-panel" data-reveal>
+          <span class="status-pill">準備中</span>
+          <h2>現在受付中のイベントはありません</h2>
+          <p>新しいイベント申し込みが決まり次第、このページでご案内します。</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

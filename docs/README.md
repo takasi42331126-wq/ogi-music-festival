@@ -40,6 +40,7 @@ npm run validate:data
 - `/about/`
 - `/artists/`
 - `/timetable/`
+- `/applications/`
 - `/map/`
 - `/access/`
 - `/sponsors/`

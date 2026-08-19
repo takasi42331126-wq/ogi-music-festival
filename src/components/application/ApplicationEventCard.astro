@@ -1,0 +1,51 @@
+---
+import type { ApplicationEvent } from "@lib/content/schema";
+
+interface Props {
+  event: ApplicationEvent;
+}
+
+const { event } = Astro.props;
+const statusLabel = {
+  open: "受付中",
+  closed: "受付終了",
+  preparing: "準備中"
+}[event.status];
+const canApply = event.status === "open" && Boolean(event.formUrl);
+---
+
+<article class={`application-card application-card-${event.status}`} data-reveal>
+  <div class="application-card-header">
+    <span class="status-pill">{event.label}</span>
+    <span class={`application-status application-status-${event.status}`}>{statusLabel}</span>
+  </div>
+  <h2>{event.title}</h2>
+  <dl class="application-detail-list">
+    <div>
+      <dt>開催日時</dt>
+      <dd>{event.dateTimeText}</dd>
+    </div>
+    <div>
+      <dt>開催場所</dt>
+      <dd>{event.venue}</dd>
+    </div>
+    <div>
+      <dt>住所</dt>
+      <dd>{event.postalCode}<br />{event.address}</dd>
+    </div>
+    {event.receptionPeriod && (
+      <div>
+        <dt>受付期間</dt>
+        <dd>{event.receptionPeriod}</dd>
+      </div>
+    )}
+  </dl>
+  <p>{event.description}</p>
+  {canApply ? (
+    <a class="button button-primary" href={event.formUrl} target="_blank" rel="noopener noreferrer">
+      {event.buttonLabel}
+    </a>
+  ) : (
+    <span class="button button-disabled" aria-disabled="true">{statusLabel}</span>
+  )}
+</article>
