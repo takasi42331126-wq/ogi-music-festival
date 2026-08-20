@@ -1,5 +1,35 @@
 [
   {
+    "id": "tent-booth-application-2026",
+    "title": "テントブース出店申込",
+    "label": "小城公園",
+    "dateTimeText": "2026年9月22日（火・祝）",
+    "venue": "小城公園",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町185番地",
+    "description": "おぎアマチュア音楽祭DX2026のテントブース出店専用申し込みフォームです。",
+    "receptionPeriod": "募集締切：2026年8月30日（日）",
+    "formUrl": "https://forms.gle/JvvNQYqfJwLuFLqX7",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 1
+  },
+  {
+    "id": "kitchen-car-application-2026",
+    "title": "キッチンカー出店申込",
+    "label": "小城公園",
+    "dateTimeText": "2026年9月22日（火・祝）",
+    "venue": "小城公園",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町185番地",
+    "description": "おぎアマチュア音楽祭DX2026のキッチンカー出店専用申し込みフォームです。",
+    "receptionPeriod": "募集締切：2026年8月30日（日）",
+    "formUrl": "https://forms.gle/i1TRbKdgrpE1UE986",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 2
+  },
+  {
     "id": "ear-acupoint-therapy-2026",
     "title": "耳つぼセラピー",
     "label": "ゆめぷらっと小城",
@@ -12,6 +42,6 @@
     "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfKvztNLvNX2TIWRpWTIxoeFxbwl58WhgBgOyMHv_65YsN8Yg/viewform?usp=dialog",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 1
+    "sortOrder": 3
   }
 ]
