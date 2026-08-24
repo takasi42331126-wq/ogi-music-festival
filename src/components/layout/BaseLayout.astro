@@ -97,6 +97,14 @@ const structuredData = {
     <meta name="twitter:image" content={ogImage} />
     <script is:inline>document.documentElement.classList.add("js-enabled");</script>
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <!-- Cloudflare Web Analytics -->
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "87f44be7f73b44a3a9244ed7d2039791"}'
+    ></script>
+    <!-- End Cloudflare Web Analytics -->
   </head>
   <body style={cssVars}>
     <a href="#main" class="skip-link">本文へ移動</a>
