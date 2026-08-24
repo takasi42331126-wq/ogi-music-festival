@@ -1,27 +1,27 @@
 [
   {
-    "id": "sponsor-001",
-    "name": "小城サンプル株式会社",
+    "id": "special-sponsor-001",
+    "name": "有限会社イル・プラス",
     "category": "特別協賛",
-    "logo": "/assets/years/2026/sponsors/sponsor-001.svg",
+    "logo": "/assets/years/2026/sponsors/il-plus.webp",
     "url": "",
-    "message": "地域の文化活動を応援しています。",
+    "message": "",
     "sortOrder": 1
   },
   {
-    "id": "sponsor-002",
-    "name": "おぎ未来商店",
+    "id": "special-sponsor-002",
+    "name": "株式会社アフターコウジ",
     "category": "特別協賛",
-    "logo": "/assets/years/2026/sponsors/sponsor-002.svg",
+    "logo": "/assets/years/2026/sponsors/after-kouji.webp",
     "url": "",
     "message": "",
     "sortOrder": 2
   },
   {
-    "id": "sponsor-003",
-    "name": "Green Field Cafe",
+    "id": "special-sponsor-003",
+    "name": "株式会社Craft ON",
     "category": "特別協賛",
-    "logo": "/assets/years/2026/sponsors/sponsor-003.svg",
+    "logo": "/assets/years/2026/sponsors/craft-on.webp",
     "url": "",
     "message": "",
     "sortOrder": 3
