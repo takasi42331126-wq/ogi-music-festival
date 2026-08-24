@@ -1,0 +1,241 @@
+[
+  {
+    "id": "yume-plat-ogi",
+    "name": "ゆめぷらっと小城",
+    "label": "Indoor Event",
+    "address": "佐賀県小城市小城町253-21",
+    "description": "屋内で楽しめる体験企画やマルシェを予定しています。",
+    "note": "開催時間・参加方法などの詳細は、決定次第順次更新します。",
+    "sortOrder": 1,
+    "events": [
+      {
+        "id": "yume-marche",
+        "title": "マルシェ",
+        "category": "マルシェ",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 1,
+        "sessions": []
+      },
+      {
+        "id": "yokan-carving",
+        "title": "羊羹くりぬき体験",
+        "category": "体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 2,
+        "sessions": []
+      },
+      {
+        "id": "ogi-taiko",
+        "title": "小城太鼓（体験会・フィナーレ）",
+        "category": "体験・フィナーレ",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 3,
+        "sessions": []
+      },
+      {
+        "id": "planting-class",
+        "title": "寄せ植え教室",
+        "category": "教室",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 4,
+        "sessions": []
+      },
+      {
+        "id": "pottery-class",
+        "title": "焼き物教室",
+        "category": "教室",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 5,
+        "sessions": []
+      },
+      {
+        "id": "ear-acupoint-experience",
+        "title": "耳つぼ体験",
+        "category": "体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "ear-acupoint-therapy-2026",
+        "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfKvztNLvNX2TIWRpWTIxoeFxbwl58WhgBgOyMHv_65YsN8Yg/viewform?usp=dialog",
+        "status": "adjusting",
+        "sortOrder": 6,
+        "sessions": []
+      },
+      {
+        "id": "calligraphy-experience",
+        "title": "書道体験",
+        "category": "体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 7,
+        "sessions": []
+      }
+    ]
+  },
+  {
+    "id": "ogi-high-school",
+    "name": "小城高校",
+    "label": "School Event",
+    "address": "佐賀県小城市小城町176",
+    "description": "学校施設を活用したスポーツ体験を予定しています。",
+    "note": "開催時間・参加方法などの詳細は、決定次第順次更新します。",
+    "sortOrder": 2,
+    "events": [
+      {
+        "id": "kendo-experience",
+        "title": "剣道体験",
+        "category": "スポーツ体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 1,
+        "sessions": []
+      },
+      {
+        "id": "judo-experience",
+        "title": "柔道体験",
+        "category": "スポーツ体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 2,
+        "sessions": []
+      }
+    ]
+  },
+  {
+    "id": "nishikyushu-university-ogi",
+    "name": "西九州大学 小城キャンパス",
+    "label": "Campus Event",
+    "address": "佐賀県小城市小城町176-27",
+    "description": "学びにつながる体験企画を予定しています。",
+    "note": "開催時間・参加方法などの詳細は、決定次第順次更新します。",
+    "sortOrder": 3,
+    "events": [
+      {
+        "id": "nursing-experience",
+        "title": "看護体験",
+        "category": "体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 1,
+        "sessions": []
+      }
+    ]
+  },
+  {
+    "id": "sakuraoka-elementary-school",
+    "name": "桜岡小学校",
+    "label": "Sports Event",
+    "address": "佐賀県小城市小城町166",
+    "description": "子どもから大人まで楽しめるスポーツ体験や展示を予定しています。",
+    "note": "開催時間・参加方法などの詳細は、決定次第順次更新します。",
+    "sortOrder": 4,
+    "events": [
+      {
+        "id": "soccer-experience",
+        "title": "サッカー体験",
+        "category": "スポーツ体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 1,
+        "sessions": []
+      },
+      {
+        "id": "mini-basketball",
+        "title": "ミニバスケットボール",
+        "category": "スポーツ体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 2,
+        "sessions": []
+      },
+      {
+        "id": "kickboxing",
+        "title": "キックボクシング",
+        "category": "スポーツ体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 3,
+        "sessions": []
+      },
+      {
+        "id": "karate",
+        "title": "空手",
+        "category": "スポーツ体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 4,
+        "sessions": []
+      },
+      {
+        "id": "working-vehicles",
+        "title": "働く車（警察、自衛隊、消防）",
+        "category": "展示・体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 5,
+        "sessions": []
+      }
+    ]
+  }
+]

@@ -2,25 +2,47 @@
 import BaseLayout from "@components/layout/BaseLayout.astro";
 import PageHero from "@components/layout/PageHero.astro";
 import SectionHeader from "@components/layout/SectionHeader.astro";
+import EventScheduleList from "@components/timetable/EventScheduleList.astro";
 import TimetableList from "@components/timetable/TimetableList.astro";
-import { stages, timetable } from "@lib/content/repository";
+import { eventScheduleVenues, stages, timetable } from "@lib/content/repository";
 ---
 
-<BaseLayout title="タイムテーブル" description="第35回おぎアマチュア音楽祭DX2026のタイムテーブルを掲載しています。">
+<BaseLayout title="イベントスケジュール" description="第35回おぎアマチュア音楽祭DX2026の小城公園 自楽園ステージ進行と各会場イベントを掲載しています。">
   <PageHero
-    eyebrow="Timetable"
-    title="タイムテーブル"
-    lead="ステージ別に当日の流れを確認できます。内容は変更になる場合があります。"
+    eyebrow="Event Schedule"
+    title="イベントスケジュール"
+    lead="小城公園 自楽園のステージ進行と、各会場で開催予定のイベントをまとめて確認できます。"
   />
 
   <section class="section">
     <div class="section-inner">
       <SectionHeader
         eyebrow="Schedule"
-        title="当日の進行"
-        lead="お気に入りの出演者や、気になるステージの時間を事前に確認できます。"
+        title="会場ごとの開催内容"
+        lead="各イベントの開催時間・参加方法などの詳細は、決定次第順次更新します。"
       />
-      <TimetableList items={timetable} stages={stages} />
+      <div class="schedule-notice" data-reveal>
+        <p class="eyebrow">Update Policy</p>
+        <p>「調整中」と表示しているイベントは、時間や参加方法が決まり次第、JSONデータの更新だけで公開内容へ反映できる構成にしています。</p>
+      </div>
+
+      <div class="event-schedule-layout">
+        <section class="event-venue-block event-venue-block-main" aria-labelledby="ogi-park-schedule-heading">
+          <div class="event-venue-header">
+            <div>
+              <span class="status-pill">Main Stage</span>
+              <h3 id="ogi-park-schedule-heading" class="event-venue-title">小城公園 自楽園</h3>
+              <p class="event-venue-address">既存のメインステージ進行</p>
+            </div>
+            <p class="event-venue-description">
+              現在公開中のタイムスケジュールをそのまま掲載しています。ステージ進行は変更になる場合があります。
+            </p>
+          </div>
+          <TimetableList items={timetable} stages={stages} />
+        </section>
+
+        <EventScheduleList venues={eventScheduleVenues} />
+      </div>
     </div>
   </section>
 </BaseLayout>

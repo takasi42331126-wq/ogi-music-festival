@@ -39,7 +39,7 @@ npm run validate:data
 - `/`
 - `/about/`
 - `/artists/`
-- `/timetable/`
+- `/timetable/` イベントスケジュール
 - `/applications/`
 - `/map/`
 - `/access/`

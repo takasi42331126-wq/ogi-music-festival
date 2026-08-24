@@ -152,6 +152,38 @@ export const TimetableItemSchema = z.object({
   note: z.string()
 });
 
+export const EventScheduleSessionSchema = z.object({
+  label: z.string(),
+  timeText: z.string(),
+  participationText: z.string(),
+  note: z.string().optional()
+});
+
+export const EventScheduleItemSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  category: z.string(),
+  description: z.string(),
+  timeText: z.string(),
+  participationText: z.string(),
+  applicationId: z.string(),
+  formUrl: z.string().url().or(z.literal("")),
+  status: z.enum(["scheduled", "adjusting", "open", "closed"]),
+  sortOrder: z.number(),
+  sessions: z.array(EventScheduleSessionSchema)
+});
+
+export const EventScheduleVenueSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  label: z.string(),
+  address: z.string(),
+  description: z.string(),
+  note: z.string(),
+  sortOrder: z.number(),
+  events: z.array(EventScheduleItemSchema)
+});
+
 export const SponsorSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -219,6 +251,9 @@ export type Artist = z.infer<typeof ArtistSchema>;
 export type ApplicationEvent = z.infer<typeof ApplicationEventSchema>;
 export type Mascot = z.infer<typeof MascotSchema>;
 export type TimetableItem = z.infer<typeof TimetableItemSchema>;
+export type EventScheduleSession = z.infer<typeof EventScheduleSessionSchema>;
+export type EventScheduleItem = z.infer<typeof EventScheduleItemSchema>;
+export type EventScheduleVenue = z.infer<typeof EventScheduleVenueSchema>;
 export type Sponsor = z.infer<typeof SponsorSchema>;
 export type NewsItem = z.infer<typeof NewsSchema>;
 export type GalleryItem = z.infer<typeof GalleryItemSchema>;

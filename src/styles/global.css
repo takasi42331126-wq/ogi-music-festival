@@ -144,7 +144,7 @@ select {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-end;
-  gap: 2px;
+  gap: 0;
   min-width: 0;
 }
 
@@ -152,10 +152,10 @@ select {
   flex: 0 0 auto;
   border-radius: var(--radius-pill);
   color: var(--color-muted);
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 700;
   line-height: 1.2;
-  padding: 8px 7px;
+  padding: 8px 5px;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -957,6 +957,202 @@ select {
   font-weight: 800;
   line-height: 1.4;
   padding: 3px 9px;
+}
+
+.schedule-notice {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(119, 155, 132, 0.32);
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, #fffdf8, #f2f8ef);
+  box-shadow: 0 16px 42px rgba(31, 42, 36, 0.08);
+  padding: 18px 20px;
+}
+
+.schedule-notice p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.event-schedule-layout,
+.event-schedule-list {
+  display: grid;
+  gap: 28px;
+}
+
+.event-venue-block {
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(31, 42, 36, 0.08);
+  padding: 24px;
+}
+
+.event-venue-block-main {
+  background: linear-gradient(180deg, #ffffff, #fffdf8);
+}
+
+.event-venue-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.78fr);
+  gap: 22px;
+  align-items: start;
+  border-bottom: 1px solid var(--color-line);
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+}
+
+.event-venue-title {
+  margin: 10px 0 8px;
+  color: var(--color-leaf-dark);
+  font-size: clamp(1.45rem, 2.6vw, 2.2rem);
+  line-height: 1.25;
+}
+
+.event-venue-address,
+.event-venue-description,
+.event-venue-note {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.event-venue-note {
+  border-top: 1px solid var(--color-line);
+  margin-top: 18px;
+  padding-top: 14px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.event-schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 14px;
+}
+
+.event-schedule-card {
+  display: grid;
+  gap: 14px;
+  border: 1px solid rgba(216, 228, 218, 0.9);
+  border-radius: var(--radius-card);
+  background: #fffdf8;
+  padding: 18px;
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.event-schedule-card:hover {
+  border-color: rgba(245, 184, 75, 0.62);
+  box-shadow: 0 18px 44px rgba(31, 42, 36, 0.12);
+  transform: translateY(-3px);
+}
+
+.event-schedule-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.event-category,
+.event-schedule-status {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1.2;
+  padding: 5px 9px;
+}
+
+.event-category {
+  background: var(--color-mist);
+  color: var(--color-leaf-dark);
+}
+
+.event-schedule-status {
+  background: #edf1ee;
+  color: var(--color-muted);
+}
+
+.event-schedule-status-open {
+  background: #fff3cf;
+  color: var(--color-leaf-dark);
+}
+
+.event-schedule-status-closed {
+  background: #f3eeee;
+  color: #8c5a5a;
+}
+
+.event-schedule-card h4 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.08rem, 1.8vw, 1.34rem);
+  line-height: 1.35;
+}
+
+.event-schedule-card p {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.event-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.event-info-cell {
+  display: grid;
+  gap: 6px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  padding: 12px;
+}
+
+.event-info-cell dt {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.event-info-cell dd {
+  margin: 0;
+  color: var(--color-ink);
+  font-weight: 900;
+}
+
+.event-info-cell dd.is-pending {
+  width: fit-content;
+  border-radius: var(--radius-pill);
+  background: #fff3cf;
+  color: var(--color-leaf-dark);
+  line-height: 1.2;
+  padding: 4px 9px;
+}
+
+.event-session-list {
+  display: grid;
+  gap: 12px;
+}
+
+.event-session {
+  display: grid;
+  gap: 10px;
+}
+
+.event-session-label {
+  color: var(--color-leaf-dark);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.event-session-note {
+  font-size: 0.9rem;
 }
 
 .sponsor-grid {
@@ -1888,6 +2084,24 @@ select {
 
   .application-card .button {
     width: 100%;
+  }
+
+  .event-venue-block,
+  .event-schedule-card {
+    padding: 18px;
+  }
+
+  .event-venue-header,
+  .event-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .event-venue-header {
+    gap: 12px;
+  }
+
+  .event-schedule-grid {
+    grid-template-columns: 1fr;
   }
 
   .application-page .page-hero h1 {

@@ -7,6 +7,7 @@ import eventRaw from "@data/years/2026/event.json";
 import artistsRaw from "@data/years/2026/artists.json";
 import mascotsRaw from "@data/years/2026/mascots.json";
 import timetableRaw from "@data/years/2026/timetable.json";
+import eventScheduleRaw from "@data/years/2026/eventSchedule.json";
 import sponsorsRaw from "@data/years/2026/sponsors.json";
 import newsRaw from "@data/years/2026/news.json";
 import galleryRaw from "@data/years/2026/gallery.json";
@@ -23,6 +24,7 @@ import {
   SiteSchema,
   SponsorSchema,
   ThemeSchema,
+  EventScheduleVenueSchema,
   TimetableItemSchema,
   VenueSchema
 } from "./schema";
@@ -42,6 +44,10 @@ export const applicationEvents = bySortOrder(ApplicationEventSchema.array().pars
 export const artists = bySortOrder(ArtistSchema.array().parse(artistsRaw));
 export const mascots = bySortOrder(MascotSchema.array().parse(mascotsRaw));
 export const timetable = TimetableItemSchema.array().parse(timetableRaw);
+export const eventScheduleVenues = bySortOrder(EventScheduleVenueSchema.array().parse(eventScheduleRaw)).map((venue) => ({
+  ...venue,
+  events: bySortOrder(venue.events)
+}));
 export const sponsors = bySortOrder(SponsorSchema.array().parse(sponsorsRaw));
 export const news = byDateDesc(NewsSchema.array().parse(newsRaw).filter((item) => item.visible));
 export const gallery = bySortOrder(GalleryItemSchema.array().parse(galleryRaw));

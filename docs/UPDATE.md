@@ -4,7 +4,7 @@
 
 1. `src/data/years/2026/` をコピーして `src/data/years/2027/` を作成する
 2. `event.json` の `year`、`title`、`dateText`、`dateStart`、`dateEnd`、`venueName` を更新する
-3. `applications.json`、`artists.json`、`timetable.json`、`sponsors.json`、`news.json`、`gallery.json` を更新する
+3. `applications.json`、`artists.json`、`timetable.json`、`eventSchedule.json`、`sponsors.json`、`news.json`、`gallery.json` を更新する
 4. `public/assets/years/2027/` に画像を配置する
 5. `src/data/current.json` の `year` を新年度へ変更する
 6. `src/data/config.json` の `content.currentYear` も同じ年度に変更する
@@ -66,6 +66,39 @@ JSON内の画像パスは `/assets/years/YYYY/...` の形式にします。
 ```
 
 `status` は `open`、`closed`、`preparing` のいずれかを指定します。受付終了にする場合は `closed` に変更します。
+
+## イベントスケジュールを更新する
+
+`src/data/years/YYYY/eventSchedule.json` で、小城公園以外の会場イベントを管理します。
+
+```json
+{
+  "id": "sample-venue",
+  "name": "会場名",
+  "label": "Venue Label",
+  "address": "住所",
+  "description": "会場説明",
+  "note": "補足案内",
+  "sortOrder": 1,
+  "events": [
+    {
+      "id": "sample-event",
+      "title": "イベント名",
+      "category": "体験",
+      "description": "",
+      "timeText": "調整中",
+      "participationText": "調整中",
+      "applicationId": "",
+      "formUrl": "",
+      "status": "adjusting",
+      "sortOrder": 1,
+      "sessions": []
+    }
+  ]
+}
+```
+
+複数回開催する場合は `sessions` に回ごとの `label`、`timeText`、`participationText` を追加します。
 
 ## 確認
 

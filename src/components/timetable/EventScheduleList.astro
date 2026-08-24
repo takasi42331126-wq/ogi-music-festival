@@ -1,0 +1,87 @@
+---
+import type { EventScheduleItem, EventScheduleVenue } from "@lib/content/schema";
+
+interface Props {
+  venues: EventScheduleVenue[];
+}
+
+const { venues } = Astro.props;
+
+const statusLabels: Record<EventScheduleItem["status"], string> = {
+  scheduled: "公開中",
+  adjusting: "詳細調整中",
+  open: "受付中",
+  closed: "受付終了"
+};
+
+const isPending = (value: string) => value === "調整中";
+---
+
+<div class="event-schedule-list">
+  {venues.map((venue) => (
+    <section class="event-venue-block" aria-labelledby={`${venue.id}-heading`} data-reveal>
+      <div class="event-venue-header">
+        <div>
+          <span class="status-pill">{venue.label}</span>
+          <h3 id={`${venue.id}-heading`} class="event-venue-title">{venue.name}</h3>
+          <p class="event-venue-address">{venue.address}</p>
+        </div>
+        <p class="event-venue-description">{venue.description}</p>
+      </div>
+
+      <div class="event-schedule-grid">
+        {venue.events.map((item) => {
+          const hasSessions = item.sessions.length > 0;
+          return (
+            <article class="event-schedule-card">
+              <div class="event-schedule-card-header">
+                <span class="event-category">{item.category}</span>
+                <span class={`event-schedule-status event-schedule-status-${item.status}`}>
+                  {statusLabels[item.status]}
+                </span>
+              </div>
+              <h4>{item.title}</h4>
+              {item.description && <p>{item.description}</p>}
+
+              {hasSessions ? (
+                <div class="event-session-list">
+                  {item.sessions.map((session) => (
+                    <div class="event-session">
+                      <span class="event-session-label">{session.label}</span>
+                      <dl class="event-info-grid">
+                        <div class="event-info-cell">
+                          <dt>開催時間</dt>
+                          <dd class:list={{ "is-pending": isPending(session.timeText) }}>{session.timeText}</dd>
+                        </div>
+                        <div class="event-info-cell">
+                          <dt>参加方法</dt>
+                          <dd class:list={{ "is-pending": isPending(session.participationText) }}>
+                            {session.participationText}
+                          </dd>
+                        </div>
+                      </dl>
+                      {session.note && <p class="event-session-note">{session.note}</p>}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <dl class="event-info-grid">
+                  <div class="event-info-cell">
+                    <dt>開催時間</dt>
+                    <dd class:list={{ "is-pending": isPending(item.timeText) }}>{item.timeText}</dd>
+                  </div>
+                  <div class="event-info-cell">
+                    <dt>参加方法</dt>
+                    <dd class:list={{ "is-pending": isPending(item.participationText) }}>{item.participationText}</dd>
+                  </div>
+                </dl>
+              )}
+            </article>
+          );
+        })}
+      </div>
+
+      <p class="event-venue-note">{venue.note}</p>
+    </section>
+  ))}
+</div>

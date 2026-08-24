@@ -1,5 +1,5 @@
 ---
-import { applicationEvents, artists, config, event, gallery, mascots, news, sponsors, timetable } from "@lib/content/repository";
+import { applicationEvents, artists, config, event, eventScheduleVenues, gallery, mascots, news, sponsors, timetable } from "@lib/content/repository";
 
 const applicationStatusLabels = {
   open: "受付中",
@@ -40,6 +40,15 @@ const panels = [
     title: "タイムテーブル管理",
     fields: timetable.map((item) => ({ label: `${item.startTime} - ${item.endTime}`, value: item.title })),
     json: timetable
+  },
+  {
+    id: "event-schedule",
+    label: "イベント予定",
+    title: "イベントスケジュール管理",
+    fields: eventScheduleVenues.flatMap((venue) =>
+      venue.events.map((item) => ({ label: venue.name, value: item.title }))
+    ),
+    json: eventScheduleVenues
   },
   {
     id: "applications",
