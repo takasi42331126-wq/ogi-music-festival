@@ -88,5 +88,127 @@
       "mapZoom": 17,
       "sortOrder": 5
     }
+  ],
+  "eventMaps": [
+    {
+      "id": "yumeplat-ogi",
+      "name": "ゆめぷらっと小城",
+      "description": "ゆめぷらっと小城では、館内の各会場でさまざまなイベントを開催します。",
+      "sourceName": "館内マップ：ゆめぷらっと小城公式サイト",
+      "sourceUrl": "https://yumeplatogi.com/floor/",
+      "sortOrder": 1,
+      "floors": [
+        {
+          "id": "yumeplat-ogi-1f",
+          "label": "1F",
+          "title": "1F 館内マップ",
+          "mapImage": "/assets/years/2026/maps/yumeplat-1f.webp",
+          "mapAlt": "ゆめぷらっと小城 1F 館内マップ",
+          "sourceUrl": "https://yumeplatogi.com/floor/floor1f/",
+          "width": 1500,
+          "height": 1654,
+          "sortOrder": 1,
+          "markers": [
+            {
+              "id": "yume-marche",
+              "markerLabel": "A",
+              "title": "マルシェ",
+              "room": "1F ギャラリー",
+              "scheduleEventId": "yume-marche",
+              "position": {
+                "x": 44.4,
+                "y": 24.5
+              },
+              "sortOrder": 1
+            },
+            {
+              "id": "yokan-carving",
+              "markerLabel": "B",
+              "title": "羊羹くりぬき体験",
+              "room": "1F クッキングスタジオ",
+              "scheduleEventId": "yokan-carving",
+              "position": {
+                "x": 27.1,
+                "y": 58.4
+              },
+              "sortOrder": 2
+            }
+          ]
+        },
+        {
+          "id": "yumeplat-ogi-2f",
+          "label": "2F",
+          "title": "2F 館内マップ",
+          "mapImage": "/assets/years/2026/maps/yumeplat-2f.webp",
+          "mapAlt": "ゆめぷらっと小城 2F 館内マップ",
+          "sourceUrl": "https://yumeplatogi.com/floor/floor2f/",
+          "width": 1500,
+          "height": 1654,
+          "sortOrder": 2,
+          "markers": [
+            {
+              "id": "ogi-taiko",
+              "markerLabel": "C",
+              "title": "小城太鼓（体験会・フィナーレ）",
+              "room": "2F 天山ホール",
+              "scheduleEventId": "ogi-taiko",
+              "position": {
+                "x": 64.8,
+                "y": 52.4
+              },
+              "sortOrder": 1
+            },
+            {
+              "id": "planting-class",
+              "markerLabel": "D",
+              "title": "寄せ植え教室",
+              "room": "2F 会議室1",
+              "scheduleEventId": "planting-class",
+              "position": {
+                "x": 23.5,
+                "y": 21.6
+              },
+              "sortOrder": 2
+            },
+            {
+              "id": "pottery-class",
+              "markerLabel": "E",
+              "title": "焼き物教室",
+              "room": "2F 会議室2",
+              "scheduleEventId": "pottery-class",
+              "position": {
+                "x": 31.5,
+                "y": 21.6
+              },
+              "sortOrder": 3
+            },
+            {
+              "id": "ear-acupoint-experience",
+              "markerLabel": "F",
+              "title": "耳つぼ体験",
+              "room": "2F 会議室4",
+              "scheduleEventId": "ear-acupoint-experience",
+              "position": {
+                "x": 26.8,
+                "y": 34.2
+              },
+              "sortOrder": 4
+            },
+            {
+              "id": "calligraphy-experience",
+              "markerLabel": "G",
+              "title": "書道体験",
+              "room": "2F ラウンジ",
+              "scheduleEventId": "calligraphy-experience",
+              "position": {
+                "x": 42.8,
+                "y": 29.1
+              },
+              "sortOrder": 5
+            }
+          ]
+        }
+      ]
+    }
   ]
 }

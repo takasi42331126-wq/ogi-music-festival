@@ -1,0 +1,143 @@
+---
+import SectionHeader from "@components/layout/SectionHeader.astro";
+import type { VenueEventMap } from "@lib/content/schema";
+
+interface Props {
+  maps: VenueEventMap[];
+}
+
+const { maps } = Astro.props;
+const sortedMaps = [...maps].sort((a, b) => a.sortOrder - b.sortOrder);
+---
+
+{sortedMaps.map((map) => (
+  <section class="section yumeplat-map-section">
+    <div class="section-inner">
+      <SectionHeader
+        eyebrow="Yume Plat Ogi"
+        title={`${map.name} 会場マップ`}
+        lead={map.description}
+      />
+
+      <div class="floor-map-stack">
+        {[...map.floors].sort((a, b) => a.sortOrder - b.sortOrder).map((floor) => {
+          const markers = [...floor.markers].sort((a, b) => a.sortOrder - b.sortOrder);
+          const dialogId = `${floor.id}-dialog`;
+          return (
+            <article class="floor-map-card" data-reveal>
+              <div class="floor-map-header">
+                <div>
+                  <span class="status-pill">{floor.label}</span>
+                  <h3>{floor.title}</h3>
+                </div>
+                <a href={floor.sourceUrl} target="_blank" rel="noopener noreferrer">公式フロア案内を見る</a>
+              </div>
+
+              <button
+                class="floor-map-image-button"
+                type="button"
+                data-map-open={dialogId}
+                aria-label={`${floor.title}を拡大表示する`}
+              >
+                <span class="floor-map-visual">
+                  <img
+                    src={floor.mapImage}
+                    alt={floor.mapAlt}
+                    width={floor.width}
+                    height={floor.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {markers.map((marker) => (
+                    <span
+                      class="floor-map-marker"
+                      style={`left: ${marker.position.x}%; top: ${marker.position.y}%;`}
+                      aria-label={`${marker.title}: ${marker.room}`}
+                    >
+                      {marker.markerLabel}
+                    </span>
+                  ))}
+                </span>
+                <span class="floor-map-zoom-label">タップして拡大</span>
+              </button>
+
+              <div class="floor-event-list" aria-label={`${floor.label} イベント一覧`}>
+                {markers.map((marker) => (
+                  <article class="floor-event-item">
+                    <span class="floor-event-marker">{marker.markerLabel}</span>
+                    <div>
+                      <h4>{marker.title}</h4>
+                      <p>{marker.room}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <p class="floor-map-source">
+                {map.sourceName}（<a href={map.sourceUrl} target="_blank" rel="noopener noreferrer">公式サイト</a>）
+              </p>
+
+              <dialog class="map-lightbox" id={dialogId} data-map-dialog>
+                <div class="map-lightbox-panel">
+                  <button class="map-lightbox-close" type="button" data-map-close aria-label="拡大マップを閉じる">
+                    閉じる
+                  </button>
+                  <div class="floor-map-visual floor-map-visual-large">
+                    <img
+                      src={floor.mapImage}
+                      alt={`${floor.mapAlt} 拡大表示`}
+                      width={floor.width}
+                      height={floor.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {markers.map((marker) => (
+                      <span
+                        class="floor-map-marker"
+                        style={`left: ${marker.position.x}%; top: ${marker.position.y}%;`}
+                        aria-label={`${marker.title}: ${marker.room}`}
+                      >
+                        {marker.markerLabel}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </dialog>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+))}
+
+<script>
+  document.querySelectorAll("[data-map-open]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      if (!(trigger instanceof HTMLElement)) {
+        return;
+      }
+      const dialogId = trigger.dataset.mapOpen;
+      const dialog = dialogId ? document.getElementById(dialogId) : null;
+      if (dialog instanceof HTMLDialogElement) {
+        dialog.showModal();
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-map-dialog]").forEach((dialog) => {
+    if (!(dialog instanceof HTMLDialogElement)) {
+      return;
+    }
+
+    dialog.querySelector("[data-map-close]")?.addEventListener("click", () => {
+      dialog.close();
+    });
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        dialog.close();
+      }
+    });
+  });
+</script>

@@ -230,6 +230,42 @@ export const VenueLocationSchema = z.object({
   sortOrder: z.number()
 });
 
+export const VenueFloorMarkerSchema = z.object({
+  id: z.string(),
+  markerLabel: z.string(),
+  title: z.string(),
+  room: z.string(),
+  scheduleEventId: z.string(),
+  position: z.object({
+    x: z.number(),
+    y: z.number()
+  }),
+  sortOrder: z.number()
+});
+
+export const VenueFloorMapSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  title: z.string(),
+  mapImage: z.string(),
+  mapAlt: z.string(),
+  sourceUrl: z.string().url(),
+  width: z.number(),
+  height: z.number(),
+  sortOrder: z.number(),
+  markers: z.array(VenueFloorMarkerSchema)
+});
+
+export const VenueEventMapSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  sourceName: z.string(),
+  sourceUrl: z.string().url(),
+  sortOrder: z.number(),
+  floors: z.array(VenueFloorMapSchema)
+});
+
 export const VenueSchema = z.object({
   name: z.string(),
   address: z.string(),
@@ -242,7 +278,8 @@ export const VenueSchema = z.object({
       description: z.string()
     })
   ),
-  locations: z.array(VenueLocationSchema)
+  locations: z.array(VenueLocationSchema),
+  eventMaps: z.array(VenueEventMapSchema)
 });
 
 export type Site = z.infer<typeof SiteSchema>;
@@ -259,3 +296,6 @@ export type NewsItem = z.infer<typeof NewsSchema>;
 export type GalleryItem = z.infer<typeof GalleryItemSchema>;
 export type Venue = z.infer<typeof VenueSchema>;
 export type VenueLocation = z.infer<typeof VenueLocationSchema>;
+export type VenueEventMap = z.infer<typeof VenueEventMapSchema>;
+export type VenueFloorMap = z.infer<typeof VenueFloorMapSchema>;
+export type VenueFloorMarker = z.infer<typeof VenueFloorMarkerSchema>;
