@@ -43,5 +43,35 @@
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
     "sortOrder": 3
+  },
+  {
+    "id": "summer-pottery-class-2026",
+    "title": "【夏の陶芸教室】参加申込",
+    "label": "ゆめぷらっと小城",
+    "dateTimeText": "2026年9月22日（火・祝）",
+    "venue": "ゆめぷらっと小城",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町253-21",
+    "description": "ゆめぷらっと小城で開催する夏の陶芸教室の参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://forms.gle/2Vvk1ngWk3JA9tc76",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 4
+  },
+  {
+    "id": "ogi-park-event-application-2026",
+    "title": "ゆめぷらっと小城イベント参加申込",
+    "label": "ゆめぷらっと小城",
+    "dateTimeText": "2026年9月22日（火・祝）",
+    "venue": "ゆめぷらっと小城",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町253-21",
+    "description": "ゆめぷらっと小城で開催する関連イベントの参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://forms.gle/sCBZkiPDZqQ2iPLb8",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 5
   }
 ]
