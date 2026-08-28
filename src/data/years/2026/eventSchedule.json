@@ -22,8 +22,8 @@
         "sessions": []
       },
       {
-        "id": "yokan-carving",
-        "title": "羊羹くりぬき体験",
+        "id": "kyudo-experience",
+        "title": "弓道体験",
         "category": "体験",
         "description": "",
         "timeText": "調整中",
@@ -32,6 +32,32 @@
         "formUrl": "",
         "status": "adjusting",
         "sortOrder": 2,
+        "sessions": []
+      },
+      {
+        "id": "ar-game-photo-experience",
+        "title": "ARゲーム体験&写真再生体験",
+        "category": "体験",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 3,
+        "sessions": []
+      },
+      {
+        "id": "donald-mcdonald-show",
+        "title": "ドナルドマクドナルドショー",
+        "category": "ショー",
+        "description": "",
+        "timeText": "調整中",
+        "participationText": "調整中",
+        "applicationId": "",
+        "formUrl": "",
+        "status": "adjusting",
+        "sortOrder": 4,
         "sessions": []
       },
       {
@@ -44,7 +70,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "adjusting",
-        "sortOrder": 3,
+        "sortOrder": 5,
         "sessions": []
       },
       {
@@ -57,7 +83,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "adjusting",
-        "sortOrder": 4,
+        "sortOrder": 6,
         "sessions": []
       },
       {
@@ -70,7 +96,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "adjusting",
-        "sortOrder": 5,
+        "sortOrder": 7,
         "sessions": []
       },
       {
@@ -83,7 +109,7 @@
         "applicationId": "ear-acupoint-therapy-2026",
         "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfKvztNLvNX2TIWRpWTIxoeFxbwl58WhgBgOyMHv_65YsN8Yg/viewform?usp=dialog",
         "status": "adjusting",
-        "sortOrder": 6,
+        "sortOrder": 8,
         "sessions": []
       },
       {
@@ -96,7 +122,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "adjusting",
-        "sortOrder": 7,
+        "sortOrder": 9,
         "sessions": []
       }
     ]
