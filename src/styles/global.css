@@ -1286,22 +1286,26 @@ select {
 }
 
 .sponsor-logo img {
-  width: 100%;
-  max-width: 220px;
+  width: min(100%, 260px);
   height: auto;
+  max-height: 118px;
+  object-fit: contain;
 }
 
 .sponsor-card-premium .sponsor-logo img {
-  max-width: 360px;
+  width: min(100%, 760px);
+  max-height: 150px;
 }
 
 .sponsor-card-gold .sponsor-logo img {
-  max-width: 300px;
+  width: min(100%, 440px);
+  max-height: 124px;
 }
 
 .sponsor-card-silver .sponsor-logo img,
 .sponsor-card-bronze .sponsor-logo img {
-  max-width: 240px;
+  width: min(100%, 280px);
+  max-height: 118px;
 }
 
 .sponsor-card.support {
