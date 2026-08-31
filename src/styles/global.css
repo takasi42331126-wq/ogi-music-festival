@@ -1188,24 +1188,121 @@ select {
 }
 
 .partner-rank {
+  --rank-accent-rgb: 184, 138, 49;
+  --rank-bg: #fff9ec;
+  --rank-corner: rgba(31, 42, 36, 0.12);
+  --rank-ink: var(--color-ink);
   display: grid;
-  gap: 12px;
+  gap: 16px;
 }
 
 .partner-rank-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  border-bottom: 1px solid var(--color-line);
-  padding-bottom: 10px;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-height: 118px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(var(--rank-accent-rgb), 0.46);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, var(--rank-corner) 0 30px, transparent 31px) top left / 88px 88px no-repeat,
+    linear-gradient(225deg, var(--rank-corner) 0 30px, transparent 31px) top right / 88px 88px no-repeat,
+    radial-gradient(circle at 50% 0%, rgba(var(--rank-accent-rgb), 0.22), transparent 42%),
+    linear-gradient(180deg, #fffefa 0%, var(--rank-bg) 100%);
+  box-shadow: 0 18px 44px rgba(31, 42, 36, 0.08);
+  padding: 24px 18px 20px;
+  text-align: center;
+}
+
+.partner-rank-header::after {
+  position: absolute;
+  inset: 8px;
+  z-index: 0;
+  border: 1px solid rgba(var(--rank-accent-rgb), 0.2);
+  border-radius: calc(var(--radius-card) - 2px);
+  content: "";
 }
 
 .partner-rank-title {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
   margin: 0;
-  color: var(--color-ink);
-  font-size: clamp(1rem, 1.8vw, 1.32rem);
+  color: var(--rank-ink);
+  font-family: var(--font-display);
   line-height: 1.25;
+}
+
+.partner-rank-title::before {
+  width: 48px;
+  height: 18px;
+  background:
+    linear-gradient(135deg, transparent 0 18%, rgba(var(--rank-accent-rgb), 0.82) 19% 40%, transparent 41%),
+    linear-gradient(225deg, transparent 0 18%, rgba(var(--rank-accent-rgb), 0.82) 19% 40%, transparent 41%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(var(--rank-accent-rgb), 0.9));
+  clip-path: polygon(0 100%, 12% 38%, 30% 74%, 50% 0, 70% 74%, 88% 38%, 100% 100%);
+  content: "";
+}
+
+.partner-rank-title-main {
+  color: var(--rank-ink);
+  font-size: 1.36rem;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.partner-rank-title-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(31, 42, 36, 0.68);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.partner-rank-title-sub::before,
+.partner-rank-title-sub::after {
+  width: 38px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--rank-accent-rgb), 0.72), transparent);
+  content: "";
+}
+
+.partner-rank-premium {
+  --rank-accent-rgb: 184, 138, 49;
+  --rank-bg: #fff6df;
+  --rank-corner: rgba(31, 42, 36, 0.16);
+}
+
+.partner-rank-premium .partner-rank-header {
+  min-height: 132px;
+}
+
+.partner-rank-premium .partner-rank-title-main {
+  font-size: 1.52rem;
+}
+
+.partner-rank-gold {
+  --rank-accent-rgb: 245, 184, 75;
+  --rank-bg: #fff8e6;
+  --rank-corner: rgba(184, 138, 49, 0.16);
+}
+
+.partner-rank-silver {
+  --rank-accent-rgb: 119, 153, 166;
+  --rank-bg: #f8fcfb;
+  --rank-corner: rgba(84, 111, 119, 0.13);
+}
+
+.partner-rank-bronze {
+  --rank-accent-rgb: 194, 112, 72;
+  --rank-bg: #fff5ef;
+  --rank-corner: rgba(194, 112, 72, 0.13);
 }
 
 .partner-grid {
@@ -2133,7 +2230,7 @@ select {
 }
 
 .sponsor-showcase .partner-rank-header {
-  border-bottom-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 20px 52px rgba(0, 0, 0, 0.18);
 }
 
 .sponsor-showcase .sponsor-empty {
@@ -2340,7 +2437,36 @@ select {
   }
 
   .partner-rank-header {
-    align-items: flex-start;
+    min-height: 100px;
+    padding: 18px 14px 16px;
+  }
+
+  .partner-rank-premium .partner-rank-header {
+    min-height: 108px;
+  }
+
+  .partner-rank-title {
+    gap: 6px;
+  }
+
+  .partner-rank-title::before {
+    width: 40px;
+    height: 15px;
+  }
+
+  .partner-rank-title-main,
+  .partner-rank-premium .partner-rank-title-main {
+    font-size: 1.05rem;
+  }
+
+  .partner-rank-title-sub {
+    gap: 8px;
+    font-size: 0.72rem;
+  }
+
+  .partner-rank-title-sub::before,
+  .partner-rank-title-sub::after {
+    width: 24px;
   }
 
   .partner-grid,

@@ -12,12 +12,13 @@ const { sponsors } = Astro.props;
 const partnerRanks: Array<{
   id: PartnerRankId;
   label: string;
+  subtitle: string;
   amount: number;
 }> = [
-  { id: "premium", label: "PREMIUM PARTNER", amount: 300000 },
-  { id: "gold", label: "GOLD PARTNER", amount: 200000 },
-  { id: "silver", label: "SILVER PARTNER", amount: 100000 },
-  { id: "bronze", label: "BRONZE PARTNER", amount: 50000 }
+  { id: "premium", label: "PREMIUM PARTNER", subtitle: "プレミアムパートナー", amount: 300000 },
+  { id: "gold", label: "GOLD PARTNER", subtitle: "ゴールドパートナー", amount: 200000 },
+  { id: "silver", label: "SILVER PARTNER", subtitle: "シルバーパートナー", amount: 100000 },
+  { id: "bronze", label: "BRONZE PARTNER", subtitle: "ブロンズパートナー", amount: 50000 }
 ];
 
 const getPartnerRankId = (amount?: number): PartnerRankId | null => {
@@ -41,7 +42,10 @@ const rankedSponsors = partnerRanks.map((rank) => ({
       {rankedSponsors.map((rank) => (
         <section class={`partner-rank partner-rank-${rank.id}`} aria-labelledby={`partner-rank-${rank.id}`}>
           <div class="partner-rank-header">
-            <h4 id={`partner-rank-${rank.id}`} class="partner-rank-title">{rank.label}</h4>
+            <h4 id={`partner-rank-${rank.id}`} class="partner-rank-title">
+              <span class="partner-rank-title-main">{rank.label}</span>
+              <span class="partner-rank-title-sub">{rank.subtitle}</span>
+            </h4>
           </div>
 
           {rank.items.length > 0 ? (
