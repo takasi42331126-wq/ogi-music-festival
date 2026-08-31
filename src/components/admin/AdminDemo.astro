@@ -7,6 +7,16 @@ const applicationStatusLabels = {
   preparing: "準備中"
 };
 
+const publicSponsorPreview = sponsors.map((sponsor) => ({
+  id: sponsor.id,
+  name: sponsor.name,
+  category: sponsor.category,
+  logo: sponsor.logo,
+  url: sponsor.url,
+  message: sponsor.message,
+  sortOrder: sponsor.sortOrder
+}));
+
 const panels = [
   {
     id: "event",
@@ -62,7 +72,7 @@ const panels = [
     label: "特別協賛・後援",
     title: "特別協賛・後援管理",
     fields: sponsors.map((sponsor) => ({ label: sponsor.name, value: sponsor.category })),
-    json: sponsors
+    json: publicSponsorPreview
   },
   {
     id: "news",

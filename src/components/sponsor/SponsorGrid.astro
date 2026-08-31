@@ -5,30 +5,89 @@ interface Props {
   sponsors: Sponsor[];
 }
 
+type PartnerRankId = "premium" | "gold" | "silver" | "bronze";
+
 const { sponsors } = Astro.props;
-const categoryOrder = ["特別協賛", "後援"] as const;
-const categoryClass: Record<string, string> = {
-  特別協賛: "special-sponsor",
-  後援: "support"
+
+const partnerRanks: Array<{
+  id: PartnerRankId;
+  label: string;
+  amount: number;
+}> = [
+  { id: "premium", label: "PREMIUM PARTNER", amount: 300000 },
+  { id: "gold", label: "GOLD PARTNER", amount: 200000 },
+  { id: "silver", label: "SILVER PARTNER", amount: 100000 },
+  { id: "bronze", label: "BRONZE PARTNER", amount: 50000 }
+];
+
+const getPartnerRankId = (amount?: number): PartnerRankId | null => {
+  const rank = partnerRanks.find((item) => item.amount === amount);
+  return rank?.id ?? null;
 };
 
-const groupedSponsors = categoryOrder
-  .map((category) => ({
-    category,
-    items: sponsors.filter((sponsor) => sponsor.category === category)
-  }))
-  .filter((group) => group.items.length > 0);
+const specialSponsors = sponsors.filter((sponsor) => sponsor.category === "特別協賛");
+const supportSponsors = sponsors.filter((sponsor) => sponsor.category === "後援");
+const rankedSponsors = partnerRanks.map((rank) => ({
+  ...rank,
+  items: specialSponsors.filter((sponsor) => getPartnerRankId(sponsor.amount) === rank.id)
+}));
 ---
 
 <div class="sponsor-groups">
-  {groupedSponsors.map((group) => (
-    <section class="sponsor-group" aria-labelledby={`sponsor-${categoryClass[group.category]}`}>
-      <h3 id={`sponsor-${categoryClass[group.category]}`} class="sponsor-category-title">
-        {group.category}
-      </h3>
-      <div class="sponsor-grid">
-        {group.items.map((sponsor) => (
-          <article class={`sponsor-card ${categoryClass[sponsor.category]}`} data-reveal>
+  <section class="sponsor-group sponsor-section-block" aria-labelledby="sponsor-special-sponsor">
+    <h3 id="sponsor-special-sponsor" class="sponsor-category-title">特別協賛</h3>
+
+    <div class="partner-rank-stack">
+      {rankedSponsors.map((rank) => (
+        <section class={`partner-rank partner-rank-${rank.id}`} aria-labelledby={`partner-rank-${rank.id}`}>
+          <div class="partner-rank-header">
+            <h4 id={`partner-rank-${rank.id}`} class="partner-rank-title">{rank.label}</h4>
+          </div>
+
+          {rank.items.length > 0 ? (
+            <div class={`sponsor-grid partner-grid partner-grid-${rank.id}`}>
+              {rank.items.map((sponsor) => (
+                <article class={`sponsor-card sponsor-card-${rank.id}`} data-reveal>
+                  {sponsor.url ? (
+                    <a href={sponsor.url} target="_blank" rel="noreferrer">
+                      <div class="sponsor-logo">
+                        {sponsor.logo ? (
+                          <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
+                        ) : sponsor.name}
+                      </div>
+                      <p class="sponsor-category">{rank.label}</p>
+                      <h5>{sponsor.name}</h5>
+                      {sponsor.message && <p>{sponsor.message}</p>}
+                    </a>
+                  ) : (
+                    <>
+                      <div class="sponsor-logo">
+                        {sponsor.logo ? (
+                          <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
+                        ) : sponsor.name}
+                      </div>
+                      <p class="sponsor-category">{rank.label}</p>
+                      <h5>{sponsor.name}</h5>
+                      {sponsor.message && <p>{sponsor.message}</p>}
+                    </>
+                  )}
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p class="sponsor-empty" data-reveal>掲載企業は決定次第お知らせします。</p>
+          )}
+        </section>
+      ))}
+    </div>
+  </section>
+
+  {supportSponsors.length > 0 && (
+    <section class="sponsor-group sponsor-section-block sponsor-support-group" aria-labelledby="sponsor-support">
+      <h3 id="sponsor-support" class="sponsor-category-title">後援</h3>
+      <div class="sponsor-grid support-grid">
+        {supportSponsors.map((sponsor) => (
+          <article class="sponsor-card support" data-reveal>
             {sponsor.url ? (
               <a href={sponsor.url} target="_blank" rel="noreferrer">
                 <div class="sponsor-logo">
@@ -56,5 +115,5 @@ const groupedSponsors = categoryOrder
         ))}
       </div>
     </section>
-  ))}
+  )}
 </div>

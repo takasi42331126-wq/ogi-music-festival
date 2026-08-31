@@ -184,14 +184,44 @@ export const EventScheduleVenueSchema = z.object({
   events: z.array(EventScheduleItemSchema)
 });
 
+const sponsorPartnerAmounts = [300000, 200000, 100000, 50000] as const;
+
 export const SponsorSchema = z.object({
   id: z.string(),
   name: z.string(),
   category: z.enum(["特別協賛", "後援"]),
+  amount: z.number().optional(),
   logo: z.string(),
   url: z.string(),
   message: z.string(),
   sortOrder: z.number()
+}).superRefine((sponsor, ctx) => {
+  if (sponsor.category === "特別協賛") {
+    if (typeof sponsor.amount !== "number") {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "特別協賛にはPARTNERランク判定用のamountが必要です。",
+        path: ["amount"]
+      });
+      return;
+    }
+
+    if (!sponsorPartnerAmounts.includes(sponsor.amount as typeof sponsorPartnerAmounts[number])) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "特別協賛のamountは定義済みのPARTNERランク金額にしてください。",
+        path: ["amount"]
+      });
+    }
+  }
+
+  if (sponsor.category === "後援" && typeof sponsor.amount === "number") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "後援にはPARTNERランク判定用のamountを設定しないでください。",
+      path: ["amount"]
+    });
+  }
 });
 
 export const NewsSchema = z.object({
