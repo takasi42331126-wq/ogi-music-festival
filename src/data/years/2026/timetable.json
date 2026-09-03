@@ -21,11 +21,11 @@
     "endTime": "10:20",
     "durationMinutes": 15,
     "stage": "メインステージ",
-    "title": "キッズダンス①",
+    "title": "キッズダンス① Rumino Kids Saga（ルミノキッズサガ）",
     "category": "ダンス",
     "progress": "本番",
     "artistId": "",
-    "note": "Rumino Kids Saga（ルミノキッズサガ）"
+    "note": ""
   },
   {
     "id": "tt-003",
@@ -35,11 +35,11 @@
     "endTime": "10:30",
     "durationMinutes": 10,
     "stage": "メインステージ",
-    "title": "キッズダンス②",
+    "title": "キッズダンス② OGP",
     "category": "ダンス",
     "progress": "本番",
     "artistId": "",
-    "note": "OGP"
+    "note": ""
   },
   {
     "id": "tt-004",
@@ -49,11 +49,11 @@
     "endTime": "10:50",
     "durationMinutes": 20,
     "stage": "メインステージ",
-    "title": "キッズダンス③",
+    "title": "キッズダンス③ ゆめりあキッズチア",
     "category": "ダンス",
     "progress": "本番",
     "artistId": "",
-    "note": "ゆめりあキッズチア"
+    "note": ""
   },
   {
     "id": "tt-005",
@@ -63,11 +63,11 @@
     "endTime": "11:20",
     "durationMinutes": 30,
     "stage": "メインステージ",
-    "title": "キッズダンス④",
+    "title": "キッズダンス④ emanation crew",
     "category": "ダンス",
     "progress": "本番",
     "artistId": "",
-    "note": "emanation crew"
+    "note": ""
   },
   {
     "id": "tt-006",
@@ -77,11 +77,11 @@
     "endTime": "11:50",
     "durationMinutes": 30,
     "stage": "メインステージ",
-    "title": "キッズダンス⑤",
+    "title": "キッズダンス⑤ DANCE ACADEMY KALDIA",
     "category": "ダンス",
     "progress": "本番",
     "artistId": "",
-    "note": "DANCE ACADEMY KALDIA"
+    "note": ""
   },
   {
     "id": "tt-007",
