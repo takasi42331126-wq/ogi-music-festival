@@ -32,12 +32,15 @@ const isPending = (value: string) => value === "調整中";
       <div class="event-schedule-grid">
         {venue.events.map((item) => {
           const hasSessions = item.sessions.length > 0;
+          const feeLabel = item.feeText ? `参加費：${item.feeText}` : statusLabels[item.status];
+          const feeStatusClass = item.feeText ? "event-schedule-status-fee" : `event-schedule-status-${item.status}`;
+          const isFeePending = item.feeText.includes("調整中");
           return (
             <article class="event-schedule-card">
               <div class="event-schedule-card-header">
                 <span class="event-category">{item.category}</span>
-                <span class={`event-schedule-status event-schedule-status-${item.status}`}>
-                  {statusLabels[item.status]}
+                <span class:list={["event-schedule-status", feeStatusClass, { "event-schedule-status-pending": isFeePending }]}>
+                  {feeLabel}
                 </span>
               </div>
               <h4>{item.title}</h4>

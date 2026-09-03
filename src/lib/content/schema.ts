@@ -166,6 +166,7 @@ export const EventScheduleItemSchema = z.object({
   description: z.string(),
   timeText: z.string(),
   participationText: z.string(),
+  feeText: z.string(),
   applicationId: z.string(),
   formUrl: z.string().url().or(z.literal("")),
   status: z.enum(["scheduled", "adjusting", "open", "closed"]),

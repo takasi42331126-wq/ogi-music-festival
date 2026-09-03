@@ -1060,10 +1060,12 @@ select {
 .event-schedule-status {
   display: inline-flex;
   align-items: center;
+  max-width: 100%;
   border-radius: var(--radius-pill);
   font-size: 0.75rem;
   font-weight: 900;
   line-height: 1.2;
+  overflow-wrap: anywhere;
   padding: 5px 9px;
 }
 
@@ -1080,6 +1082,16 @@ select {
 .event-schedule-status-open {
   background: #fff3cf;
   color: var(--color-leaf-dark);
+}
+
+.event-schedule-status-fee {
+  background: #fff3cf;
+  color: var(--color-leaf-dark);
+}
+
+.event-schedule-status-pending {
+  background: #edf1ee;
+  color: var(--color-muted);
 }
 
 .event-schedule-status-closed {
