@@ -11,8 +11,8 @@
     "receptionPeriod": "募集締切：2026年8月30日（日）",
     "formUrl": "https://forms.gle/JvvNQYqfJwLuFLqX7",
     "buttonLabel": "申し込みフォームはこちら",
-    "status": "open",
-    "sortOrder": 1
+    "status": "closed",
+    "sortOrder": 4
   },
   {
     "id": "kitchen-car-application-2026",
@@ -26,8 +26,8 @@
     "receptionPeriod": "募集締切：2026年8月30日（日）",
     "formUrl": "https://forms.gle/i1TRbKdgrpE1UE986",
     "buttonLabel": "申し込みフォームはこちら",
-    "status": "open",
-    "sortOrder": 2
+    "status": "closed",
+    "sortOrder": 5
   },
   {
     "id": "ear-acupoint-therapy-2026",
@@ -42,7 +42,7 @@
     "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSfKvztNLvNX2TIWRpWTIxoeFxbwl58WhgBgOyMHv_65YsN8Yg/viewform?usp=dialog",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 3
+    "sortOrder": 1
   },
   {
     "id": "summer-pottery-class-2026",
@@ -57,7 +57,7 @@
     "formUrl": "https://forms.gle/2Vvk1ngWk3JA9tc76",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 4
+    "sortOrder": 2
   },
   {
     "id": "ogi-park-event-application-2026",
@@ -72,6 +72,6 @@
     "formUrl": "https://forms.gle/sCBZkiPDZqQ2iPLb8",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 5
+    "sortOrder": 3
   }
 ]
