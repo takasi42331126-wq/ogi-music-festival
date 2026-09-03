@@ -5,9 +5,10 @@ import { getArtistById } from "@lib/content/repository";
 interface Props {
   items: TimetableItem[];
   stages: string[];
+  collapseFromTime?: string;
 }
 
-const { items, stages } = Astro.props;
+const { items, stages, collapseFromTime } = Astro.props;
 const grouped = stages.map((stage) => ({
   stage,
   items: items
@@ -18,6 +19,17 @@ const grouped = stages.map((stage) => ({
       )
     )
 }));
+
+const getMeta = (item: TimetableItem) => {
+  const artist = item.artistId ? getArtistById(item.artistId) : undefined;
+
+  return Array.from(
+    new Set([artist?.role, item.category, item.progress, item.note].filter((label): label is string => Boolean(label)))
+  );
+};
+
+const shouldCollapse = (item: TimetableItem) =>
+  typeof collapseFromTime === "string" && item.startTime >= collapseFromTime;
 ---
 
 <div class="timetable">
@@ -25,11 +37,8 @@ const grouped = stages.map((stage) => ({
     <section class="stage-block" aria-labelledby={`${stage}-heading`} data-reveal>
       <h3 id={`${stage}-heading`} class="stage-title">{stage}</h3>
       <ul class="time-list">
-        {items.map((item) => {
-          const artist = item.artistId ? getArtistById(item.artistId) : undefined;
-          const meta = Array.from(
-            new Set([artist?.role, item.category, item.progress, item.note].filter((label): label is string => Boolean(label)))
-          );
+        {items.filter((item) => !shouldCollapse(item)).map((item) => {
+          const meta = getMeta(item);
           return (
             <li class="time-item">
               <div class="time-range">
@@ -48,6 +57,38 @@ const grouped = stages.map((stage) => ({
           );
         })}
       </ul>
+
+      {collapseFromTime && items.some(shouldCollapse) && (
+        <details class="timetable-more">
+          <summary class="timetable-more-summary">
+            <span class="timetable-more-text timetable-more-text-closed">続きを見る</span>
+            <span class="timetable-more-text timetable-more-text-open">閉じる</span>
+            <span class="timetable-more-subtext">{collapseFromTime}以降のスケジュール</span>
+          </summary>
+
+          <ul class="time-list time-list-collapsed">
+            {items.filter(shouldCollapse).map((item) => {
+              const meta = getMeta(item);
+              return (
+                <li class="time-item">
+                  <div class="time-range">
+                    <span>{item.startTime} - {item.endTime}</span>
+                    {typeof item.durationMinutes === "number" && <span class="time-duration">{item.durationMinutes}分</span>}
+                  </div>
+                  <div>
+                    <span class="time-title">{item.title}</span>
+                    {meta.length > 0 && (
+                      <div class="time-meta">
+                        {meta.map((label) => <span class="time-note">{label}</span>)}
+                      </div>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </details>
+      )}
     </section>
   ))}
 </div>

@@ -38,7 +38,7 @@ import { eventScheduleVenues, stages, timetable } from "@lib/content/repository"
               現在公開中のタイムスケジュールをそのまま掲載しています。ステージ進行は変更になる場合があります。
             </p>
           </div>
-          <TimetableList items={timetable} stages={stages} />
+          <TimetableList items={timetable} stages={stages} collapseFromTime="12:00" />
         </section>
 
         <EventScheduleList venues={eventScheduleVenues} />
