@@ -1537,6 +1537,13 @@ select {
   object-fit: contain;
 }
 
+.sponsor-logo-text {
+  margin: 0;
+  padding: 18px;
+  color: var(--color-leaf-dark);
+  font-size: 1.16rem;
+}
+
 .sponsor-card-premium .sponsor-logo img {
   width: min(100%, 760px);
   max-height: 150px;

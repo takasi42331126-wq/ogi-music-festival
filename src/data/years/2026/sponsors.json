@@ -27,7 +27,47 @@
     "logo": "/assets/years/2026/sponsors/craft-on-tight.webp",
     "url": "",
     "message": "",
+    "sortOrder": 4
+  },
+  {
+    "id": "special-sponsor-004",
+    "name": "株式会社岩松自動車",
+    "category": "特別協賛",
+    "amount": 100000,
+    "logo": "/assets/years/2026/sponsors/iwamatsu-jidosha-tight.webp",
+    "url": "",
+    "message": "",
     "sortOrder": 3
+  },
+  {
+    "id": "special-sponsor-005",
+    "name": "有限会社山輝開発",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/yamaki-kaihatsu-tight.webp",
+    "url": "",
+    "message": "",
+    "sortOrder": 5
+  },
+  {
+    "id": "special-sponsor-006",
+    "name": "株式会社村岡総本舗",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/muraoka-sohonpo-tight.webp",
+    "url": "",
+    "message": "",
+    "sortOrder": 6
+  },
+  {
+    "id": "special-sponsor-007",
+    "name": "株式会社田中丸設備",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 7
   },
   {
     "id": "support-001",
@@ -36,6 +76,6 @@
     "logo": "",
     "url": "",
     "message": "音楽祭の開催を後援しています。",
-    "sortOrder": 4
+    "sortOrder": 100
   }
 ]

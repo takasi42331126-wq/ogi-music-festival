@@ -54,24 +54,38 @@ const rankedSponsors = partnerRanks.map((rank) => ({
                 <article class={`sponsor-card sponsor-card-${rank.id}`} data-reveal>
                   {sponsor.url ? (
                     <a href={sponsor.url} target="_blank" rel="noreferrer">
-                      <div class="sponsor-logo">
-                        {sponsor.logo ? (
+                      {sponsor.logo ? (
+                        <>
+                          <div class="sponsor-logo">
                           <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
-                        ) : sponsor.name}
-                      </div>
-                      <p class="sponsor-category">{rank.label}</p>
-                      <h5>{sponsor.name}</h5>
+                          </div>
+                          <p class="sponsor-category">{rank.label}</p>
+                          <h5>{sponsor.name}</h5>
+                        </>
+                      ) : (
+                        <>
+                          <h5 class="sponsor-logo sponsor-logo-text">{sponsor.name}</h5>
+                          <p class="sponsor-category">{rank.label}</p>
+                        </>
+                      )}
                       {sponsor.message && <p>{sponsor.message}</p>}
                     </a>
                   ) : (
                     <>
-                      <div class="sponsor-logo">
-                        {sponsor.logo ? (
+                      {sponsor.logo ? (
+                        <>
+                          <div class="sponsor-logo">
                           <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
-                        ) : sponsor.name}
-                      </div>
-                      <p class="sponsor-category">{rank.label}</p>
-                      <h5>{sponsor.name}</h5>
+                          </div>
+                          <p class="sponsor-category">{rank.label}</p>
+                          <h5>{sponsor.name}</h5>
+                        </>
+                      ) : (
+                        <>
+                          <h5 class="sponsor-logo sponsor-logo-text">{sponsor.name}</h5>
+                          <p class="sponsor-category">{rank.label}</p>
+                        </>
+                      )}
                       {sponsor.message && <p>{sponsor.message}</p>}
                     </>
                   )}
@@ -94,24 +108,38 @@ const rankedSponsors = partnerRanks.map((rank) => ({
           <article class="sponsor-card support" data-reveal>
             {sponsor.url ? (
               <a href={sponsor.url} target="_blank" rel="noreferrer">
-                <div class="sponsor-logo">
-                  {sponsor.logo ? (
+                {sponsor.logo ? (
+                  <>
+                    <div class="sponsor-logo">
                     <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
-                  ) : sponsor.name}
-                </div>
-                <p class="sponsor-category">{sponsor.category}</p>
-                <h4>{sponsor.name}</h4>
+                    </div>
+                    <p class="sponsor-category">{sponsor.category}</p>
+                    <h4>{sponsor.name}</h4>
+                  </>
+                ) : (
+                  <>
+                    <h4 class="sponsor-logo sponsor-logo-text">{sponsor.name}</h4>
+                    <p class="sponsor-category">{sponsor.category}</p>
+                  </>
+                )}
                 {sponsor.message && <p>{sponsor.message}</p>}
               </a>
             ) : (
               <>
-                <div class="sponsor-logo">
-                  {sponsor.logo ? (
+                {sponsor.logo ? (
+                  <>
+                    <div class="sponsor-logo">
                     <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
-                  ) : sponsor.name}
-                </div>
-                <p class="sponsor-category">{sponsor.category}</p>
-                <h4>{sponsor.name}</h4>
+                    </div>
+                    <p class="sponsor-category">{sponsor.category}</p>
+                    <h4>{sponsor.name}</h4>
+                  </>
+                ) : (
+                  <>
+                    <h4 class="sponsor-logo sponsor-logo-text">{sponsor.name}</h4>
+                    <p class="sponsor-category">{sponsor.category}</p>
+                  </>
+                )}
                 {sponsor.message && <p>{sponsor.message}</p>}
               </>
             )}
