@@ -6,6 +6,7 @@
     "genre": "音楽活動 / MC",
     "profile": "鹿児島県薩摩川内市出身。佐賀大学文化教育学部卒業。現在はソロ名義での音楽活動の他、佐賀県を中心にローカルタレントとしてテレビ・ラジオ・イベントMCとして活動中。",
     "image": "/assets/years/2026/artists/tokumaru-hideki.webp",
+    "imageFit": "cover",
     "stage": "メインステージ",
     "links": {
       "official": "",
@@ -21,6 +22,7 @@
     "genre": "タレント / MC / モデル",
     "profile": "佐賀を中心に全国でタレント、MC、モデルとして活動中。MCの講師やSNSの講師としても活動している。",
     "image": "/assets/years/2026/artists/yamaguchi-anzu.webp",
+    "imageFit": "cover",
     "stage": "メインステージ",
     "links": {
       "official": "",
@@ -36,6 +38,7 @@
     "genre": "シンガーソングライター",
     "profile": "佐賀県出身。\nシンガーソングライター・俳優。\n\n「誰かの人生を少しでも前向きにできる作品を届けたい」という想いを胸に、音楽を軸としながら俳優、映像制作など幅広い表現活動を行っている。\n\nシンガーソングライターとして、「情報ライブ ミヤネ屋」エンディングテーマ「実り」「ポンコツ」「ivory」、YouTubeチャンネル「『釣りよかでしょう。』のテーマ」、映画『いつか、いつも……いつまでも。』劇中歌「シャボンと飴」、そして「佐賀よかでしょう。」テーマソング「デタラメロディ」などを手がける。\n\n俳優としては、映画『いつか、いつも……いつまでも。』、テレビ朝日『相棒 season22』、24時間テレビ ドラマスペシャル『トットの欠落青春期』などに出演。\n\n近年は、短編映画『愛憎』で企画・脚本・監督・編集を担当するほか、自身のミュージックビデオの企画・演出・制作にも携わるなど、表現の幅を広げ続けている。\n\n音楽、俳優、映像──そのすべてを通して、まだ誰も見たことのない景色を届けたい。\n\nワクワクする方へ、ただただまっすぐに。\n\nジャンルにとらわれることなく、江頭勇哉らしい新しいエンターテインメントを創り続けている。",
     "image": "/assets/years/2026/artists/egashira-yuya.webp",
+    "imageFit": "cover",
     "stage": "メインステージ",
     "links": {
       "official": "",
@@ -51,6 +54,7 @@
     "genre": "シンガーソングライター",
     "profile": "小城市出身、シンガーソングライター。アーティスト活動を軸に、ボーカルコーチ、CMソング制作、いのちの講演など幅広く活動。ライフスタイル雑貨店のオーナーという一面も持つ。",
     "image": "/assets/years/2026/artists/nozoe-kazuki.webp",
+    "imageFit": "cover",
     "stage": "メインステージ",
     "links": {
       "official": "",
@@ -58,5 +62,227 @@
     },
     "sortOrder": 4,
     "pickup": true
+  },
+  {
+    "id": "dance-rumino-kids-saga",
+    "name": "Rumino Kids Saga（ルミノキッズサガ）",
+    "role": "ダンス",
+    "genre": "ダンス",
+    "profile": "",
+    "image": "/assets/years/2026/artists/dance-rumino-kids-saga.webp",
+    "imageFit": "contain",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 10,
+    "pickup": false
+  },
+  {
+    "id": "dance-ogp",
+    "name": "OGP",
+    "role": "ダンス",
+    "genre": "ダンス",
+    "profile": "",
+    "image": "/assets/years/2026/artists/dance-ogp.webp",
+    "imageFit": "cover",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 11,
+    "pickup": false
+  },
+  {
+    "id": "dance-yumeria-kids-cheer",
+    "name": "ゆめりあキッズチア",
+    "role": "ダンス",
+    "genre": "チアダンス",
+    "profile": "",
+    "image": "/assets/years/2026/artists/dance-yumeria-kids-cheer.webp",
+    "imageFit": "cover",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 12,
+    "pickup": false
+  },
+  {
+    "id": "dance-emanation-crew",
+    "name": "emanation crew",
+    "role": "ダンス",
+    "genre": "ダンス",
+    "profile": "",
+    "image": "/assets/years/2026/artists/dance-emanation-crew.webp",
+    "imageFit": "cover",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 13,
+    "pickup": false
+  },
+  {
+    "id": "dance-academy-kaldia",
+    "name": "DANCE ACADEMY KALDIA",
+    "role": "ダンス",
+    "genre": "ダンス",
+    "profile": "",
+    "image": "/assets/years/2026/artists/dance-kaldia.webp",
+    "imageFit": "contain",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 14,
+    "pickup": false
+  },
+  {
+    "id": "band-identy",
+    "name": "あいでんてぃてぃ",
+    "role": "バンド",
+    "genre": "バンド",
+    "profile": "",
+    "image": "/assets/years/2026/artists/band-identy.webp",
+    "imageFit": "contain",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 20,
+    "pickup": false
+  },
+  {
+    "id": "band-mizuki",
+    "name": "みづき",
+    "role": "バンド",
+    "genre": "弾き語り",
+    "profile": "",
+    "image": "/assets/years/2026/artists/band-mizuki.webp",
+    "imageFit": "cover",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 21,
+    "pickup": false
+  },
+  {
+    "id": "band-move-over",
+    "name": "move over",
+    "role": "バンド",
+    "genre": "バンド",
+    "profile": "",
+    "image": "/assets/years/2026/artists/band-move-over.webp",
+    "imageFit": "cover",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 22,
+    "pickup": false
+  },
+  {
+    "id": "band-go-luck",
+    "name": "Go Luck",
+    "role": "バンド",
+    "genre": "バンド",
+    "profile": "",
+    "image": "",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 23,
+    "pickup": false
+  },
+  {
+    "id": "band-hit",
+    "name": "HIT",
+    "role": "バンド",
+    "genre": "バンド",
+    "profile": "",
+    "image": "/assets/years/2026/artists/band-hit.webp",
+    "imageFit": "cover",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 24,
+    "pickup": false
+  },
+  {
+    "id": "band-love-noize",
+    "name": "Love noize",
+    "role": "バンド",
+    "genre": "バンド",
+    "profile": "",
+    "image": "/assets/years/2026/artists/band-love-noize.webp",
+    "imageFit": "contain",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 25,
+    "pickup": false
+  },
+  {
+    "id": "band-yuikaji",
+    "name": "ゆいかじ（結風）",
+    "role": "バンド",
+    "genre": "バンド",
+    "profile": "",
+    "image": "/assets/years/2026/artists/band-yuikaji.webp",
+    "imageFit": "cover",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 26,
+    "pickup": false
+  },
+  {
+    "id": "band-music-like-club",
+    "name": "music・like・club",
+    "role": "バンド",
+    "genre": "バンド",
+    "profile": "",
+    "image": "",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 27,
+    "pickup": false
+  },
+  {
+    "id": "band-bigme",
+    "name": "BigMe",
+    "role": "バンド",
+    "genre": "バンド",
+    "profile": "",
+    "image": "/assets/years/2026/artists/band-bigme.webp",
+    "imageFit": "cover",
+    "stage": "メインステージ",
+    "links": {
+      "official": "",
+      "instagram": ""
+    },
+    "sortOrder": 28,
+    "pickup": false
   }
 ]

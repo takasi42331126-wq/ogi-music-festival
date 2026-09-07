@@ -102,6 +102,7 @@ export const ArtistSchema = z.object({
   genre: z.string(),
   profile: z.string(),
   image: z.string(),
+  imageFit: z.enum(["cover", "contain"]).optional(),
   stage: z.string(),
   links: z.object({
     official: z.string(),

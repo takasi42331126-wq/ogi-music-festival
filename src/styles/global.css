@@ -629,6 +629,16 @@ select {
   gap: 18px;
 }
 
+.artist-section-stack {
+  display: grid;
+  gap: 46px;
+}
+
+.artist-section + .artist-section {
+  border-top: 1px solid var(--color-line);
+  padding-top: 40px;
+}
+
 .artist-card,
 .news-card,
 .gallery-card,
@@ -676,6 +686,28 @@ select {
   object-position: center top;
 }
 
+.artist-visual-contain {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #fffdf8, #f7fbf3);
+  padding: 22px;
+}
+
+.artist-visual-contain::after {
+  display: none;
+}
+
+.artist-visual-contain figcaption {
+  top: 12px;
+  bottom: auto;
+  background: rgba(255, 253, 248, 0.94);
+}
+
+.artist-visual-contain img {
+  object-fit: contain;
+  object-position: center;
+}
+
 .gallery-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
@@ -696,8 +728,26 @@ select {
   transform: scale(1.045);
 }
 
+.artist-card:hover .artist-visual-contain img {
+  transform: scale(1.025);
+}
+
 .artist-card img {
   transition: transform 480ms ease;
+}
+
+.artist-card-no-image {
+  display: grid;
+  min-height: 156px;
+  background:
+    linear-gradient(135deg, rgba(255, 243, 207, 0.72), rgba(242, 248, 239, 0.9)),
+    #fff;
+}
+
+.artist-card-no-image .artist-card-body {
+  display: grid;
+  align-content: center;
+  gap: 8px;
 }
 
 .artist-card-body,
@@ -2607,6 +2657,22 @@ select {
 
   .artist-grid {
     gap: 16px;
+  }
+
+  .artist-section-stack {
+    gap: 34px;
+  }
+
+  .artist-section + .artist-section {
+    padding-top: 30px;
+  }
+
+  .artist-visual-contain {
+    padding: 16px;
+  }
+
+  .artist-card-no-image {
+    min-height: 132px;
   }
 
   .artist-card-body {

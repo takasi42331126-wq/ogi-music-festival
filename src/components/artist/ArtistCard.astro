@@ -7,26 +7,34 @@ interface Props {
 
 const { artist } = Astro.props;
 const profileCollapseThreshold = 70;
-const isLongProfile = artist.profile.length > profileCollapseThreshold || artist.profile.includes("\n");
+const hasProfile = artist.profile.trim().length > 0;
+const isLongProfile = hasProfile && (artist.profile.length > profileCollapseThreshold || artist.profile.includes("\n"));
 const profileId = `${artist.id}-profile`;
+const hasImage = artist.image.trim().length > 0;
+const imageFit = artist.imageFit ?? "cover";
+const imageLabel = imageFit === "contain" ? "ロゴ" : "写真";
 ---
 
-<article class="artist-card" data-reveal>
-  <figure class="artist-visual">
-    <img
-      src={artist.image}
-      alt={`${artist.name}の写真`}
-      width="720"
-      height="720"
-      loading="lazy"
-      decoding="async"
-    />
-    <figcaption>{artist.stage}</figcaption>
-  </figure>
+<article class:list={["artist-card", { "artist-card-no-image": !hasImage }]} data-reveal>
+  {hasImage && (
+    <figure class:list={["artist-visual", `artist-visual-${imageFit}`]}>
+      <img
+        src={artist.image}
+        alt={`${artist.name}の${imageLabel}`}
+        width="720"
+        height="720"
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption>{artist.stage}</figcaption>
+    </figure>
+  )}
   <div class="artist-card-body">
     <div class="artist-meta">{artist.role}</div>
     <h3>{artist.name}</h3>
-    <p id={profileId} class={`artist-profile${isLongProfile ? " is-collapsible" : ""}`} data-artist-profile>{artist.profile}</p>
+    {hasProfile && (
+      <p id={profileId} class={`artist-profile${isLongProfile ? " is-collapsible" : ""}`} data-artist-profile>{artist.profile}</p>
+    )}
     {isLongProfile && (
       <button
         class="artist-profile-toggle"
