@@ -209,8 +209,8 @@
         "timeText": "調整中",
         "participationText": "調整中",
         "feeText": "詳細調整中",
-        "applicationId": "",
-        "formUrl": "",
+        "applicationId": "judo-experience-2026",
+        "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdXp3ZxOqsSPF5EPnIG862uWrNecdlgF7JSMRjpj2M9Ov8SOg/viewform?usp=publish-editor",
         "status": "adjusting",
         "sortOrder": 2,
         "sessions": []
@@ -287,8 +287,8 @@
         "timeText": "調整中",
         "participationText": "調整中",
         "feeText": "詳細調整中",
-        "applicationId": "",
-        "formUrl": "",
+        "applicationId": "basketball-experience-2026",
+        "formUrl": "https://forms.gle/jcuSyMYKkyS8qpGa7",
         "status": "adjusting",
         "sortOrder": 3,
         "sessions": []

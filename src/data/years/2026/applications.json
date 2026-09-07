@@ -150,6 +150,36 @@
     "sortOrder": 10
   },
   {
+    "id": "basketball-experience-2026",
+    "title": "バスケ体験",
+    "label": "桜岡小学校",
+    "dateTimeText": "2026年9月22日（火・祝） 時間調整中",
+    "venue": "桜岡小学校",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町166",
+    "description": "桜岡小学校で開催するバスケ体験の参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://forms.gle/jcuSyMYKkyS8qpGa7",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 11
+  },
+  {
+    "id": "judo-experience-2026",
+    "title": "柔道体験",
+    "label": "小城高校",
+    "dateTimeText": "2026年9月22日（火・祝） 時間調整中",
+    "venue": "小城高校",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町176",
+    "description": "小城高校で開催する柔道体験の参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdXp3ZxOqsSPF5EPnIG862uWrNecdlgF7JSMRjpj2M9Ov8SOg/viewform?usp=publish-editor",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 12
+  },
+  {
     "id": "tent-booth-application-2026",
     "title": "テントブース出店申込",
     "label": "小城公園",
@@ -162,7 +192,7 @@
     "formUrl": "https://forms.gle/JvvNQYqfJwLuFLqX7",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "closed",
-    "sortOrder": 11
+    "sortOrder": 13
   },
   {
     "id": "kitchen-car-application-2026",
@@ -177,6 +207,6 @@
     "formUrl": "https://forms.gle/i1TRbKdgrpE1UE986",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "closed",
-    "sortOrder": 12
+    "sortOrder": 14
   }
 ]
