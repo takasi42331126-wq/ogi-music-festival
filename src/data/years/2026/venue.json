@@ -93,7 +93,7 @@
     {
       "id": "yumeplat-ogi",
       "name": "ゆめぷらっと小城",
-      "description": "ゆめぷらっと小城では、館内の各会場でさまざまなイベントを開催します。",
+      "description": "ゆめぷらっと小城では、館内・屋外の各会場でさまざまなイベントを開催します。",
       "sourceName": "館内マップ：ゆめぷらっと小城公式サイト",
       "sourceUrl": "https://yumeplatogi.com/floor/",
       "sortOrder": 1,
@@ -110,10 +110,10 @@
           "sortOrder": 1,
           "markers": [
             {
-              "id": "yume-marche",
+              "id": "marche-gallery",
               "markerLabel": "A",
               "title": "マルシェ",
-              "room": "1F ギャラリー",
+              "room": "ギャラリー",
               "scheduleEventId": "yume-marche",
               "position": {
                 "x": 44.4,
@@ -122,16 +122,40 @@
               "sortOrder": 1
             },
             {
-              "id": "yokan-carving",
+              "id": "marche-ogikuro",
               "markerLabel": "B",
-              "title": "羊羹くりぬき体験",
-              "room": "1F クッキングスタジオ",
-              "scheduleEventId": "yokan-carving",
+              "title": "マルシェ",
+              "room": "小城空路",
+              "scheduleEventId": "yume-marche",
               "position": {
-                "x": 27.1,
-                "y": 58.4
+                "x": 43.7,
+                "y": 34.2
               },
               "sortOrder": 2
+            },
+            {
+              "id": "kitchen-car-roof-plaza",
+              "markerLabel": "C",
+              "title": "キッチンカー",
+              "room": "屋根下広場",
+              "scheduleEventId": "kitchen-car",
+              "position": {
+                "x": 26.9,
+                "y": 83.6
+              },
+              "sortOrder": 3
+            },
+            {
+              "id": "carpenter-experience",
+              "markerLabel": "D",
+              "title": "大工体験",
+              "room": "1F 研修室",
+              "scheduleEventId": "carpenter-experience",
+              "position": {
+                "x": 26.9,
+                "y": 47.2
+              },
+              "sortOrder": 4
             }
           ]
         },
@@ -147,20 +171,32 @@
           "sortOrder": 2,
           "markers": [
             {
-              "id": "ogi-taiko",
-              "markerLabel": "C",
-              "title": "小城太鼓（体験会・フィナーレ）",
+              "id": "donald-mcdonald-show",
+              "markerLabel": "E",
+              "title": "ドナルド・マクドナルドショー",
               "room": "2F 天山ホール",
-              "scheduleEventId": "ogi-taiko",
+              "scheduleEventId": "donald-mcdonald-show",
               "position": {
-                "x": 64.8,
-                "y": 52.4
+                "x": 62.5,
+                "y": 49.6
               },
               "sortOrder": 1
             },
             {
+              "id": "ogi-taiko",
+              "markerLabel": "F",
+              "title": "小城太鼓（体験会・フィナーレ）",
+              "room": "2F 天山ホール",
+              "scheduleEventId": "ogi-taiko",
+              "position": {
+                "x": 66.8,
+                "y": 55.8
+              },
+              "sortOrder": 2
+            },
+            {
               "id": "planting-class",
-              "markerLabel": "D",
+              "markerLabel": "G",
               "title": "寄せ植え教室",
               "room": "2F 会議室1",
               "scheduleEventId": "planting-class",
@@ -168,43 +204,104 @@
                 "x": 23.5,
                 "y": 21.6
               },
-              "sortOrder": 2
+              "sortOrder": 3
             },
             {
               "id": "pottery-class",
-              "markerLabel": "E",
-              "title": "焼き物教室",
+              "markerLabel": "H",
+              "title": "夏の陶芸教室",
               "room": "2F 会議室2",
               "scheduleEventId": "pottery-class",
               "position": {
                 "x": 31.5,
                 "y": 21.6
               },
-              "sortOrder": 3
+              "sortOrder": 4
+            },
+            {
+              "id": "kids-nail-workshop",
+              "markerLabel": "I",
+              "title": "キッズネイルワークショップ",
+              "room": "2F 会議室3",
+              "scheduleEventId": "kids-nail-workshop",
+              "position": {
+                "x": 23.5,
+                "y": 34.7
+              },
+              "sortOrder": 5
             },
             {
               "id": "ear-acupoint-experience",
-              "markerLabel": "F",
+              "markerLabel": "J",
               "title": "耳つぼ体験",
               "room": "2F 会議室4",
               "scheduleEventId": "ear-acupoint-experience",
               "position": {
-                "x": 26.8,
-                "y": 34.2
+                "x": 31.5,
+                "y": 34.7
               },
-              "sortOrder": 4
+              "sortOrder": 6
             },
             {
               "id": "calligraphy-experience",
-              "markerLabel": "G",
-              "title": "書道体験",
+              "markerLabel": "K",
+              "title": "書道体験（体験・パフォーマンス）",
               "room": "2F ラウンジ",
               "scheduleEventId": "calligraphy-experience",
               "position": {
-                "x": 42.8,
-                "y": 29.1
+                "x": 43.0,
+                "y": 31.0
               },
-              "sortOrder": 5
+              "sortOrder": 7
+            },
+            {
+              "id": "ar-game-photo-experience",
+              "markerLabel": "L",
+              "title": "ARゲーム体験＆写真再生体験",
+              "room": "おぎぽーと",
+              "scheduleEventId": "ar-game-photo-experience",
+              "position": {
+                "x": 27.2,
+                "y": 70.6
+              },
+              "sortOrder": 8
+            }
+          ]
+        },
+        {
+          "id": "yumeplat-ogi-3f",
+          "label": "3F",
+          "title": "3F 館内マップ",
+          "mapImage": "/assets/years/2026/maps/yumeplat-3f.webp",
+          "mapAlt": "ゆめぷらっと小城 3F 館内マップ",
+          "sourceUrl": "https://yumeplatogi.com/floor/floor3f/",
+          "width": 1500,
+          "height": 1654,
+          "sortOrder": 3,
+          "markers": [
+            {
+              "id": "kyudo-experience",
+              "markerLabel": "M",
+              "title": "弓道体験",
+              "room": "3階会議室5",
+              "scheduleEventId": "kyudo-experience",
+              "position": {
+                "x": 27.2,
+                "y": 57.0
+              },
+              "sortOrder": 1
+            },
+            {
+              "id": "saga-industrial-technology-exhibit",
+              "markerLabel": "N",
+              "title": "佐賀県立産業技術学院（展示）",
+              "room": "3階会議室5",
+              "scheduleEventId": "taku-industrial-academy-exhibit",
+              "position": {
+                "x": 31.3,
+                "y": 57.0
+              },
+              "sortOrder": 2
             }
           ]
         }
