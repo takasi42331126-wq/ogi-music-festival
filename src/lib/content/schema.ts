@@ -281,19 +281,21 @@ export const VenueFloorMapSchema = z.object({
   title: z.string(),
   mapImage: z.string(),
   mapAlt: z.string(),
-  sourceUrl: z.string().url(),
+  sourceUrl: z.string().url().optional(),
   width: z.number(),
   height: z.number(),
   sortOrder: z.number(),
+  showMarkers: z.boolean().optional(),
   markers: z.array(VenueFloorMarkerSchema)
 });
 
 export const VenueEventMapSchema = z.object({
   id: z.string(),
   name: z.string(),
+  eyebrow: z.string().optional(),
   description: z.string(),
   sourceName: z.string(),
-  sourceUrl: z.string().url(),
+  sourceUrl: z.string().url().optional(),
   sortOrder: z.number(),
   floors: z.array(VenueFloorMapSchema)
 });

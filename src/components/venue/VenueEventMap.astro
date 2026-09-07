@@ -14,7 +14,7 @@ const sortedMaps = [...maps].sort((a, b) => a.sortOrder - b.sortOrder);
   <section class="section yumeplat-map-section">
     <div class="section-inner">
       <SectionHeader
-        eyebrow="Yume Plat Ogi"
+        eyebrow={map.eyebrow ?? "Venue Map"}
         title={`${map.name} 会場マップ`}
         lead={map.description}
       />
@@ -30,7 +30,9 @@ const sortedMaps = [...maps].sort((a, b) => a.sortOrder - b.sortOrder);
                   <span class="status-pill">{floor.label}</span>
                   <h3>{floor.title}</h3>
                 </div>
-                <a href={floor.sourceUrl} target="_blank" rel="noopener noreferrer">公式フロア案内を見る</a>
+                {floor.sourceUrl && (
+                  <a href={floor.sourceUrl} target="_blank" rel="noopener noreferrer">公式フロア案内を見る</a>
+                )}
               </div>
 
               <button
@@ -48,7 +50,7 @@ const sortedMaps = [...maps].sort((a, b) => a.sortOrder - b.sortOrder);
                     loading="lazy"
                     decoding="async"
                   />
-                  {markers.map((marker) => (
+                  {floor.showMarkers !== false && markers.map((marker) => (
                     <span
                       class="floor-map-marker"
                       style={`left: ${marker.position.x}%; top: ${marker.position.y}%;`}
@@ -74,7 +76,10 @@ const sortedMaps = [...maps].sort((a, b) => a.sortOrder - b.sortOrder);
               </div>
 
               <p class="floor-map-source">
-                {map.sourceName}（<a href={map.sourceUrl} target="_blank" rel="noopener noreferrer">公式サイト</a>）
+                {map.sourceName}
+                {map.sourceUrl && (
+                  <>（<a href={map.sourceUrl} target="_blank" rel="noopener noreferrer">公式サイト</a>）</>
+                )}
               </p>
 
               <dialog class="map-lightbox" id={dialogId} data-map-dialog>
@@ -91,7 +96,7 @@ const sortedMaps = [...maps].sort((a, b) => a.sortOrder - b.sortOrder);
                       loading="lazy"
                       decoding="async"
                     />
-                    {markers.map((marker) => (
+                    {floor.showMarkers !== false && markers.map((marker) => (
                       <span
                         class="floor-map-marker"
                         style={`left: ${marker.position.x}%; top: ${marker.position.y}%;`}

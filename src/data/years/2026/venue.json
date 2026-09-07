@@ -93,6 +93,7 @@
     {
       "id": "yumeplat-ogi",
       "name": "ゆめぷらっと小城",
+      "eyebrow": "Yume Plat Ogi",
       "description": "ゆめぷらっと小城では、館内・屋外の各会場でさまざまなイベントを開催します。",
       "sourceName": "館内マップ：ゆめぷらっと小城公式サイト",
       "sourceUrl": "https://yumeplatogi.com/floor/",
@@ -302,6 +303,148 @@
                 "y": 57.0
               },
               "sortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ogi-high-school",
+      "name": "小城高校",
+      "eyebrow": "Ogi High School",
+      "description": "小城高校では、武道場で剣道体験と柔道体験を開催します。",
+      "sourceName": "会場マップ：提供画像",
+      "sortOrder": 2,
+      "floors": [
+        {
+          "id": "ogi-high-school-budojo",
+          "label": "小城高校",
+          "title": "小城高校 会場マップ",
+          "mapImage": "/assets/years/2026/maps/ogi-high-school-map.webp",
+          "mapAlt": "小城高校 会場マップ",
+          "width": 1246,
+          "height": 1263,
+          "sortOrder": 1,
+          "showMarkers": false,
+          "markers": [
+            {
+              "id": "kendo-experience",
+              "markerLabel": "A",
+              "title": "剣道体験",
+              "room": "小城高校武道場",
+              "scheduleEventId": "kendo-experience",
+              "position": {
+                "x": 50.0,
+                "y": 68.5
+              },
+              "sortOrder": 1
+            },
+            {
+              "id": "judo-experience",
+              "markerLabel": "B",
+              "title": "柔道体験",
+              "room": "小城高校武道場",
+              "scheduleEventId": "judo-experience",
+              "position": {
+                "x": 56.9,
+                "y": 68.5
+              },
+              "sortOrder": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sakuraoka-school",
+      "name": "桜岡小学校",
+      "eyebrow": "Sakuraoka School",
+      "description": "桜岡小学校では、グラウンド・体育館・校舎前駐車場でスポーツ体験や展示を開催します。",
+      "sourceName": "会場マップ：提供画像",
+      "sortOrder": 3,
+      "floors": [
+        {
+          "id": "sakuraoka-school-ground",
+          "label": "桜岡小学校",
+          "title": "桜岡小学校 会場マップ",
+          "mapImage": "/assets/years/2026/maps/sakuraoka-school-map.webp",
+          "mapAlt": "桜岡小学校 会場マップ",
+          "width": 981,
+          "height": 1604,
+          "sortOrder": 1,
+          "showMarkers": false,
+          "markers": [
+            {
+              "id": "soccer-experience",
+              "markerLabel": "A",
+              "title": "サッカー体験",
+              "room": "桜岡小学校グラウンド",
+              "scheduleEventId": "soccer-experience",
+              "position": {
+                "x": 42.3,
+                "y": 60.6
+              },
+              "sortOrder": 1
+            },
+            {
+              "id": "baseball-experience",
+              "markerLabel": "B",
+              "title": "野球体験",
+              "room": "桜岡小学校グラウンド",
+              "scheduleEventId": "baseball-experience",
+              "position": {
+                "x": 55.9,
+                "y": 60.5
+              },
+              "sortOrder": 2
+            },
+            {
+              "id": "basketball-experience",
+              "markerLabel": "C",
+              "title": "バスケ体験",
+              "room": "桜岡小学校体育館",
+              "scheduleEventId": "mini-basketball",
+              "position": {
+                "x": 80.0,
+                "y": 51.8
+              },
+              "sortOrder": 3
+            },
+            {
+              "id": "kickboxing",
+              "markerLabel": "D",
+              "title": "キックボクシング",
+              "room": "桜岡小学校体育館",
+              "scheduleEventId": "kickboxing",
+              "position": {
+                "x": 90.4,
+                "y": 51.5
+              },
+              "sortOrder": 4
+            },
+            {
+              "id": "karate",
+              "markerLabel": "E",
+              "title": "空手",
+              "room": "桜岡小学校体育館",
+              "scheduleEventId": "karate",
+              "position": {
+                "x": 81.5,
+                "y": 58.9
+              },
+              "sortOrder": 5
+            },
+            {
+              "id": "working-vehicles",
+              "markerLabel": "F",
+              "title": "働く車（警察・自衛隊・消防）",
+              "room": "桜岡小学校校舎前駐車場",
+              "scheduleEventId": "working-vehicles",
+              "position": {
+                "x": 24.3,
+                "y": 12.1
+              },
+              "sortOrder": 6
             }
           ]
         }
