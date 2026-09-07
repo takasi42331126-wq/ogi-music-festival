@@ -6,10 +6,10 @@ import SponsorGrid from "@components/sponsor/SponsorGrid.astro";
 import { sponsors } from "@lib/content/repository";
 ---
 
-<BaseLayout title="特別協賛・後援" description="第35回おぎアマチュア音楽祭DX2026を支える特別協賛企業・後援団体を紹介します。">
+<BaseLayout title="特別協賛・名義協賛・名義後援" description="第35回おぎアマチュア音楽祭DX2026を支える特別協賛企業、名義協賛、名義後援を紹介します。">
   <PageHero
     eyebrow="Sponsors"
-    title="特別協賛・後援"
+    title="特別協賛・名義協賛・名義後援"
     lead="第35回おぎアマチュア音楽祭DX2026の開催を支えてくださる企業・団体の皆さまです。"
   />
 
@@ -17,8 +17,8 @@ import { sponsors } from "@lib/content/repository";
     <div class="section-inner">
       <SectionHeader
         eyebrow="Partners"
-        title="特別協賛・後援一覧"
-        lead="地域のにぎわいと音楽祭の開催を支えてくださる皆さまです。"
+        title="ご支援企業・団体一覧"
+        lead="地域のにぎわいと音楽祭の開催を支えてくださる企業・団体の皆さまです。"
       />
       <SponsorGrid sponsors={sponsors} />
     </div>

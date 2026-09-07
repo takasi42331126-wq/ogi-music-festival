@@ -27,11 +27,25 @@ const getPartnerRankId = (amount?: number): PartnerRankId | null => {
 };
 
 const specialSponsors = sponsors.filter((sponsor) => sponsor.category === "特別協賛");
-const supportSponsors = sponsors.filter((sponsor) => sponsor.category === "後援");
+const nominalSponsors = sponsors.filter((sponsor) => sponsor.category === "名義協賛");
+const nominalSupporters = sponsors.filter((sponsor) => sponsor.category === "名義後援");
 const rankedSponsors = partnerRanks.map((rank) => ({
   ...rank,
   items: specialSponsors.filter((sponsor) => getPartnerRankId(sponsor.amount) === rank.id)
 }));
+
+const nominalGroups = [
+  {
+    id: "nominal-sponsor",
+    title: "名義協賛",
+    items: nominalSponsors
+  },
+  {
+    id: "nominal-support",
+    title: "名義後援",
+    items: nominalSupporters
+  }
+].filter((group) => group.items.length > 0);
 ---
 
 <div class="sponsor-groups">
@@ -100,46 +114,20 @@ const rankedSponsors = partnerRanks.map((rank) => ({
     </div>
   </section>
 
-  {supportSponsors.length > 0 && (
-    <section class="sponsor-group sponsor-section-block sponsor-support-group" aria-labelledby="sponsor-support">
-      <h3 id="sponsor-support" class="sponsor-category-title">後援</h3>
-      <div class="sponsor-grid support-grid">
-        {supportSponsors.map((sponsor) => (
-          <article class="sponsor-card support" data-reveal>
+  {nominalGroups.map((group) => (
+    <section class="sponsor-group sponsor-section-block sponsor-nominal-group" aria-labelledby={`sponsor-${group.id}`}>
+      <h3 id={`sponsor-${group.id}`} class="sponsor-category-title">{group.title}</h3>
+      <div class="sponsor-grid support-grid nominal-grid">
+        {group.items.map((sponsor) => (
+          <article class="sponsor-card support sponsor-card-nominal" data-reveal>
             {sponsor.url ? (
               <a href={sponsor.url} target="_blank" rel="noreferrer">
-                {sponsor.logo ? (
-                  <>
-                    <div class="sponsor-logo">
-                    <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
-                    </div>
-                    <p class="sponsor-category">{sponsor.category}</p>
-                    <h4>{sponsor.name}</h4>
-                  </>
-                ) : (
-                  <>
-                    <h4 class="sponsor-logo sponsor-logo-text">{sponsor.name}</h4>
-                    <p class="sponsor-category">{sponsor.category}</p>
-                  </>
-                )}
+                <h4>{sponsor.name}</h4>
                 {sponsor.message && <p>{sponsor.message}</p>}
               </a>
             ) : (
               <>
-                {sponsor.logo ? (
-                  <>
-                    <div class="sponsor-logo">
-                    <img src={sponsor.logo} alt={`${sponsor.name} ロゴ`} width="360" height="160" loading="lazy" decoding="async" />
-                    </div>
-                    <p class="sponsor-category">{sponsor.category}</p>
-                    <h4>{sponsor.name}</h4>
-                  </>
-                ) : (
-                  <>
-                    <h4 class="sponsor-logo sponsor-logo-text">{sponsor.name}</h4>
-                    <p class="sponsor-category">{sponsor.category}</p>
-                  </>
-                )}
+                <h4>{sponsor.name}</h4>
                 {sponsor.message && <p>{sponsor.message}</p>}
               </>
             )}
@@ -147,5 +135,5 @@ const rankedSponsors = partnerRanks.map((rank) => ({
         ))}
       </div>
     </section>
-  )}
+  ))}
 </div>

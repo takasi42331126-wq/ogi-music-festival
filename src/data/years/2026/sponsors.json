@@ -70,12 +70,129 @@
     "sortOrder": 7
   },
   {
-    "id": "support-001",
-    "name": "後援団体サンプル",
-    "category": "後援",
+    "id": "nominal-sponsor-001",
+    "name": "小城商工会議所",
+    "category": "名義協賛",
     "logo": "",
     "url": "",
-    "message": "音楽祭の開催を後援しています。",
-    "sortOrder": 100
+    "message": "",
+    "sortOrder": 101
+  },
+  {
+    "id": "nominal-sponsor-002",
+    "name": "（一社）小城市観光協会",
+    "category": "名義協賛",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 102
+  },
+  {
+    "id": "nominal-support-001",
+    "name": "小城市",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 201
+  },
+  {
+    "id": "nominal-support-002",
+    "name": "小城市教育委員会",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 202
+  },
+  {
+    "id": "nominal-support-003",
+    "name": "佐賀新聞社",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 203
+  },
+  {
+    "id": "nominal-support-004",
+    "name": "西日本新聞社",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 204
+  },
+  {
+    "id": "nominal-support-005",
+    "name": "サガテレビ",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 205
+  },
+  {
+    "id": "nominal-support-006",
+    "name": "NBCラジオ",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 206
+  },
+  {
+    "id": "nominal-support-007",
+    "name": "エフエム佐賀",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 207
+  },
+  {
+    "id": "nominal-support-008",
+    "name": "ぶんぶんテレビ",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 208
+  },
+  {
+    "id": "nominal-support-009",
+    "name": "小城羊羹協同組合",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 209
+  },
+  {
+    "id": "nominal-support-010",
+    "name": "三日月町商工連盟",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 210
+  },
+  {
+    "id": "nominal-support-011",
+    "name": "小城商工会議所女性会",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 211
+  },
+  {
+    "id": "nominal-support-012",
+    "name": "（株）まちづくり小城",
+    "category": "名義後援",
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 212
   }
 ]

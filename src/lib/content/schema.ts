@@ -191,7 +191,7 @@ const sponsorPartnerAmounts = [300000, 200000, 100000, 50000] as const;
 export const SponsorSchema = z.object({
   id: z.string(),
   name: z.string(),
-  category: z.enum(["特別協賛", "後援"]),
+  category: z.enum(["特別協賛", "名義協賛", "名義後援"]),
   amount: z.number().optional(),
   logo: z.string(),
   url: z.string(),
@@ -217,10 +217,10 @@ export const SponsorSchema = z.object({
     }
   }
 
-  if (sponsor.category === "後援" && typeof sponsor.amount === "number") {
+  if (sponsor.category !== "特別協賛" && typeof sponsor.amount === "number") {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: "後援にはPARTNERランク判定用のamountを設定しないでください。",
+      message: "名義協賛・名義後援にはPARTNERランク判定用のamountを設定しないでください。",
       path: ["amount"]
     });
   }

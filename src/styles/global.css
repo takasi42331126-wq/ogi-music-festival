@@ -1564,6 +1564,21 @@ select {
   border-color: rgba(119, 185, 214, 0.62);
 }
 
+.sponsor-card-nominal {
+  align-content: center;
+  min-height: 108px;
+  background: #fffdf8;
+  padding: 24px;
+}
+
+.sponsor-card-nominal h4 {
+  margin: 0;
+  color: var(--color-leaf-dark);
+  font-size: 1.08rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
 .sponsor-empty {
   margin: 0;
   border: 1px dashed var(--color-line);
