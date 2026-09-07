@@ -16,7 +16,7 @@ const imageLabel = imageFit === "contain" ? "ロゴ" : "写真";
 ---
 
 <article class:list={["artist-card", { "artist-card-no-image": !hasImage }]} data-reveal>
-  {hasImage && (
+  {hasImage ? (
     <figure class:list={["artist-visual", `artist-visual-${imageFit}`]}>
       <img
         src={artist.image}
@@ -26,6 +26,11 @@ const imageLabel = imageFit === "contain" ? "ロゴ" : "写真";
         loading="lazy"
         decoding="async"
       />
+      <figcaption>{artist.stage}</figcaption>
+    </figure>
+  ) : (
+    <figure class="artist-visual artist-visual-placeholder">
+      <span class="artist-visual-name">{artist.name}</span>
       <figcaption>{artist.stage}</figcaption>
     </figure>
   )}

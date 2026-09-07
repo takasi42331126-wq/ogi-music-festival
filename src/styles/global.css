@@ -690,7 +690,7 @@ select {
   display: grid;
   place-items: center;
   background: linear-gradient(135deg, #fffdf8, #f7fbf3);
-  padding: 22px;
+  padding: 14px;
 }
 
 .artist-visual-contain::after {
@@ -706,6 +706,28 @@ select {
 .artist-visual-contain img {
   object-fit: contain;
   object-position: center;
+}
+
+.artist-visual-placeholder {
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background:
+    radial-gradient(circle at 18% 16%, rgba(245, 184, 75, 0.26), transparent 34%),
+    linear-gradient(135deg, #fffdf8, #edf7ef);
+}
+
+.artist-visual-placeholder::after {
+  display: none;
+}
+
+.artist-visual-name {
+  color: var(--color-leaf-dark);
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4.8vw, 2.65rem);
+  font-weight: 900;
+  line-height: 1.16;
+  text-align: center;
 }
 
 .gallery-card img {
@@ -737,8 +759,6 @@ select {
 }
 
 .artist-card-no-image {
-  display: grid;
-  min-height: 156px;
   background:
     linear-gradient(135deg, rgba(255, 243, 207, 0.72), rgba(242, 248, 239, 0.9)),
     #fff;
@@ -746,7 +766,6 @@ select {
 
 .artist-card-no-image .artist-card-body {
   display: grid;
-  align-content: center;
   gap: 8px;
 }
 
@@ -2668,11 +2687,15 @@ select {
   }
 
   .artist-visual-contain {
-    padding: 16px;
+    padding: 10px;
   }
 
-  .artist-card-no-image {
-    min-height: 132px;
+  .artist-visual-placeholder {
+    padding: 20px;
+  }
+
+  .artist-visual-name {
+    font-size: clamp(1.55rem, 8vw, 2.25rem);
   }
 
   .artist-card-body {

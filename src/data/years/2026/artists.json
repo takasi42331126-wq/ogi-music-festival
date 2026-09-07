@@ -166,7 +166,7 @@
     "genre": "弾き語り",
     "profile": "",
     "image": "/assets/years/2026/artists/band-mizuki.webp",
-    "imageFit": "cover",
+    "imageFit": "contain",
     "stage": "メインステージ",
     "links": {
       "official": "",
@@ -182,7 +182,7 @@
     "genre": "バンド",
     "profile": "",
     "image": "/assets/years/2026/artists/band-move-over.webp",
-    "imageFit": "cover",
+    "imageFit": "contain",
     "stage": "メインステージ",
     "links": {
       "official": "",
@@ -213,7 +213,7 @@
     "genre": "バンド",
     "profile": "",
     "image": "/assets/years/2026/artists/band-hit.webp",
-    "imageFit": "cover",
+    "imageFit": "contain",
     "stage": "メインステージ",
     "links": {
       "official": "",
@@ -245,7 +245,7 @@
     "genre": "バンド",
     "profile": "",
     "image": "/assets/years/2026/artists/band-yuikaji.webp",
-    "imageFit": "cover",
+    "imageFit": "contain",
     "stage": "メインステージ",
     "links": {
       "official": "",
@@ -276,7 +276,7 @@
     "genre": "バンド",
     "profile": "",
     "image": "/assets/years/2026/artists/band-bigme.webp",
-    "imageFit": "cover",
+    "imageFit": "contain",
     "stage": "メインステージ",
     "links": {
       "official": "",
