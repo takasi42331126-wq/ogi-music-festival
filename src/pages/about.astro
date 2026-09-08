@@ -2,46 +2,51 @@
 import BaseLayout from "@components/layout/BaseLayout.astro";
 import PageHero from "@components/layout/PageHero.astro";
 import SectionHeader from "@components/layout/SectionHeader.astro";
-import { event, site } from "@lib/content/repository";
+import { aboutMessages, site } from "@lib/content/repository";
 ---
 
 <BaseLayout title="音楽祭について" description={`${site.siteName}の概要と開催への想いを紹介します。`}>
   <PageHero
     eyebrow="About"
     title="音楽祭について"
-    lead="地域のにぎわい、音楽の力、自然の心地よさをひとつにする、小城らしい音楽祭です。"
+    lead="35年の歴史を次の未来へつなぐ、第35回おぎアマチュア音楽祭DX2026への想いを紹介します。"
   />
 
   <section class="section">
-    <div class="section-inner split">
-      <div class="prose">
-        <SectionHeader
-          eyebrow="Concept"
-          title="小城に集い、音楽でつながる"
-          lead={event.lead}
-        />
-        <p>
-          第35回おぎアマチュア音楽祭DX2026は、小城商工会議所 青年部（小城YEG）が中心となり、地域の魅力を音楽とともに発信するイベントです。
-          毎年の開催情報を積み重ねながら、来場者、出演者、特別協賛企業・後援団体、運営メンバーが同じ場所でつながる場を目指します。
-        </p>
-        <p>
-          公式ホームページでは、開催日、出演者、イベントスケジュール、会場情報、お知らせをわかりやすく届けます。
-          年度ごとの情報をJSONで管理することで、次回以降の更新も少ない作業で行えるようにしています。
-        </p>
-      </div>
-      <div class="fact-grid" style="grid-template-columns: 1fr;">
-        <div class="fact-tile">
-          <span class="fact-label">イベント名</span>
-          <span class="fact-value">{event.title}</span>
-        </div>
-        <div class="fact-tile">
-          <span class="fact-label">開催日</span>
-          <span class="fact-value">{event.dateText}</span>
-        </div>
-        <div class="fact-tile">
-          <span class="fact-label">主催</span>
-          <span class="fact-value">{site.organization}</span>
-        </div>
+    <div class="section-inner about-message-section">
+      <SectionHeader
+        eyebrow="Message"
+        title="ご挨拶"
+        lead="音楽祭を支える想いと、今年の開催に向けたメッセージです。"
+      />
+
+      <div class="about-message-list">
+        {aboutMessages.map((message) => (
+          <article class="about-message-card" data-reveal>
+            <div class="about-message-visual">
+              <img
+                src={message.image}
+                alt={message.imageAlt}
+                width={message.imageWidth}
+                height={message.imageHeight}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="about-message-body">
+              <p class="about-message-role">{message.role}</p>
+              <h2>{message.name}</h2>
+              <div class="about-message-text">
+                {message.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              </div>
+              {message.signature.length > 0 && (
+                <div class="about-message-signature">
+                  {message.signature.map((line) => <p>{line}</p>)}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
       </div>
     </div>
   </section>

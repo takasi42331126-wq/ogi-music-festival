@@ -457,6 +457,30 @@ select {
   font-weight: 900;
 }
 
+.hero-apology-link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  margin-top: 14px;
+  border: 1px solid rgba(232, 111, 81, 0.58);
+  border-radius: var(--radius-pill);
+  background: rgba(232, 111, 81, 0.14);
+  color: #ffe4de;
+  font-size: 0.95rem;
+  font-weight: 900;
+  line-height: 1.2;
+  padding: 8px 13px;
+  text-decoration: none;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.hero-apology-link:hover {
+  border-color: rgba(232, 111, 81, 0.78);
+  background: rgba(232, 111, 81, 0.24);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
 .hero-scroll {
   position: absolute;
   bottom: 24px;
@@ -594,6 +618,97 @@ select {
   color: var(--color-ink);
   font-size: 1.12rem;
   font-weight: 900;
+}
+
+.about-message-section {
+  display: grid;
+  gap: 30px;
+}
+
+.about-message-list {
+  display: grid;
+  gap: 34px;
+}
+
+.about-message-card {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.74fr) minmax(0, 1.26fr);
+  gap: clamp(24px, 4vw, 44px);
+  align-items: start;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background:
+    linear-gradient(135deg, rgba(245, 184, 75, 0.12), transparent 36%),
+    #fff;
+  box-shadow: 0 20px 60px rgba(31, 42, 36, 0.08);
+  padding: clamp(18px, 3.6vw, 36px);
+}
+
+.about-message-card:nth-child(even) {
+  grid-template-columns: minmax(0, 1.26fr) minmax(240px, 0.74fr);
+}
+
+.about-message-card:nth-child(even) .about-message-visual {
+  order: 2;
+}
+
+.about-message-visual img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-card);
+  object-fit: cover;
+  object-position: center top;
+  box-shadow: 0 18px 44px rgba(31, 42, 36, 0.12);
+}
+
+.about-message-card:nth-child(even) .about-message-visual img {
+  aspect-ratio: 4 / 3;
+  object-position: center 34%;
+}
+
+.about-message-body {
+  color: var(--color-muted);
+}
+
+.about-message-role {
+  display: inline-flex;
+  margin: 0 0 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-mist);
+  color: var(--color-leaf-dark);
+  font-size: 0.88rem;
+  font-weight: 900;
+  padding: 6px 12px;
+}
+
+.about-message-body h2 {
+  margin: 0 0 22px;
+  color: var(--color-leaf-dark);
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  line-height: 1.16;
+  letter-spacing: 0;
+}
+
+.about-message-text {
+  display: grid;
+  gap: 0.9em;
+}
+
+.about-message-text p,
+.about-message-signature p {
+  margin: 0;
+  line-height: 1.9;
+}
+
+.about-message-signature {
+  display: grid;
+  gap: 4px;
+  margin-top: 26px;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-ink);
+  font-weight: 900;
+  padding-top: 18px;
 }
 
 .link-list {
@@ -862,6 +977,16 @@ select {
 .artist-profile-toggle:focus-visible {
   outline: 3px solid rgba(245, 184, 75, 0.74);
   outline-offset: 3px;
+}
+
+.news-detail-body {
+  display: grid;
+  gap: 1em;
+}
+
+.news-detail-body p {
+  margin: 0;
+  white-space: pre-line;
 }
 
 .application-grid {
@@ -2536,6 +2661,20 @@ select {
   .partner-grid-premium {
     grid-template-columns: 1fr;
   }
+
+  .about-message-card,
+  .about-message-card:nth-child(even) {
+    grid-template-columns: 1fr;
+  }
+
+  .about-message-card:nth-child(even) .about-message-visual {
+    order: 0;
+  }
+
+  .about-message-visual img,
+  .about-message-card:nth-child(even) .about-message-visual img {
+    aspect-ratio: 16 / 11;
+  }
 }
 
 @media (max-width: 680px) {
@@ -2580,6 +2719,13 @@ select {
 
   .hero-copy {
     font-size: clamp(1.25rem, 6vw, 1.65rem);
+  }
+
+  .hero-apology-link {
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+    padding: 10px 12px;
   }
 
   .hero-meta,
@@ -2659,6 +2805,23 @@ select {
   .sponsor-card-silver .sponsor-logo,
   .sponsor-card-bronze .sponsor-logo {
     min-height: 104px;
+  }
+
+  .about-message-card {
+    padding: 18px;
+  }
+
+  .about-message-list {
+    gap: 24px;
+  }
+
+  .about-message-body h2 {
+    margin-bottom: 18px;
+  }
+
+  .about-message-text p,
+  .about-message-signature p {
+    line-height: 1.85;
   }
 
   .mascot-spotlight {

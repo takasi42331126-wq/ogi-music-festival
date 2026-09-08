@@ -20,6 +20,10 @@ const formatter = new Intl.DateTimeFormat("ja-JP", {
   month: "2-digit",
   day: "2-digit"
 });
+const bodyParagraphs = item.body
+  .split(/\n{2,}/)
+  .map((paragraph) => paragraph.trim())
+  .filter(Boolean);
 ---
 
 <BaseLayout title={item.title} description={item.excerpt}>
@@ -31,7 +35,9 @@ const formatter = new Intl.DateTimeFormat("ja-JP", {
 
   <article class="section">
     <div class="section-inner prose">
-      <p>{item.body}</p>
+      <div class="news-detail-body">
+        {bodyParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
       <div class="button-row">
         <a class="button button-outline" href="/news/">お知らせ一覧へ</a>
       </div>

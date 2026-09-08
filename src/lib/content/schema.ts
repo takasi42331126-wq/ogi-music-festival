@@ -112,6 +112,19 @@ export const ArtistSchema = z.object({
   pickup: z.boolean()
 });
 
+export const AboutMessageSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  role: z.string(),
+  image: z.string(),
+  imageAlt: z.string(),
+  imageWidth: z.number(),
+  imageHeight: z.number(),
+  paragraphs: z.array(z.string()),
+  signature: z.array(z.string()),
+  sortOrder: z.number()
+});
+
 export const ApplicationEventSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -319,6 +332,7 @@ export const VenueSchema = z.object({
 export type Site = z.infer<typeof SiteSchema>;
 export type Event = z.infer<typeof EventSchema>;
 export type Artist = z.infer<typeof ArtistSchema>;
+export type AboutMessage = z.infer<typeof AboutMessageSchema>;
 export type ApplicationEvent = z.infer<typeof ApplicationEventSchema>;
 export type Mascot = z.infer<typeof MascotSchema>;
 export type TimetableItem = z.infer<typeof TimetableItemSchema>;
