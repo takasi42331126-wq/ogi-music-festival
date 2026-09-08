@@ -1,7 +1,10 @@
 {
   "name": "小城公園 自楽園",
   "address": "〒845-0001 佐賀県小城市小城町185番地",
-  "mapImage": "",
+  "mapImage": "/assets/years/2026/maps/ogi-park-jirakuen-map.jpg",
+  "mapImageAlt": "おぎアマチュア音楽祭DX2026 小城公園 自楽園 会場マップ",
+  "mapImageWidth": 850,
+  "mapImageHeight": 1200,
   "googleMapUrl": "https://www.google.com/maps?q=33.288233,130.195982",
   "accessNotes": [
     "会場周辺は混雑が予想されます。時間に余裕を持ってお越しください。",

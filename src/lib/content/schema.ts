@@ -317,6 +317,9 @@ export const VenueSchema = z.object({
   name: z.string(),
   address: z.string(),
   mapImage: z.string(),
+  mapImageAlt: z.string().optional(),
+  mapImageWidth: z.number().optional(),
+  mapImageHeight: z.number().optional(),
   googleMapUrl: z.string(),
   accessNotes: z.array(z.string()),
   facilities: z.array(

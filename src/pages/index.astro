@@ -7,6 +7,7 @@ import SponsorGrid from "@components/sponsor/SponsorGrid.astro";
 import TimetableList from "@components/timetable/TimetableList.astro";
 import Hero from "@components/top/Hero.astro";
 import MascotSpotlight from "@components/mascot/MascotSpotlight.astro";
+import VenueOverviewMap from "@components/venue/VenueOverviewMap.astro";
 import { applicationEvents, event, mascots, news, pickupArtists, site, sponsors, stages, timetable, venue } from "@lib/content/repository";
 ---
 
@@ -160,12 +161,7 @@ import { applicationEvents, event, mascots, news, pickupArtists, site, sponsors,
           title="会場マップ"
           lead={`${venue.name}のステージ、案内所、飲食エリアを確認できます。`}
         />
-        <div class="map-canvas" aria-label="会場マップの簡易図">
-          <div class="map-zone map-zone-main">Main Stage</div>
-          <div class="map-zone map-zone-garden">Garden Stage</div>
-          <div class="map-zone map-zone-food">Food Area</div>
-          <div class="map-zone map-zone-info">Information</div>
-        </div>
+        <VenueOverviewMap venue={venue} />
       </div>
       <ul class="note-list" data-reveal>
         {venue.accessNotes.map((note) => <li>{note}</li>)}

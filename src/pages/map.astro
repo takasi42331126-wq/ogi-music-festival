@@ -2,6 +2,7 @@
 import BaseLayout from "@components/layout/BaseLayout.astro";
 import PageHero from "@components/layout/PageHero.astro";
 import SectionHeader from "@components/layout/SectionHeader.astro";
+import VenueOverviewMap from "@components/venue/VenueOverviewMap.astro";
 import VenueEventMap from "@components/venue/VenueEventMap.astro";
 import { venue } from "@lib/content/repository";
 ---
@@ -21,12 +22,7 @@ import { venue } from "@lib/content/repository";
           title={venue.name}
           lead="ステージ、飲食エリア、案内所の位置を確認して、当日をゆっくり楽しめるように準備できます。"
         />
-        <div class="map-canvas" aria-label="会場マップの簡易図">
-          <div class="map-zone map-zone-main">Main Stage</div>
-          <div class="map-zone map-zone-garden">Garden Stage</div>
-          <div class="map-zone map-zone-food">Food Area</div>
-          <div class="map-zone map-zone-info">Information</div>
-        </div>
+        <VenueOverviewMap venue={venue} />
       </div>
       <div class="contact-panel">
         <h2>施設情報</h2>

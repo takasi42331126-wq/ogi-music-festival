@@ -1782,6 +1782,21 @@ select {
   width: 26%;
 }
 
+.venue-overview-map {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: #fffdf8;
+  box-shadow: 0 18px 48px rgba(31, 42, 36, 0.08);
+}
+
+.venue-overview-map img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .yumeplat-map-section {
   background: linear-gradient(180deg, #fffdf8, #f6fbf2);
 }

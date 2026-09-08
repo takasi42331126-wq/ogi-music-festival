@@ -70,6 +70,26 @@
     "sortOrder": 7
   },
   {
+    "id": "special-sponsor-008",
+    "name": "株式会社G.A.S",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/gas-tight.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 8
+  },
+  {
+    "id": "special-sponsor-009",
+    "name": "株式会社西九州三和",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/nishikyushu-sanwa-tight.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 9
+  },
+  {
     "id": "nominal-sponsor-001",
     "name": "小城商工会議所",
     "category": "名義協賛",
