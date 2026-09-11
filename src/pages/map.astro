@@ -7,7 +7,7 @@ import VenueEventMap from "@components/venue/VenueEventMap.astro";
 import { venue } from "@lib/content/repository";
 ---
 
-<BaseLayout title="会場マップ" description="第35回おぎアマチュア音楽祭DX2026の会場マップと施設情報を掲載しています。">
+<BaseLayout title="会場マップ" description="第35回おぎアマチュア音楽祭DX2026の会場マップを掲載しています。">
   <PageHero
     eyebrow="Map"
     title="会場マップ"
@@ -15,7 +15,7 @@ import { venue } from "@lib/content/repository";
   />
 
   <section class="section">
-    <div class="section-inner venue-layout">
+    <div class="section-inner">
       <div>
         <SectionHeader
           eyebrow="Venue"
@@ -23,14 +23,6 @@ import { venue } from "@lib/content/repository";
           lead="ステージ、飲食エリア、案内所の位置を確認して、当日をゆっくり楽しめるように準備できます。"
         />
         <VenueOverviewMap venue={venue} />
-      </div>
-      <div class="contact-panel">
-        <h2>施設情報</h2>
-        <ul class="note-list">
-          {venue.facilities.map((facility) => (
-            <li><strong>{facility.name}</strong><br />{facility.description}</li>
-          ))}
-        </ul>
       </div>
     </div>
   </section>
