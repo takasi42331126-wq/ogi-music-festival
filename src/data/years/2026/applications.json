@@ -180,6 +180,51 @@
     "sortOrder": 12
   },
   {
+    "id": "kendo-experience-2026",
+    "title": "小城市剣道体験会",
+    "label": "小城高校",
+    "dateTimeText": "2026年9月22日（火・祝） 10:00～15:45",
+    "venue": "小城高校",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町176",
+    "description": "小城高校で開催する小城市剣道体験会の参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://forms.gle/akqMUvo6rD37rbRRA",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 13
+  },
+  {
+    "id": "karate-experience-2026",
+    "title": "空手体験",
+    "label": "桜岡小学校",
+    "dateTimeText": "2026年9月22日（火・祝） 10:00～14:30",
+    "venue": "桜岡小学校",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町166",
+    "description": "桜岡小学校で開催する空手体験の参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://forms.gle/8joeuYWFzHNwzzPq7",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 14
+  },
+  {
+    "id": "kickboxing-experience-2026",
+    "title": "キックボクシング体験",
+    "label": "桜岡小学校",
+    "dateTimeText": "2026年9月22日（火・祝） 10:00～15:45",
+    "venue": "桜岡小学校",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町166",
+    "description": "桜岡小学校で開催するキックボクシング体験の参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://forms.gle/R3yusAKxDMez7hP66",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 15
+  },
+  {
     "id": "tent-booth-application-2026",
     "title": "テントブース出店申込",
     "label": "小城公園",
@@ -192,7 +237,7 @@
     "formUrl": "https://forms.gle/JvvNQYqfJwLuFLqX7",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "closed",
-    "sortOrder": 13
+    "sortOrder": 16
   },
   {
     "id": "kitchen-car-application-2026",
@@ -207,6 +252,6 @@
     "formUrl": "https://forms.gle/i1TRbKdgrpE1UE986",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "closed",
-    "sortOrder": 14
+    "sortOrder": 17
   }
 ]
