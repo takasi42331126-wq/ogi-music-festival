@@ -130,6 +130,16 @@
     "sortOrder": 13
   },
   {
+    "id": "special-sponsor-014",
+    "name": "株式会社メモリード",
+    "category": "特別協賛",
+    "amount": 100000,
+    "logo": "/assets/years/2026/sponsors/memolead-tight.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 14
+  },
+  {
     "id": "nominal-sponsor-001",
     "name": "小城商工会議所",
     "category": "名義協賛",
