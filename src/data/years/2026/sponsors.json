@@ -210,6 +210,36 @@
     "sortOrder": 21
   },
   {
+    "id": "special-sponsor-022",
+    "name": "音成印刷",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/otonari-insatsu.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 22
+  },
+  {
+    "id": "special-sponsor-023",
+    "name": "桜花園",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/oukaen.jpg",
+    "url": "",
+    "message": "",
+    "sortOrder": 23
+  },
+  {
+    "id": "special-sponsor-024",
+    "name": "山口産業株式会社",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/yamaguchi-sangyo.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 24
+  },
+  {
     "id": "nominal-sponsor-001",
     "name": "小城商工会議所",
     "category": "名義協賛",
