@@ -92,6 +92,56 @@
       "sortOrder": 5
     }
   ],
+  "parkingLots": [
+    {
+      "id": "ogi-park-parking",
+      "name": "小城公園駐車場",
+      "mapUrl": "https://maps.app.goo.gl/niA58UZCGVsyyHsr8?g_st=il",
+      "sortOrder": 1
+    },
+    {
+      "id": "ogi-park-parking-1",
+      "name": "小城公園 第１駐車場",
+      "mapUrl": "https://maps.app.goo.gl/QW6X8d3SbNav3zVc9?g_st=il",
+      "sortOrder": 2
+    },
+    {
+      "id": "ogi-park-parking-2",
+      "name": "小城公園 第２駐車場",
+      "mapUrl": "https://maps.app.goo.gl/hk4x5sM6YS4JCGJG7?g_st=il",
+      "sortOrder": 3
+    },
+    {
+      "id": "ourakukan-parking",
+      "name": "小城保健福祉センター｢桜楽館｣",
+      "mapUrl": "https://maps.app.goo.gl/sJq1nmrHGXxwkT4d7?g_st=il",
+      "sortOrder": 4
+    },
+    {
+      "id": "ja-saga-sajou-kaikan",
+      "name": "ＪＡさが 佐城会館",
+      "mapUrl": "https://maps.app.goo.gl/28BdHvf9pubHDsUd8?g_st=il",
+      "sortOrder": 5
+    },
+    {
+      "id": "nishikyushu-university-nearby-parking",
+      "name": "西九州大学近辺駐車場",
+      "mapUrl": "https://maps.app.goo.gl/VLnCjXLQC9ishaQ48?g_st=il",
+      "sortOrder": 6
+    },
+    {
+      "id": "yumeplat-ogi-nearby-parking",
+      "name": "ゆめぷらっと小城近辺駐車場",
+      "mapUrl": "https://maps.app.goo.gl/61qW7g78yA1EXUzw8?g_st=il",
+      "sortOrder": 7
+    },
+    {
+      "id": "ogi-junior-high-school-parking",
+      "name": "小城中学校駐車場",
+      "mapUrl": "https://maps.app.goo.gl/dNvC593g1x1jWkdi7?g_st=il",
+      "sortOrder": 8
+    }
+  ],
   "eventMaps": [
     {
       "id": "yumeplat-ogi",

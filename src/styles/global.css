@@ -2030,6 +2030,53 @@ select {
   width: fit-content;
 }
 
+.access-parking-section {
+  display: grid;
+  gap: 22px;
+  margin-top: 20px;
+  border-top: 1px solid var(--color-line);
+  padding-top: 34px;
+}
+
+.access-parking-section .section-header {
+  margin-bottom: 0;
+}
+
+.access-parking-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.access-parking-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  padding: 20px;
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
+.access-parking-card:hover {
+  border-color: rgba(47, 125, 79, 0.24);
+  box-shadow: 0 18px 42px rgba(31, 42, 36, 0.13);
+  transform: translateY(-3px);
+}
+
+.access-parking-card h3 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(1.08rem, 1.4vw, 1.32rem);
+  line-height: 1.35;
+}
+
+.access-parking-card .button {
+  width: fit-content;
+}
+
 .access-map-frame {
   min-height: 260px;
   border-top: 1px solid var(--color-line);
@@ -3053,11 +3100,16 @@ select {
     gap: 16px;
   }
 
+  .access-parking-grid {
+    grid-template-columns: 1fr;
+  }
+
   .access-location-body {
     padding: 16px;
   }
 
-  .access-location-body .button {
+  .access-location-body .button,
+  .access-parking-card .button {
     width: 100%;
   }
 

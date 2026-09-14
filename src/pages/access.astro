@@ -6,6 +6,7 @@ import { venue } from "@lib/content/repository";
 import type { VenueLocation } from "@lib/content/schema";
 
 const locations = [...venue.locations].sort((a, b) => a.sortOrder - b.sortOrder);
+const parkingLots = [...venue.parkingLots].sort((a, b) => a.sortOrder - b.sortOrder);
 
 const getCoordinateQuery = (location: VenueLocation) =>
   `${location.coordinates.lat},${location.coordinates.lng}`;
@@ -59,6 +60,28 @@ const getGoogleMapUrl = (location: VenueLocation) =>
             </article>
           ))}
         </div>
+
+        {parkingLots.length > 0 && (
+          <section class="access-parking-section" data-reveal>
+            <SectionHeader
+              eyebrow="Parking"
+              title="駐車場案内"
+              lead="当日の来場時に利用しやすい駐車場・周辺駐車場をまとめています。"
+            />
+
+            <div class="access-parking-grid">
+              {parkingLots.map((parkingLot) => (
+                <article class="access-parking-card">
+                  <span class="status-pill">駐車場</span>
+                  <h3>{parkingLot.name}</h3>
+                  <a class="button button-outline" href={parkingLot.mapUrl} target="_blank" rel="noopener noreferrer">
+                    Googleマップで見る
+                  </a>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
 
       <div class="contact-panel access-note-panel" data-reveal>
