@@ -140,6 +140,76 @@
     "sortOrder": 14
   },
   {
+    "id": "special-sponsor-015",
+    "name": "有限会社悟空",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/goku.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 15
+  },
+  {
+    "id": "special-sponsor-016",
+    "name": "株式会社江崎しろあり",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/ezaki-shiroari.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 16
+  },
+  {
+    "id": "special-sponsor-017",
+    "name": "株式会社サンノミヤ",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/sannomiya.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 17
+  },
+  {
+    "id": "special-sponsor-018",
+    "name": "大島インテリア株式会社",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/oshima-interior.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 18
+  },
+  {
+    "id": "special-sponsor-019",
+    "name": "有限会社SUNシステム",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/sun-system.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 19
+  },
+  {
+    "id": "special-sponsor-020",
+    "name": "ニュームラハチ 小城店",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/new-murahachi-ogi.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 20
+  },
+  {
+    "id": "special-sponsor-021",
+    "name": "株式会社嶋本建設",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/shimamoto-kensetsu.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 21
+  },
+  {
     "id": "nominal-sponsor-001",
     "name": "小城商工会議所",
     "category": "名義協賛",
