@@ -279,6 +279,7 @@ export const VenueParkingLotSchema = z.object({
   id: z.string(),
   name: z.string(),
   mapUrl: z.string().url(),
+  embedQuery: z.string().optional(),
   sortOrder: z.number()
 });
 

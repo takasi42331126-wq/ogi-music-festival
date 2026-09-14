@@ -3,7 +3,7 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
 import PageHero from "@components/layout/PageHero.astro";
 import SectionHeader from "@components/layout/SectionHeader.astro";
 import { venue } from "@lib/content/repository";
-import type { VenueLocation } from "@lib/content/schema";
+import type { VenueLocation, VenueParkingLot } from "@lib/content/schema";
 
 const locations = [...venue.locations].sort((a, b) => a.sortOrder - b.sortOrder);
 const parkingLots = [...venue.parkingLots].sort((a, b) => a.sortOrder - b.sortOrder);
@@ -16,6 +16,9 @@ const getMapEmbedUrl = (location: VenueLocation) =>
 
 const getGoogleMapUrl = (location: VenueLocation) =>
   `https://www.google.com/maps?q=${encodeURIComponent(getCoordinateQuery(location))}`;
+
+const getParkingMapEmbedUrl = (parkingLot: VenueParkingLot) =>
+  `https://www.google.com/maps?q=${encodeURIComponent(parkingLot.embedQuery ?? parkingLot.name)}&z=17&output=embed`;
 ---
 
 <BaseLayout title="アクセス" description="第35回おぎアマチュア音楽祭DX2026の会場アクセス情報を掲載しています。">
@@ -72,11 +75,22 @@ const getGoogleMapUrl = (location: VenueLocation) =>
             <div class="access-parking-grid">
               {parkingLots.map((parkingLot) => (
                 <article class="access-parking-card">
-                  <span class="status-pill">駐車場</span>
-                  <h3>{parkingLot.name}</h3>
-                  <a class="button button-outline" href={parkingLot.mapUrl} target="_blank" rel="noopener noreferrer">
-                    Googleマップで見る
-                  </a>
+                  <div class="access-location-body">
+                    <span class="status-pill">駐車場</span>
+                    <h3>{parkingLot.name}</h3>
+                    <a class="button button-outline" href={parkingLot.mapUrl} target="_blank" rel="noopener noreferrer">
+                      Googleマップで見る
+                    </a>
+                  </div>
+                  <div class="access-map-frame">
+                    <iframe
+                      title={`${parkingLot.name}のGoogleマップ`}
+                      src={getParkingMapEmbedUrl(parkingLot)}
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade"
+                      allowfullscreen
+                    ></iframe>
+                  </div>
                 </article>
               ))}
             </div>

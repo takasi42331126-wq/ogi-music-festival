@@ -8,7 +8,6 @@
   "googleMapUrl": "https://www.google.com/maps?q=33.288233,130.195982",
   "accessNotes": [
     "会場周辺は混雑が予想されます。時間に余裕を持ってお越しください。",
-    "駐車場や周辺施設の利用案内は、当日の会場案内・お知らせをご確認ください。",
     "Googleマップは各施設の座標をもとに表示しています。経路案内は最新の交通状況をご確認ください。"
   ],
   "facilities": [
@@ -97,48 +96,56 @@
       "id": "ogi-park-parking",
       "name": "小城公園駐車場",
       "mapUrl": "https://maps.app.goo.gl/niA58UZCGVsyyHsr8?g_st=il",
+      "embedQuery": "小城公園駐車場 佐賀県小城市",
       "sortOrder": 1
     },
     {
       "id": "ogi-park-parking-1",
       "name": "小城公園 第１駐車場",
       "mapUrl": "https://maps.app.goo.gl/QW6X8d3SbNav3zVc9?g_st=il",
+      "embedQuery": "小城公園 第１駐車場 佐賀県小城市",
       "sortOrder": 2
     },
     {
       "id": "ogi-park-parking-2",
       "name": "小城公園 第２駐車場",
       "mapUrl": "https://maps.app.goo.gl/hk4x5sM6YS4JCGJG7?g_st=il",
+      "embedQuery": "小城公園 第２駐車場 佐賀県小城市",
       "sortOrder": 3
     },
     {
       "id": "ourakukan-parking",
       "name": "小城保健福祉センター｢桜楽館｣",
       "mapUrl": "https://maps.app.goo.gl/sJq1nmrHGXxwkT4d7?g_st=il",
+      "embedQuery": "小城保健福祉センター 桜楽館 佐賀県小城市",
       "sortOrder": 4
     },
     {
       "id": "ja-saga-sajou-kaikan",
       "name": "ＪＡさが 佐城会館",
       "mapUrl": "https://maps.app.goo.gl/28BdHvf9pubHDsUd8?g_st=il",
+      "embedQuery": "ＪＡさが 佐城会館 佐賀県小城市",
       "sortOrder": 5
     },
     {
       "id": "nishikyushu-university-nearby-parking",
       "name": "西九州大学近辺駐車場",
       "mapUrl": "https://maps.app.goo.gl/VLnCjXLQC9ishaQ48?g_st=il",
+      "embedQuery": "西九州大学 小城キャンパス 駐車場",
       "sortOrder": 6
     },
     {
       "id": "yumeplat-ogi-nearby-parking",
       "name": "ゆめぷらっと小城近辺駐車場",
       "mapUrl": "https://maps.app.goo.gl/61qW7g78yA1EXUzw8?g_st=il",
+      "embedQuery": "ゆめぷらっと小城 駐車場",
       "sortOrder": 7
     },
     {
       "id": "ogi-junior-high-school-parking",
       "name": "小城中学校駐車場",
       "mapUrl": "https://maps.app.goo.gl/dNvC593g1x1jWkdi7?g_st=il",
+      "embedQuery": "小城中学校 駐車場 佐賀県小城市",
       "sortOrder": 8
     }
   ],

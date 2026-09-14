@@ -2050,13 +2050,13 @@ select {
 
 .access-parking-card {
   display: grid;
-  gap: 12px;
+  gap: 0;
   align-content: start;
+  overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
   background: #fff;
   box-shadow: var(--shadow-soft);
-  padding: 20px;
   transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 }
 
@@ -2075,6 +2075,10 @@ select {
 
 .access-parking-card .button {
   width: fit-content;
+}
+
+.access-parking-card .access-map-frame {
+  align-self: end;
 }
 
 .access-map-frame {
