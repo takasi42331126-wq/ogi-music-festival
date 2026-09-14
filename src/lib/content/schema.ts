@@ -283,6 +283,17 @@ export const VenueParkingLotSchema = z.object({
   sortOrder: z.number()
 });
 
+export const VenueDetailMapSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  title: z.string(),
+  image: z.string(),
+  alt: z.string(),
+  width: z.number(),
+  height: z.number(),
+  sortOrder: z.number()
+});
+
 export const VenueFloorMarkerSchema = z.object({
   id: z.string(),
   markerLabel: z.string(),
@@ -338,6 +349,7 @@ export const VenueSchema = z.object({
   ),
   locations: z.array(VenueLocationSchema),
   parkingLots: z.array(VenueParkingLotSchema).default([]),
+  detailMaps: z.array(VenueDetailMapSchema).default([]),
   eventMaps: z.array(VenueEventMapSchema)
 });
 
@@ -357,6 +369,7 @@ export type GalleryItem = z.infer<typeof GalleryItemSchema>;
 export type Venue = z.infer<typeof VenueSchema>;
 export type VenueLocation = z.infer<typeof VenueLocationSchema>;
 export type VenueParkingLot = z.infer<typeof VenueParkingLotSchema>;
+export type VenueDetailMap = z.infer<typeof VenueDetailMapSchema>;
 export type VenueEventMap = z.infer<typeof VenueEventMapSchema>;
 export type VenueFloorMap = z.infer<typeof VenueFloorMapSchema>;
 export type VenueFloorMarker = z.infer<typeof VenueFloorMarkerSchema>;

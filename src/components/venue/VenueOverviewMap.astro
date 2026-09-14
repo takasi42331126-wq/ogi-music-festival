@@ -3,30 +3,63 @@ import type { Venue } from "@lib/content/schema";
 
 interface Props {
   venue: Venue;
+  showDetailMaps?: boolean;
 }
 
-const { venue } = Astro.props;
+const { venue, showDetailMaps = false } = Astro.props;
 const mapAlt = venue.mapImageAlt ?? `${venue.name} 会場マップ`;
+const detailMaps = showDetailMaps
+  ? [...venue.detailMaps].sort((a, b) => a.sortOrder - b.sortOrder)
+  : [];
 ---
 
-{
-  venue.mapImage ? (
-    <figure class="venue-overview-map">
-      <img
-        src={venue.mapImage}
-        alt={mapAlt}
-        width={venue.mapImageWidth}
-        height={venue.mapImageHeight}
-        loading="lazy"
-        decoding="async"
-      />
-    </figure>
-  ) : (
-    <div class="map-canvas" aria-label="会場マップの簡易図">
-      <div class="map-zone map-zone-main">Main Stage</div>
-      <div class="map-zone map-zone-garden">Garden Stage</div>
-      <div class="map-zone map-zone-food">Food Area</div>
-      <div class="map-zone map-zone-info">Information</div>
+<>
+  {
+    venue.mapImage ? (
+      <figure class="venue-overview-map">
+        <img
+          src={venue.mapImage}
+          alt={mapAlt}
+          width={venue.mapImageWidth}
+          height={venue.mapImageHeight}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    ) : (
+      <div class="map-canvas" aria-label="会場マップの簡易図">
+        <div class="map-zone map-zone-main">Main Stage</div>
+        <div class="map-zone map-zone-garden">Garden Stage</div>
+        <div class="map-zone map-zone-food">Food Area</div>
+        <div class="map-zone map-zone-info">Information</div>
+      </div>
+    )
+  }
+
+  {detailMaps.length > 0 && (
+    <div class="venue-detail-map-section" data-reveal>
+      <div class="venue-detail-map-header">
+        <p class="eyebrow">Detail Map</p>
+        <h3>小城公園 自楽園 詳細マップ</h3>
+      </div>
+      <div class="venue-detail-map-stack">
+        {detailMaps.map((detailMap) => (
+          <figure class="venue-detail-map-card">
+            <figcaption>
+              <span class="status-pill">{detailMap.label}</span>
+              <h4>{detailMap.title}</h4>
+            </figcaption>
+            <img
+              src={detailMap.image}
+              alt={detailMap.alt}
+              width={detailMap.width}
+              height={detailMap.height}
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        ))}
+      </div>
     </div>
-  )
-}
+  )}
+</>

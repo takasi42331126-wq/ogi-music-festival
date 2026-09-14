@@ -24,6 +24,38 @@
       "description": "落とし物、迷子、救護などの総合案内"
     }
   ],
+  "detailMaps": [
+    {
+      "id": "ogi-park-main-area",
+      "label": "①",
+      "title": "メインエリア会場マップ",
+      "image": "/assets/years/2026/maps/ogi-park-main-area-detail.jpg",
+      "alt": "おぎアマチュア音楽祭DX2026 メインエリア会場マップ",
+      "width": 1080,
+      "height": 1350,
+      "sortOrder": 1
+    },
+    {
+      "id": "ogi-park-sub-area",
+      "label": "②",
+      "title": "サブエリア会場マップ",
+      "image": "/assets/years/2026/maps/ogi-park-sub-area-detail.jpg",
+      "alt": "おぎアマチュア音楽祭DX2026 サブエリア会場マップ",
+      "width": 1080,
+      "height": 1350,
+      "sortOrder": 2
+    },
+    {
+      "id": "okayama-shrine-area",
+      "label": "③",
+      "title": "岡山神社マップ",
+      "image": "/assets/years/2026/maps/okayama-shrine-detail.jpg",
+      "alt": "おぎアマチュア音楽祭DX2026 岡山神社マップ",
+      "width": 1080,
+      "height": 1350,
+      "sortOrder": 3
+    }
+  ],
   "locations": [
     {
       "id": "ogi-park-jirakuen",
