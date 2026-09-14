@@ -107,6 +107,20 @@
         "sessions": []
       },
       {
+        "id": "patissier-experience",
+        "title": "パティシエ体験",
+        "category": "体験",
+        "description": "",
+        "timeText": "10:00～14:30",
+        "participationText": "事前申込・空き枠があれば当日自由参加可能",
+        "feeText": "200円",
+        "applicationId": "patissier-experience-2026",
+        "formUrl": "https://forms.gle/nVWx22XeRgKabz2b8",
+        "status": "open",
+        "sortOrder": 8,
+        "sessions": []
+      },
+      {
         "id": "ar-game-photo-experience",
         "title": "ARゲーム体験＆写真再生体験",
         "category": "体験",
@@ -117,7 +131,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "scheduled",
-        "sortOrder": 8,
+        "sortOrder": 9,
         "sessions": []
       },
       {
@@ -131,7 +145,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "adjusting",
-        "sortOrder": 9,
+        "sortOrder": 10,
         "sessions": []
       },
       {
@@ -142,10 +156,10 @@
         "timeText": "10:00～15:00",
         "participationText": "事前申込・空き枠があれば当日自由参加可能",
         "feeText": "無料",
-        "applicationId": "",
-        "formUrl": "",
-        "status": "scheduled",
-        "sortOrder": 10,
+        "applicationId": "calligraphy-experience-2026",
+        "formUrl": "https://forms.gle/r8Db9ehwKD7iwwFA7",
+        "status": "open",
+        "sortOrder": 11,
         "sessions": []
       },
       {
@@ -159,7 +173,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "scheduled",
-        "sortOrder": 11,
+        "sortOrder": 12,
         "sessions": []
       },
       {
@@ -173,7 +187,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "scheduled",
-        "sortOrder": 12,
+        "sortOrder": 13,
         "sessions": []
       }
     ]

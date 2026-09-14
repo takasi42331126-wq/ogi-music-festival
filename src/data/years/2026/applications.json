@@ -120,6 +120,36 @@
     "sortOrder": 8
   },
   {
+    "id": "calligraphy-experience-2026",
+    "title": "書道体験",
+    "label": "ゆめぷらっと小城",
+    "dateTimeText": "2026年9月22日（火・祝） 10:00～15:00",
+    "venue": "ゆめぷらっと小城",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町253-21",
+    "description": "ゆめぷらっと小城で開催する書道体験の参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://forms.gle/r8Db9ehwKD7iwwFA7",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 9
+  },
+  {
+    "id": "patissier-experience-2026",
+    "title": "パティシエ体験",
+    "label": "ゆめぷらっと小城",
+    "dateTimeText": "2026年9月22日（火・祝） 10:00～14:30",
+    "venue": "ゆめぷらっと小城",
+    "postalCode": "〒845-0001",
+    "address": "佐賀県小城市小城町253-21",
+    "description": "ゆめぷらっと小城で開催するパティシエ体験の参加申し込みフォームです。",
+    "receptionPeriod": "",
+    "formUrl": "https://forms.gle/nVWx22XeRgKabz2b8",
+    "buttonLabel": "申し込みフォームはこちら",
+    "status": "open",
+    "sortOrder": 10
+  },
+  {
     "id": "baseball-experience-2026",
     "title": "野球体験",
     "label": "桜岡小学校",
@@ -132,7 +162,7 @@
     "formUrl": "https://forms.gle/2qDphHFquEqtt6kx6",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 9
+    "sortOrder": 11
   },
   {
     "id": "soccer-experience-2026",
@@ -147,7 +177,7 @@
     "formUrl": "https://forms.gle/DnGXwrUwQaYTnTxCA",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 10
+    "sortOrder": 12
   },
   {
     "id": "basketball-experience-2026",
@@ -162,7 +192,7 @@
     "formUrl": "https://forms.gle/jcuSyMYKkyS8qpGa7",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 11
+    "sortOrder": 13
   },
   {
     "id": "judo-experience-2026",
@@ -177,7 +207,7 @@
     "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdXp3ZxOqsSPF5EPnIG862uWrNecdlgF7JSMRjpj2M9Ov8SOg/viewform?usp=publish-editor",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 12
+    "sortOrder": 14
   },
   {
     "id": "kendo-experience-2026",
@@ -192,7 +222,7 @@
     "formUrl": "https://forms.gle/akqMUvo6rD37rbRRA",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 13
+    "sortOrder": 15
   },
   {
     "id": "karate-experience-2026",
@@ -207,7 +237,7 @@
     "formUrl": "https://forms.gle/8joeuYWFzHNwzzPq7",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 14
+    "sortOrder": 16
   },
   {
     "id": "kickboxing-experience-2026",
@@ -222,7 +252,7 @@
     "formUrl": "https://forms.gle/R3yusAKxDMez7hP66",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "open",
-    "sortOrder": 15
+    "sortOrder": 17
   },
   {
     "id": "tent-booth-application-2026",
@@ -237,7 +267,7 @@
     "formUrl": "https://forms.gle/JvvNQYqfJwLuFLqX7",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "closed",
-    "sortOrder": 16
+    "sortOrder": 18
   },
   {
     "id": "kitchen-car-application-2026",
@@ -252,6 +282,6 @@
     "formUrl": "https://forms.gle/i1TRbKdgrpE1UE986",
     "buttonLabel": "申し込みフォームはこちら",
     "status": "closed",
-    "sortOrder": 17
+    "sortOrder": 19
   }
 ]

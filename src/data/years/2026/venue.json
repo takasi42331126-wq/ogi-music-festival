@@ -249,6 +249,18 @@
                 "y": 47.2
               },
               "sortOrder": 4
+            },
+            {
+              "id": "patissier-experience",
+              "markerLabel": "E",
+              "title": "パティシエ体験",
+              "room": "1F クッキングスタジオ",
+              "scheduleEventId": "patissier-experience",
+              "position": {
+                "x": 26.9,
+                "y": 58.7
+              },
+              "sortOrder": 5
             }
           ]
         },
@@ -265,7 +277,7 @@
           "markers": [
             {
               "id": "donald-mcdonald-show",
-              "markerLabel": "E",
+              "markerLabel": "F",
               "title": "ドナルド・マクドナルドショー",
               "room": "2F 天山ホール",
               "scheduleEventId": "donald-mcdonald-show",
@@ -277,7 +289,7 @@
             },
             {
               "id": "ogi-taiko",
-              "markerLabel": "F",
+              "markerLabel": "G",
               "title": "小城太鼓（体験会・フィナーレ）",
               "room": "2F 天山ホール",
               "scheduleEventId": "ogi-taiko",
@@ -289,7 +301,7 @@
             },
             {
               "id": "planting-class",
-              "markerLabel": "G",
+              "markerLabel": "H",
               "title": "寄せ植え教室",
               "room": "2F 会議室1",
               "scheduleEventId": "planting-class",
@@ -301,7 +313,7 @@
             },
             {
               "id": "pottery-class",
-              "markerLabel": "H",
+              "markerLabel": "I",
               "title": "夏の陶芸教室",
               "room": "2F 会議室2",
               "scheduleEventId": "pottery-class",
@@ -313,7 +325,7 @@
             },
             {
               "id": "kids-nail-workshop",
-              "markerLabel": "I",
+              "markerLabel": "J",
               "title": "キッズネイルワークショップ",
               "room": "2F 会議室3",
               "scheduleEventId": "kids-nail-workshop",
@@ -325,7 +337,7 @@
             },
             {
               "id": "ear-acupoint-experience",
-              "markerLabel": "J",
+              "markerLabel": "K",
               "title": "耳つぼ体験",
               "room": "2F 会議室4",
               "scheduleEventId": "ear-acupoint-experience",
@@ -337,7 +349,7 @@
             },
             {
               "id": "calligraphy-experience",
-              "markerLabel": "K",
+              "markerLabel": "L",
               "title": "書道体験（体験・パフォーマンス）",
               "room": "2F ラウンジ",
               "scheduleEventId": "calligraphy-experience",
@@ -349,7 +361,7 @@
             },
             {
               "id": "ar-game-photo-experience",
-              "markerLabel": "L",
+              "markerLabel": "M",
               "title": "ARゲーム体験＆写真再生体験",
               "room": "おぎぽーと",
               "scheduleEventId": "ar-game-photo-experience",
@@ -374,7 +386,7 @@
           "markers": [
             {
               "id": "kyudo-experience",
-              "markerLabel": "M",
+              "markerLabel": "N",
               "title": "弓道体験",
               "room": "3階会議室5",
               "scheduleEventId": "kyudo-experience",
@@ -386,7 +398,7 @@
             },
             {
               "id": "saga-industrial-technology-exhibit",
-              "markerLabel": "N",
+              "markerLabel": "O",
               "title": "佐賀県立産業技術学院（展示）",
               "room": "3階会議室5",
               "scheduleEventId": "taku-industrial-academy-exhibit",
