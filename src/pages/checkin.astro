@@ -209,14 +209,25 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
       }
     }
 
-    form?.querySelectorAll('input[name="visitor-count"]').forEach((input) => {
-      input.addEventListener("change", () => {
-        const selected = form?.querySelector('input[name="visitor-count"]:checked');
-        if (customCount instanceof HTMLElement) {
-          customCount.hidden = !(selected instanceof HTMLInputElement && selected.value === "custom");
+    const syncCustomCountInput = () => {
+      const selected = form?.querySelector('input[name="visitor-count"]:checked');
+      const isCustomCount = selected instanceof HTMLInputElement && selected.value === "custom";
+      const customInput = form?.querySelector('input[name="visitor-count-custom"]');
+      if (customCount instanceof HTMLElement) {
+        customCount.hidden = !isCustomCount;
+      }
+      if (customInput instanceof HTMLInputElement) {
+        customInput.disabled = !isCustomCount;
+        if (isCustomCount && customInput.value === "") {
+          customInput.value = "5";
         }
-      });
+      }
+    };
+
+    form?.querySelectorAll('input[name="visitor-count"]').forEach((input) => {
+      input.addEventListener("change", syncCustomCountInput);
     });
+    syncCustomCountInput();
 
     form?.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -229,13 +240,17 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
         return;
       }
 
+      syncCustomCountInput();
+      const isCustomCount = selected.value === "custom";
       const customInput = form.querySelector('input[name="visitor-count-custom"]');
-      const visitorCount = selected.value === "custom" && customInput instanceof HTMLInputElement
+      const visitorCount = isCustomCount && customInput instanceof HTMLInputElement
         ? Number(customInput.value)
         : Number(selected.value);
+      const minVisitorCount = isCustomCount ? 5 : 1;
+      const maxVisitorCount = isCustomCount ? 99 : 4;
 
-      if (!Number.isInteger(visitorCount) || visitorCount < 1 || visitorCount > 99) {
-        setStatus("来場人数は1〜99名で入力してください。", true);
+      if (!Number.isInteger(visitorCount) || visitorCount < minVisitorCount || visitorCount > maxVisitorCount) {
+        setStatus(isCustomCount ? "5名以上は5〜99名で入力してください。" : "来場人数を選択してください。", true);
         return;
       }
 

@@ -2122,6 +2122,10 @@ select {
   gap: 8px;
 }
 
+.checkin-custom-count[hidden] {
+  display: none;
+}
+
 .checkin-custom-count label,
 .checkin-admin-form label,
 .checkin-admin-auth label,

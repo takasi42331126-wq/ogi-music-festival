@@ -400,6 +400,53 @@ function venueStat(summary, venueId) {
   return summary.venueStats.find((venue) => venue.venue_id === venueId);
 }
 
+function resolveVisitorCountSelection(selection, customValue = "5") {
+  const isCustomCount = selection === "custom";
+  const visitorCount = isCustomCount ? Number(customValue) : Number(selection);
+  const minVisitorCount = isCustomCount ? 5 : 1;
+  const maxVisitorCount = isCustomCount ? 99 : 4;
+
+  if (!Number.isInteger(visitorCount) || visitorCount < minVisitorCount || visitorCount > maxVisitorCount) {
+    throw new Error("invalid visitor count");
+  }
+
+  return {
+    customInputVisible: isCustomCount,
+    visitorCount
+  };
+}
+
+function testVisitorCountSelectionRules() {
+  assert.deepEqual(resolveVisitorCountSelection("1"), {
+    customInputVisible: false,
+    visitorCount: 1
+  }, "1名選択時はvisitor_count=1になり、5名以上入力欄は非表示");
+  assert.deepEqual(resolveVisitorCountSelection("2"), {
+    customInputVisible: false,
+    visitorCount: 2
+  }, "2名選択時はvisitor_count=2になり、5名以上入力欄は非表示");
+  assert.deepEqual(resolveVisitorCountSelection("3"), {
+    customInputVisible: false,
+    visitorCount: 3
+  }, "3名選択時はvisitor_count=3になり、5名以上入力欄は非表示");
+  assert.deepEqual(resolveVisitorCountSelection("4"), {
+    customInputVisible: false,
+    visitorCount: 4
+  }, "4名選択時はvisitor_count=4になり、5名以上入力欄は非表示");
+  assert.deepEqual(resolveVisitorCountSelection("custom", "5"), {
+    customInputVisible: true,
+    visitorCount: 5
+  }, "5名以上の初期値はvisitor_count=5");
+  assert.deepEqual(resolveVisitorCountSelection("custom", "99"), {
+    customInputVisible: true,
+    visitorCount: 99
+  }, "5名以上は99名まで送信できる");
+
+  assert.throws(() => resolveVisitorCountSelection("custom", ""), /invalid visitor count/, "5名以上で空欄は送信できない");
+  assert.throws(() => resolveVisitorCountSelection("custom", "4"), /invalid visitor count/, "5名以上で5未満は送信できない");
+  assert.throws(() => resolveVisitorCountSelection("custom", "100"), /invalid visitor count/, "5名以上で100以上は送信できない");
+}
+
 async function savePrizeTotal(db, totalWinners) {
   const response = await savePrize(adminContext(db, {
     mode: "live",
@@ -638,12 +685,16 @@ async function testRequestedVenueCountingAndLocalStorageFlow() {
 
 function testCheckinPageHasSafeMissingVenueHandling() {
   const source = readFileSync(new URL("../src/pages/checkin.astro", import.meta.url), "utf8");
+  const styles = readFileSync(new URL("../src/styles/global.css", import.meta.url), "utf8");
   assert.match(source, /venues\.get\(rawVenueId\)/, "チェックイン画面は許可済み会場リストでvenueを照合する");
   assert.match(source, /会場URLが正しくありません/, "/checkinや不正venueで安全なエラーを表示する");
   assert.match(source, /ogi-dx2026-checkin:\$\{mode\}:\$\{venueId\}/, "LocalStorageキーは会場別になっている");
   assert.match(source, /ogi-dx2026-visitor:\$\{mode\}/, "端末の匿名IDはmode単位で保持する");
   assert.match(source, /anonymousId, visitorCount, venueId, mode/, "チェックインAPIへ端末の匿名IDと会場IDを送信する");
   assert.match(source, /venue=\$\{encodeURIComponent\(venueId\)\}/, "結果再表示APIへ会場IDを送信する");
+  assert.match(source, /customInput\.disabled = !isCustomCount/, "1〜4名選択時は5名以上入力欄を無効化する");
+  assert.match(source, /const minVisitorCount = isCustomCount \? 5 : 1/, "5名以上だけ5〜99名の入力を許可する");
+  assert.match(styles, /\.checkin-custom-count\[hidden\]\s*\{\s*display:\s*none;/s, "5名以上入力欄のhidden表示をCSSで確実に非表示にする");
 }
 
 async function testAdminPageRequiresAuth() {
@@ -667,6 +718,7 @@ async function testAdminPageRequiresAuth() {
   assert.equal(authenticated.status, 200, "正しいBasic認証で管理画面を表示できる");
 }
 
+testVisitorCountSelectionRules();
 await testConcurrentWinnerCap();
 await testResultRedisplay();
 await testClaimedResultRedisplay();
