@@ -1,0 +1,251 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import { CHECKIN_VENUES } from "../data/checkinVenues.js";
+---
+
+<BaseLayout
+  title="来場者チェックイン"
+  description="第35回おぎアマチュア音楽祭DX2026の来場者チェックインページです。"
+  noindex
+>
+  <section class="checkin-page section">
+    <div class="section-inner checkin-shell">
+      <div class="checkin-hero">
+        <p class="eyebrow">Check-in</p>
+        <h1>おぎアマチュア音楽祭DX2026</h1>
+        <p class="checkin-venue" data-checkin-venue hidden></p>
+        <p>ご来場ありがとうございます。人数を選んでチェックインすると、その場で抽選結果が表示されます。</p>
+      </div>
+
+      <div class="checkin-card" data-checkin-root>
+        <div class="checkin-status" data-checkin-status>読み込み中です...</div>
+
+        <form class="checkin-form" data-checkin-form hidden>
+          <div>
+            <p class="checkin-question">あなたを含めて何名で来場しましたか？</p>
+            <div class="checkin-choice-grid" role="radiogroup" aria-label="来場人数">
+              {[1, 2, 3, 4].map((count) => (
+                <label class="checkin-choice">
+                  <input type="radio" name="visitor-count" value={count} required />
+                  <span>{count}名</span>
+                </label>
+              ))}
+              <label class="checkin-choice">
+                <input type="radio" name="visitor-count" value="custom" required />
+                <span>5名以上</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="checkin-custom-count" data-custom-count hidden>
+            <label for="visitor-count-custom">人数を入力してください</label>
+            <input id="visitor-count-custom" name="visitor-count-custom" type="number" min="5" max="99" inputmode="numeric" value="5" />
+          </div>
+
+          <button class="button button-primary checkin-submit" type="submit" data-checkin-submit>
+            チェックインして抽選する
+          </button>
+          <p class="checkin-note">氏名・電話番号・メールアドレスなどの個人情報は取得しません。</p>
+        </form>
+
+        <div class="checkin-result" data-checkin-result hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ checkinVenues: CHECKIN_VENUES }}>
+    const root = document.querySelector("[data-checkin-root]");
+    const venueEl = document.querySelector("[data-checkin-venue]");
+    const statusEl = root?.querySelector("[data-checkin-status]");
+    const form = root?.querySelector("[data-checkin-form]");
+    const customCount = root?.querySelector("[data-custom-count]");
+    const submitButton = root?.querySelector("[data-checkin-submit]");
+    const resultEl = root?.querySelector("[data-checkin-result]");
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode") === "test" ? "test" : "live";
+    const venues = new Map(checkinVenues.map((venue) => [venue.id, venue]));
+    const rawVenueId = params.get("venue") || params.get("venue_id") || "";
+    const venue = venues.get(rawVenueId);
+    const venueId = venue?.id || "";
+    const storageKey = venueId ? `ogi-dx2026-checkin:${mode}:${venueId}` : "";
+
+    const escapeHtml = (value) =>
+      String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+
+    const setStatus = (message, isError = false) => {
+      if (!(statusEl instanceof HTMLElement)) {
+        return;
+      }
+      statusEl.textContent = message;
+      statusEl.dataset.error = String(isError);
+      statusEl.hidden = false;
+    };
+
+    const showForm = () => {
+      if (form instanceof HTMLFormElement) {
+        form.hidden = false;
+      }
+      if (resultEl instanceof HTMLElement) {
+        resultEl.hidden = true;
+      }
+      if (statusEl instanceof HTMLElement) {
+        statusEl.hidden = true;
+      }
+    };
+
+    const venueLabel = (venueIdValue) => venues.get(venueIdValue)?.label || venueIdValue;
+
+    const resultMarkup = (result) => {
+      const isWin = result.result === "win";
+      const claimed = Boolean(result.claimed_at);
+      if (isWin) {
+        return `
+          <div class="checkin-result-hero checkin-result-win">
+            <p class="eyebrow">Lottery Result</p>
+            <h2>おめでとうございます！</h2>
+            <p class="checkin-result-title">当選</p>
+          </div>
+          <dl class="checkin-result-list">
+            <div><dt>景品名</dt><dd>${escapeHtml(result.prize_name)}</dd></div>
+            <div><dt>抽選番号</dt><dd>${escapeHtml(result.anonymous_id)}</dd></div>
+            <div><dt>会場</dt><dd>${escapeHtml(venueLabel(result.venue_id))}</dd></div>
+            <div><dt>受付人数</dt><dd>${Number(result.visitor_count).toLocaleString("ja-JP")}名</dd></div>
+          </dl>
+          <p class="checkin-staff-message ${claimed ? "is-claimed" : ""}">
+            ${claimed ? "この賞品は受取済みです。" : "この画面をスタッフにお見せください。"}
+          </p>
+        `;
+      }
+
+      return `
+        <div class="checkin-result-hero">
+          <p class="eyebrow">Lottery Result</p>
+          <h2>ご参加ありがとうございました！</h2>
+          <p>また次回の音楽祭もお楽しみください。</p>
+        </div>
+        <dl class="checkin-result-list">
+          <div><dt>抽選番号</dt><dd>${escapeHtml(result.anonymous_id)}</dd></div>
+          <div><dt>会場</dt><dd>${escapeHtml(venueLabel(result.venue_id))}</dd></div>
+          <div><dt>受付人数</dt><dd>${Number(result.visitor_count).toLocaleString("ja-JP")}名</dd></div>
+        </dl>
+      `;
+    };
+
+    const showResult = (result, checkedIn = false) => {
+      if (!(resultEl instanceof HTMLElement)) {
+        return;
+      }
+      if (form instanceof HTMLFormElement) {
+        form.hidden = true;
+      }
+      if (statusEl instanceof HTMLElement) {
+        statusEl.hidden = true;
+      }
+      resultEl.innerHTML = `
+        ${checkedIn ? '<p class="checkin-already">チェックイン済みです</p>' : ""}
+        ${resultMarkup(result)}
+        <button class="button button-outline checkin-reload" type="button" data-result-refresh>抽選結果を再読み込み</button>
+      `;
+      resultEl.hidden = false;
+      resultEl.querySelector("[data-result-refresh]")?.addEventListener("click", loadExistingResult);
+    };
+
+    const requestJson = async (url, options = {}) => {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          ...(options.headers ?? {})
+        }
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) {
+        throw new Error(data.error || "通信に失敗しました。");
+      }
+      return data;
+    };
+
+    async function loadExistingResult() {
+      const anonymousId = window.localStorage.getItem(storageKey);
+      if (!anonymousId) {
+        showForm();
+        return;
+      }
+
+      setStatus("チェックイン済み情報を確認しています...");
+      try {
+        const data = await requestJson(`/api/checkin/result?anonymousId=${encodeURIComponent(anonymousId)}&mode=${mode}`);
+        showResult(data.result, true);
+      } catch (error) {
+        window.localStorage.removeItem(storageKey);
+        setStatus(error instanceof Error ? error.message : "結果を確認できませんでした。", true);
+        showForm();
+      }
+    }
+
+    form?.querySelectorAll('input[name="visitor-count"]').forEach((input) => {
+      input.addEventListener("change", () => {
+        const selected = form?.querySelector('input[name="visitor-count"]:checked');
+        if (customCount instanceof HTMLElement) {
+          customCount.hidden = !(selected instanceof HTMLInputElement && selected.value === "custom");
+        }
+      });
+    });
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!(form instanceof HTMLFormElement)) {
+        return;
+      }
+      const selected = form.querySelector('input[name="visitor-count"]:checked');
+      if (!(selected instanceof HTMLInputElement)) {
+        setStatus("来場人数を選択してください。", true);
+        return;
+      }
+
+      const customInput = form.querySelector('input[name="visitor-count-custom"]');
+      const visitorCount = selected.value === "custom" && customInput instanceof HTMLInputElement
+        ? Number(customInput.value)
+        : Number(selected.value);
+
+      if (!Number.isInteger(visitorCount) || visitorCount < 1 || visitorCount > 99) {
+        setStatus("来場人数は1〜99名で入力してください。", true);
+        return;
+      }
+
+      if (submitButton instanceof HTMLButtonElement) {
+        submitButton.disabled = true;
+      }
+      setStatus("チェックインと抽選を行っています...");
+
+      try {
+        const data = await requestJson("/api/checkin", {
+          method: "POST",
+          body: JSON.stringify({ visitorCount, venueId, mode })
+        });
+        window.localStorage.setItem(storageKey, data.result.anonymous_id);
+        showResult(data.result, false);
+      } catch (error) {
+        setStatus(error instanceof Error ? error.message : "チェックインできませんでした。", true);
+      } finally {
+        if (submitButton instanceof HTMLButtonElement) {
+          submitButton.disabled = false;
+        }
+      }
+    });
+
+    if (venue) {
+      if (venueEl instanceof HTMLElement) {
+        venueEl.textContent = venue.displayName;
+        venueEl.hidden = false;
+      }
+      loadExistingResult();
+    } else {
+      setStatus("会場URLが正しくありません。会場のQRコードからアクセスしてください。", true);
+    }
+  </script>
+</BaseLayout>

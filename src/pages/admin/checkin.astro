@@ -1,0 +1,497 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="チェックイン管理"
+  description="来場者チェックインと抽選の管理画面です。"
+  noindex
+>
+  <section class="section checkin-admin-page">
+    <div class="section-inner checkin-admin-shell" data-checkin-admin>
+      <div class="section-header">
+        <p class="eyebrow">Check-in Admin</p>
+        <h1>来場者チェックイン管理</h1>
+        <p>来場者数、会場別集計、抽選状況、景品受取状況を確認できます。</p>
+      </div>
+
+      <div class="checkin-admin-auth">
+        <label for="admin-token">管理トークン</label>
+        <input id="admin-token" type="password" autocomplete="current-password" placeholder="CHECKIN_ADMIN_TOKEN" data-admin-token />
+        <button class="button button-primary" type="button" data-admin-login>表示する</button>
+        <button class="button button-outline" type="button" data-admin-logout>トークンを削除</button>
+      </div>
+
+      <div class="checkin-admin-toolbar">
+        <label for="admin-mode">表示データ</label>
+        <select id="admin-mode" data-admin-mode>
+          <option value="live">本番</option>
+          <option value="test">テスト</option>
+        </select>
+        <button class="button button-outline" type="button" data-admin-refresh>再読み込み</button>
+        <span class="status-pill" data-admin-status>未接続</span>
+      </div>
+
+      <div class="checkin-admin-summary" data-admin-summary></div>
+
+      <section class="checkin-admin-panel">
+        <div class="checkin-admin-panel-heading">
+          <div>
+            <p class="eyebrow">Settings</p>
+            <h2>抽選設定</h2>
+          </div>
+        </div>
+        <form class="checkin-admin-form" data-settings-form>
+          <label>
+            <span>抽選受付</span>
+            <select name="drawOpen">
+              <option value="true">受付中</option>
+              <option value="false">停止中</option>
+            </select>
+          </label>
+          <label>
+            <span>当選確率（%）</span>
+            <input name="winRatePercent" type="number" min="0" max="100" step="0.01" value="0" />
+          </label>
+          <button class="button button-primary" type="submit">設定を保存</button>
+        </form>
+      </section>
+
+      <section class="checkin-admin-panel">
+        <div class="checkin-admin-panel-heading">
+          <div>
+            <p class="eyebrow">Prizes</p>
+            <h2>景品設定</h2>
+          </div>
+        </div>
+        <form class="checkin-admin-form checkin-prize-form" data-prize-form>
+          <input name="id" type="hidden" />
+          <label>
+            <span>景品名</span>
+            <input name="name" type="text" maxlength="80" required />
+          </label>
+          <label>
+            <span>当選本数</span>
+            <input name="totalWinners" type="number" min="0" max="100000" value="0" required />
+          </label>
+          <label>
+            <span>表示順</span>
+            <input name="sortOrder" type="number" value="0" />
+          </label>
+          <label>
+            <span>有効</span>
+            <select name="enabled">
+              <option value="true">有効</option>
+              <option value="false">無効</option>
+            </select>
+          </label>
+          <button class="button button-primary" type="submit">景品を保存</button>
+          <button class="button button-outline" type="button" data-prize-clear>新規入力に戻す</button>
+        </form>
+        <div class="checkin-admin-table-wrap">
+          <table class="checkin-admin-table" data-prize-table></table>
+        </div>
+      </section>
+
+      <section class="checkin-admin-panel">
+        <div class="checkin-admin-panel-heading">
+          <div>
+            <p class="eyebrow">Winners</p>
+            <h2>当選者・受取管理</h2>
+          </div>
+        </div>
+        <div class="checkin-admin-table-wrap">
+          <table class="checkin-admin-table" data-winner-table></table>
+        </div>
+      </section>
+
+      <section class="checkin-admin-panel">
+        <div class="checkin-admin-panel-heading">
+          <div>
+            <p class="eyebrow">Venue</p>
+            <h2>会場別来場者数</h2>
+          </div>
+        </div>
+        <p class="checkin-admin-help">全会場合計は各会場の来場者数を単純合計した数字です。同じ方が複数会場でチェックインした場合も、各会場の来場者として集計します。</p>
+        <div class="checkin-admin-table-wrap">
+          <table class="checkin-admin-table" data-venue-table></table>
+        </div>
+      </section>
+
+      <section class="checkin-admin-panel checkin-admin-danger">
+        <div class="checkin-admin-panel-heading">
+          <div>
+            <p class="eyebrow">Test Data</p>
+            <h2>テストデータ削除</h2>
+          </div>
+        </div>
+        <p>本番データは削除しません。テストモードのチェックイン・抽選結果のみ削除します。</p>
+        <form class="checkin-admin-form" data-reset-test-form>
+          <label>
+            <span>確認文字列</span>
+            <input name="confirm" type="text" placeholder="DELETE TEST DATA" />
+          </label>
+          <button class="button button-outline" type="submit">テストデータを削除</button>
+        </form>
+      </section>
+    </div>
+  </section>
+
+  <script>
+    const adminRoot = document.querySelector("[data-checkin-admin]");
+    const tokenInput = adminRoot?.querySelector("[data-admin-token]");
+    const loginButton = adminRoot?.querySelector("[data-admin-login]");
+    const logoutButton = adminRoot?.querySelector("[data-admin-logout]");
+    const refreshButton = adminRoot?.querySelector("[data-admin-refresh]");
+    const modeSelect = adminRoot?.querySelector("[data-admin-mode]");
+    const statusBadge = adminRoot?.querySelector("[data-admin-status]");
+    const summaryEl = adminRoot?.querySelector("[data-admin-summary]");
+    const prizeTable = adminRoot?.querySelector("[data-prize-table]");
+    const winnerTable = adminRoot?.querySelector("[data-winner-table]");
+    const venueTable = adminRoot?.querySelector("[data-venue-table]");
+    const settingsForm = adminRoot?.querySelector("[data-settings-form]");
+    const prizeForm = adminRoot?.querySelector("[data-prize-form]");
+    const prizeClearButton = adminRoot?.querySelector("[data-prize-clear]");
+    const resetTestForm = adminRoot?.querySelector("[data-reset-test-form]");
+    const tokenStorageKey = "ogi-dx2026-checkin-admin-token";
+
+    let currentData = null;
+
+    const formField = (form, name) => {
+      if (!(form instanceof HTMLFormElement)) {
+        return null;
+      }
+      const field = form.elements.namedItem(name);
+      return field instanceof HTMLInputElement || field instanceof HTMLSelectElement ? field : null;
+    };
+
+    const escapeHtml = (value) =>
+      String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+
+    const setAdminStatus = (message, isError = false) => {
+      if (statusBadge instanceof HTMLElement) {
+        statusBadge.textContent = message;
+        statusBadge.dataset.error = String(isError);
+      }
+    };
+
+    const getToken = () => {
+      if (tokenInput instanceof HTMLInputElement && tokenInput.value.trim()) {
+        return tokenInput.value.trim();
+      }
+      return window.sessionStorage.getItem(tokenStorageKey) || "";
+    };
+
+    const getMode = () => modeSelect instanceof HTMLSelectElement ? modeSelect.value : "live";
+
+    const adminRequest = async (url, options = {}) => {
+      const token = getToken();
+      if (!token) {
+        throw new Error("管理トークンを入力してください。");
+      }
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          ...(options.headers ?? {})
+        }
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) {
+        throw new Error(data.error || "管理APIに接続できませんでした。");
+      }
+      window.sessionStorage.setItem(tokenStorageKey, token);
+      return data;
+    };
+
+    const renderSummary = (data) => {
+      if (!(summaryEl instanceof HTMLElement)) {
+        return;
+      }
+      summaryEl.innerHTML = `
+        <article class="checkin-metric"><span>全会場合計</span><strong>${Number(data.venueTotal?.visitorTotal ?? data.stats.visitorTotal).toLocaleString("ja-JP")}人</strong></article>
+        <article class="checkin-metric"><span>総来場者数</span><strong>${Number(data.stats.visitorTotal).toLocaleString("ja-JP")}人</strong></article>
+        <article class="checkin-metric"><span>チェックイン件数</span><strong>${Number(data.stats.checkinCount).toLocaleString("ja-JP")}件</strong></article>
+        <article class="checkin-metric"><span>モード</span><strong>${data.mode === "test" ? "テスト" : "本番"}</strong></article>
+      `;
+    };
+
+    const renderSettings = (data) => {
+      if (!(settingsForm instanceof HTMLFormElement)) {
+        return;
+      }
+      const drawOpen = formField(settingsForm, "drawOpen");
+      const winRatePercent = formField(settingsForm, "winRatePercent");
+      if (drawOpen) {
+        drawOpen.value = data.settings.draw_open ?? "true";
+      }
+      if (winRatePercent) {
+        winRatePercent.value = data.settings.win_rate_percent ?? "0";
+      }
+    };
+
+    const renderPrizes = (data) => {
+      if (!(prizeTable instanceof HTMLTableElement)) {
+        return;
+      }
+      const rows = data.prizes.map((prize) => `
+        <tr>
+          <td>${escapeHtml(prize.name)}</td>
+          <td>${Number(prize.total_winners).toLocaleString("ja-JP")}</td>
+          <td>${Number(prize.win_count).toLocaleString("ja-JP")}</td>
+          <td>${Number(prize.remaining_count).toLocaleString("ja-JP")}</td>
+          <td>${Number(prize.claimed_count).toLocaleString("ja-JP")}</td>
+          <td>${prize.enabled ? "有効" : "無効"}</td>
+          <td><button class="button button-outline button-small" type="button" data-edit-prize="${escapeHtml(prize.id)}">編集</button></td>
+        </tr>
+      `).join("");
+
+      prizeTable.innerHTML = `
+        <thead><tr><th>景品</th><th>当選本数</th><th>当選済み</th><th>残り</th><th>受取済み</th><th>状態</th><th></th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="7">景品が未設定です。</td></tr>'}</tbody>
+      `;
+
+      prizeTable.querySelectorAll("[data-edit-prize]").forEach((button) => {
+        button.addEventListener("click", () => {
+          if (!(prizeForm instanceof HTMLFormElement)) {
+            return;
+          }
+          const prize = currentData?.prizes.find((item) => item.id === button.getAttribute("data-edit-prize"));
+          if (!prize) {
+            return;
+          }
+          const id = formField(prizeForm, "id");
+          const name = formField(prizeForm, "name");
+          const totalWinners = formField(prizeForm, "totalWinners");
+          const sortOrder = formField(prizeForm, "sortOrder");
+          const enabled = formField(prizeForm, "enabled");
+          if (id) id.value = prize.id;
+          if (name) name.value = prize.name;
+          if (totalWinners) totalWinners.value = prize.total_winners;
+          if (sortOrder) sortOrder.value = prize.sort_order;
+          if (enabled) enabled.value = prize.enabled ? "true" : "false";
+          prizeForm.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+    };
+
+    const renderWinners = (data) => {
+      if (!(winnerTable instanceof HTMLTableElement)) {
+        return;
+      }
+      const rows = data.winners.map((winner) => `
+        <tr>
+          <td>${escapeHtml(winner.anonymous_id)}</td>
+          <td>${escapeHtml(winner.prize_name)}</td>
+          <td>${escapeHtml(winner.venue_id)}</td>
+          <td>${new Date(winner.drawn_at).toLocaleString("ja-JP")}</td>
+          <td>${winner.claimed_at ? "受取済み" : "未受取"}</td>
+          <td>
+            <button class="button button-outline button-small" type="button" data-claim="${escapeHtml(winner.anonymous_id)}" data-claimed="${winner.claimed_at ? "false" : "true"}">
+              ${winner.claimed_at ? "未受取に戻す" : "景品受取済み"}
+            </button>
+          </td>
+        </tr>
+      `).join("");
+
+      winnerTable.innerHTML = `
+        <thead><tr><th>抽選番号</th><th>景品</th><th>会場</th><th>当選日時</th><th>受取状況</th><th></th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="6">当選者はまだいません。</td></tr>'}</tbody>
+      `;
+
+      winnerTable.querySelectorAll("[data-claim]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          try {
+            setAdminStatus("受取状況を更新しています...");
+            const data = await adminRequest("/api/checkin/admin/claim", {
+              method: "POST",
+              body: JSON.stringify({
+                mode: getMode(),
+                anonymousId: button.getAttribute("data-claim"),
+                claimed: button.getAttribute("data-claimed") === "true"
+              })
+            });
+            renderAll(data.data);
+            setAdminStatus("更新しました");
+          } catch (error) {
+            setAdminStatus(error instanceof Error ? error.message : "更新できませんでした。", true);
+          }
+        });
+      });
+    };
+
+    const renderVenueStats = (data) => {
+      if (!(venueTable instanceof HTMLTableElement)) {
+        return;
+      }
+      const absoluteUrl = (path) => {
+        if (!path) {
+          return "";
+        }
+        return new URL(path, window.location.origin).toString();
+      };
+      const rows = data.venueStats.map((venue) => `
+        <tr>
+          <td>${escapeHtml(venue.venue_name)}</td>
+          <td>${Number(venue.visitor_total).toLocaleString("ja-JP")}人</td>
+          <td>${Number(venue.checkin_count).toLocaleString("ja-JP")}件</td>
+          <td>${venue.checkin_url ? `<code>${escapeHtml(venue.checkin_url)}</code>` : "-"}</td>
+          <td>${venue.checkin_url ? `<button class="button button-outline button-small" type="button" data-copy-url="${escapeHtml(absoluteUrl(venue.checkin_url))}">コピー</button>` : ""}</td>
+          <td>${escapeHtml(venue.venue_id)}</td>
+        </tr>
+      `).join("");
+
+      venueTable.innerHTML = `
+        <thead><tr><th>会場</th><th>来場者数</th><th>チェックイン件数</th><th>QR用URL</th><th></th><th>会場ID</th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="6">チェックインはまだありません。</td></tr>'}</tbody>
+      `;
+
+      venueTable.querySelectorAll("[data-copy-url]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const url = button.getAttribute("data-copy-url") || "";
+          try {
+            await navigator.clipboard.writeText(url);
+            setAdminStatus("会場URLをコピーしました");
+          } catch {
+            setAdminStatus("コピーできませんでした。URLを選択してコピーしてください。", true);
+          }
+        });
+      });
+    };
+
+    const renderAll = (data) => {
+      currentData = data;
+      renderSummary(data);
+      renderSettings(data);
+      renderPrizes(data);
+      renderWinners(data);
+      renderVenueStats(data);
+    };
+
+    const loadAdmin = async () => {
+      try {
+        setAdminStatus("読み込み中...");
+        const data = await adminRequest(`/api/checkin/admin?mode=${getMode()}`);
+        renderAll(data.data);
+        setAdminStatus("接続中");
+      } catch (error) {
+        setAdminStatus(error instanceof Error ? error.message : "読み込めませんでした。", true);
+      }
+    };
+
+    loginButton?.addEventListener("click", loadAdmin);
+    refreshButton?.addEventListener("click", loadAdmin);
+    modeSelect?.addEventListener("change", loadAdmin);
+
+    logoutButton?.addEventListener("click", () => {
+      window.sessionStorage.removeItem(tokenStorageKey);
+      if (tokenInput instanceof HTMLInputElement) {
+        tokenInput.value = "";
+      }
+      setAdminStatus("トークンを削除しました");
+    });
+
+    settingsForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!(settingsForm instanceof HTMLFormElement)) {
+        return;
+      }
+      try {
+        const drawOpen = formField(settingsForm, "drawOpen");
+        const winRatePercent = formField(settingsForm, "winRatePercent");
+        setAdminStatus("抽選設定を保存しています...");
+        const data = await adminRequest("/api/checkin/admin/settings", {
+          method: "POST",
+          body: JSON.stringify({
+            mode: getMode(),
+            drawOpen: drawOpen?.value === "true",
+            winRatePercent: winRatePercent?.value
+          })
+        });
+        renderAll(data.data);
+        setAdminStatus("保存しました");
+      } catch (error) {
+        setAdminStatus(error instanceof Error ? error.message : "保存できませんでした。", true);
+      }
+    });
+
+    prizeForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!(prizeForm instanceof HTMLFormElement)) {
+        return;
+      }
+      try {
+        const id = formField(prizeForm, "id");
+        const name = formField(prizeForm, "name");
+        const totalWinners = formField(prizeForm, "totalWinners");
+        const sortOrder = formField(prizeForm, "sortOrder");
+        const enabled = formField(prizeForm, "enabled");
+        setAdminStatus("景品を保存しています...");
+        const data = await adminRequest("/api/checkin/admin/prizes", {
+          method: "POST",
+          body: JSON.stringify({
+            mode: getMode(),
+            id: id?.value,
+            name: name?.value,
+            totalWinners: totalWinners?.value,
+            sortOrder: sortOrder?.value,
+            enabled: enabled?.value === "true"
+          })
+        });
+        prizeForm.reset();
+        const idAfterReset = formField(prizeForm, "id");
+        if (idAfterReset) {
+          idAfterReset.value = "";
+        }
+        renderAll(data.data);
+        setAdminStatus("保存しました");
+      } catch (error) {
+        setAdminStatus(error instanceof Error ? error.message : "保存できませんでした。", true);
+      }
+    });
+
+    prizeClearButton?.addEventListener("click", () => {
+      if (prizeForm instanceof HTMLFormElement) {
+        prizeForm.reset();
+        const id = formField(prizeForm, "id");
+        if (id) {
+          id.value = "";
+        }
+      }
+    });
+
+    resetTestForm?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!(resetTestForm instanceof HTMLFormElement)) {
+        return;
+      }
+      try {
+        const confirm = formField(resetTestForm, "confirm");
+        setAdminStatus("テストデータを削除しています...");
+        const data = await adminRequest("/api/checkin/admin/reset-test", {
+          method: "POST",
+          body: JSON.stringify({ confirm: confirm?.value })
+        });
+        if (modeSelect instanceof HTMLSelectElement) {
+          modeSelect.value = "test";
+        }
+        resetTestForm.reset();
+        renderAll(data.data);
+        setAdminStatus("テストデータを削除しました");
+      } catch (error) {
+        setAdminStatus(error instanceof Error ? error.message : "削除できませんでした。", true);
+      }
+    });
+
+    const savedToken = window.sessionStorage.getItem(tokenStorageKey);
+    if (savedToken && tokenInput instanceof HTMLInputElement) {
+      tokenInput.value = savedToken;
+      loadAdmin();
+    }
+  </script>
+</BaseLayout>

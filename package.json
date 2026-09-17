@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "validate:data": "node scripts/validate-data.mjs"
+    "validate:data": "node scripts/validate-data.mjs",
+    "test:checkin": "node scripts/test-checkin-lottery.mjs"
   },
   "dependencies": {
     "astro": "^4.16.18",

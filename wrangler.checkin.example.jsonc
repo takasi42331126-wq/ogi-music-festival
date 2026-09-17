@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ogi-music-festival",
+  "pages_build_output_dir": "./dist",
+  "d1_databases": [
+    {
+      "binding": "CHECKIN_DB",
+      "database_name": "ogi-dx2026-checkin",
+      "database_id": "<YOUR_D1_DATABASE_ID>"
+    }
+  ]
+}
