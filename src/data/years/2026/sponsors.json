@@ -310,6 +310,16 @@
     "sortOrder": 31
   },
   {
+    "id": "special-sponsor-032",
+    "name": "株式会社古賀木材センター",
+    "category": "特別協賛",
+    "amount": 300000,
+    "logo": "/assets/years/2026/sponsors/koga-mokuzai-center.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 32
+  },
+  {
     "id": "nominal-sponsor-001",
     "name": "小城商工会議所",
     "category": "名義協賛",
