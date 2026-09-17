@@ -39,6 +39,7 @@ class MockD1 {
     this.checkins = [];
     this.drawResults = [];
     this.prizes = [];
+    this.prizeVenueLimits = [];
     this.settings = new Map([
       ["live:draw_open", "true"],
       ["live:win_rate_percent", "0"],
@@ -59,24 +60,64 @@ class MockD1 {
     return results;
   }
 
-  addPrize({ id, name, totalWinners, enabled = 1, sortOrder = 0 }) {
+  addPrize({ id, name, totalWinners, venueLimits, enabled = 1, sortOrder = 0 }) {
     const now = new Date().toISOString();
+    const limits = CHECKIN_VENUES.map((venue) => ({
+      prize_id: id,
+      venue_id: venue.id,
+      total_winners: Number(venueLimits?.[venue.id] ?? totalWinners ?? 0),
+      created_at: now,
+      updated_at: now
+    }));
     this.prizes.push({
       id,
       name,
-      total_winners: totalWinners,
+      total_winners: limits.reduce((sum, item) => sum + item.total_winners, 0),
       enabled,
       sort_order: sortOrder,
       created_at: now,
       updated_at: now
     });
+    this.prizeVenueLimits.push(...limits);
   }
 
   setPrizeTotal(id, totalWinners) {
     const prize = this.prizes.find((item) => item.id === id);
     assert.ok(prize, `Prize ${id} exists`);
-    prize.total_winners = totalWinners;
+    for (const venue of CHECKIN_VENUES) {
+      this.upsertPrizeVenueLimit(id, venue.id, totalWinners);
+    }
+    prize.total_winners = totalWinners * CHECKIN_VENUES.length;
     prize.updated_at = new Date().toISOString();
+  }
+
+  upsertPrizeVenueLimit(prizeId, venueId, totalWinners) {
+    const now = new Date().toISOString();
+    const existing = this.prizeVenueLimits.find((item) => item.prize_id === prizeId && item.venue_id === venueId);
+    if (existing) {
+      existing.total_winners = Number(totalWinners);
+      existing.updated_at = now;
+      return existing;
+    }
+    const created = {
+      prize_id: prizeId,
+      venue_id: venueId,
+      total_winners: Number(totalWinners),
+      created_at: now,
+      updated_at: now
+    };
+    this.prizeVenueLimits.push(created);
+    return created;
+  }
+
+  seedMissingPrizeVenueLimits() {
+    for (const prize of this.prizes) {
+      for (const venue of CHECKIN_VENUES) {
+        if (!this.prizeVenueLimits.some((item) => item.prize_id === prize.id && item.venue_id === venue.id)) {
+          this.upsertPrizeVenueLimit(prize.id, venue.id, prize.total_winners);
+        }
+      }
+    }
   }
 
   setSetting(mode, key, value) {
@@ -84,6 +125,16 @@ class MockD1 {
   }
 
   run(sql, args) {
+    if (sql.startsWith("CREATE TABLE IF NOT EXISTS prize_venue_limits") || sql.startsWith("CREATE INDEX IF NOT EXISTS idx_prize_venue_limits_venue")) {
+      return { meta: { changes: 0 } };
+    }
+
+    if (sql.startsWith("INSERT OR IGNORE INTO prize_venue_limits")) {
+      const before = this.prizeVenueLimits.length;
+      this.seedMissingPrizeVenueLimits();
+      return { meta: { changes: this.prizeVenueLimits.length - before } };
+    }
+
     if (sql.startsWith("INSERT INTO checkins")) {
       const [id, anonymousId, venueId, visitorCount, mode, userAgentHash, checkedInAt] = args;
       if (this.checkins.some((item) => item.anonymous_id === anonymousId && item.venue_id === venueId && item.mode === mode)) {
@@ -103,15 +154,16 @@ class MockD1 {
     }
 
     if (sql.startsWith("INSERT OR IGNORE INTO draw_results") && sql.includes("SELECT")) {
-      const [id, anonymousId, checkinId, venueId, mode, drawnAt, prizeId, countMode] = args;
+      const [id, anonymousId, checkinId, venueId, mode, drawnAt, prizeId, limitVenueId, countMode, countVenueId] = args;
       if (this.drawResults.some((item) => item.anonymous_id === anonymousId && item.venue_id === venueId && item.mode === mode)) {
         return { meta: { changes: 0 } };
       }
       const prize = this.prizes.find((item) => item.id === prizeId);
+      const venueLimit = this.prizeVenueLimits.find((item) => item.prize_id === prizeId && item.venue_id === limitVenueId);
       const winCount = this.drawResults.filter(
-        (item) => item.prize_id === prizeId && item.result === "win" && item.mode === countMode
+        (item) => item.prize_id === prizeId && item.result === "win" && item.mode === countMode && item.venue_id === countVenueId
       ).length;
-      if (!prize || prize.enabled !== 1 || prize.total_winners <= winCount) {
+      if (!prize || !venueLimit || prize.enabled !== 1 || venueLimit.total_winners <= winCount) {
         return { meta: { changes: 0 } };
       }
       this.drawResults.push({
@@ -184,6 +236,12 @@ class MockD1 {
       return { meta: { changes: 1 } };
     }
 
+    if (sql.startsWith("INSERT INTO prize_venue_limits")) {
+      const [prizeId, venueId, totalWinners] = args;
+      this.upsertPrizeVenueLimit(prizeId, venueId, totalWinners);
+      return { meta: { changes: 1 } };
+    }
+
     if (sql.startsWith("INSERT INTO settings")) {
       const [mode, value] = args.length === 3 ? args : [args[0], args[1]];
       const key = sql.includes("'win_rate_percent'") ? "win_rate_percent" : "draw_open";
@@ -234,11 +292,16 @@ class MockD1 {
     }
 
     if (sql.includes("FROM prizes p") && sql.includes("WHERE remaining > 0")) {
-      const [mode] = args;
-      return { results: this.availablePrizes(mode) };
+      const [venueId, mode] = args;
+      return { results: this.availablePrizes(mode, venueId) };
     }
 
-    if (sql.includes("COALESCE(w.claimed_count, 0) AS claimed_count")) {
+    if (sql.includes("p.id AS prize_id") && sql.includes("venues.venue_id")) {
+      const [mode] = args;
+      return { results: this.prizeVenueSummary(mode) };
+    }
+
+    if (sql.includes("COALESCE(SUM(w.claimed_count), 0) AS claimed_count")) {
       const [mode] = args;
       return { results: this.prizeSummary(mode) };
     }
@@ -256,9 +319,9 @@ class MockD1 {
     throw new Error(`Unsupported all SQL: ${sql}`);
   }
 
-  availablePrizes(mode) {
-    return this.prizeSummary(mode)
-      .filter((prize) => prize.enabled === 1 && prize.total_winners > 0 && prize.remaining > 0)
+  availablePrizes(mode, venueId) {
+    return this.prizeVenueSummary(mode)
+      .filter((prize) => prize.venue_id === venueId && prize.enabled === 1 && prize.total_winners > 0 && prize.remaining > 0)
       .map((prize) => ({ ...prize }))
       .sort((left, right) => left.sort_order - right.sort_order || left.name.localeCompare(right.name));
   }
@@ -271,15 +334,47 @@ class MockD1 {
         );
         const winCount = wins.length;
         const claimedCount = wins.filter((result) => result.claimed_at).length;
+        const limits = this.prizeVenueLimits.filter((limit) => limit.prize_id === prize.id);
+        const totalWinners = limits.reduce((sum, limit) => sum + Number(limit.total_winners), 0);
+        const remaining = limits.reduce((sum, limit) => {
+          const venueWinCount = wins.filter((result) => result.venue_id === limit.venue_id).length;
+          return sum + Math.max(Number(limit.total_winners) - venueWinCount, 0);
+        }, 0);
         return {
           ...prize,
+          total_winners: totalWinners,
           win_count: winCount,
           claimed_count: claimedCount,
-          remaining: prize.total_winners - winCount,
-          remaining_count: Math.max(prize.total_winners - winCount, 0)
+          remaining,
+          remaining_count: remaining
         };
       })
       .sort((left, right) => left.sort_order - right.sort_order || left.name.localeCompare(right.name));
+  }
+
+  prizeVenueSummary(mode) {
+    const rows = [];
+    for (const prize of this.prizes) {
+      for (const venue of CHECKIN_VENUES) {
+        const limit = this.prizeVenueLimits.find((item) => item.prize_id === prize.id && item.venue_id === venue.id);
+        const wins = this.drawResults.filter(
+          (result) => result.mode === mode && result.prize_id === prize.id && result.venue_id === venue.id && result.result === "win"
+        );
+        const winCount = wins.length;
+        const totalWinners = Number(limit?.total_winners ?? 0);
+        rows.push({
+          ...prize,
+          prize_id: prize.id,
+          venue_id: venue.id,
+          total_winners: totalWinners,
+          win_count: winCount,
+          claimed_count: wins.filter((result) => result.claimed_at).length,
+          remaining: totalWinners - winCount,
+          remaining_count: Math.max(totalWinners - winCount, 0)
+        });
+      }
+    }
+    return rows.sort((left, right) => left.sort_order - right.sort_order || left.name.localeCompare(right.name) || left.venue_id.localeCompare(right.venue_id));
   }
 
   rowForResult(anonymousId, venueId, mode) {
@@ -447,16 +542,28 @@ function testVisitorCountSelectionRules() {
   assert.throws(() => resolveVisitorCountSelection("custom", "100"), /invalid visitor count/, "5名以上で100以上は送信できない");
 }
 
-async function savePrizeTotal(db, totalWinners) {
+function venueLimits(values = {}) {
+  return Object.fromEntries(CHECKIN_VENUES.map((venue) => [venue.id, values[venue.id] ?? 0]));
+}
+
+async function savePrizeTotal(db, totalWinners, limits = { park: totalWinners }) {
   const response = await savePrize(adminContext(db, {
     mode: "live",
     id: "prize-a",
     name: "本数変更景品",
-    totalWinners,
+    venueLimits: venueLimits(limits),
     enabled: true,
     sortOrder: 0
   }));
   assert.equal(response.status, 200, "景品設定APIが成功する");
+}
+
+function prizeVenueLimit(summary, prizeId, venueId) {
+  const prize = summary.prizes.find((item) => item.id === prizeId);
+  assert.ok(prize, `${prizeId}の景品集計が存在する`);
+  const venue = prize.venue_limits.find((item) => item.venue_id === venueId);
+  assert.ok(venue, `${venueId}の会場別当選上限が存在する`);
+  return venue;
 }
 
 async function testConcurrentWinnerCap() {
@@ -470,9 +577,55 @@ async function testConcurrentWinnerCap() {
   const wins = results.filter((result) => result.result === "win");
   const losses = results.filter((result) => result.result === "lose");
 
-  assert.equal(wins.length, 3, "同時チェックインでも当選本数を超えない");
+  assert.equal(wins.length, 3, "同時チェックインでも小城公園の会場別当選本数を超えない");
   assert.equal(losses.length, 27, "上限到達後はハズレとして確定する");
   assert.equal(db.drawResults.filter((result) => result.result === "win").length, 3);
+}
+
+async function testVenueSpecificWinnerCaps() {
+  const db = new MockD1();
+  db.addPrize({
+    id: "prize-a",
+    name: "会場別景品",
+    venueLimits: {
+      park: 10,
+      yumeplat: 3,
+      highschool: 2,
+      university: 1,
+      sakuraoka: 5
+    }
+  });
+  db.setSetting("live", "win_rate_percent", "100");
+
+  const parkResults = await Promise.all(Array.from({ length: 12 }, (_, index) => createVisitor(db, 700 + index, { venueId: "park" })));
+  const sakuraokaResults = await Promise.all(Array.from({ length: 7 }, (_, index) => createVisitor(db, 800 + index, { venueId: "sakuraoka" })));
+  const yumeplatResults = await Promise.all(Array.from({ length: 4 }, (_, index) => createVisitor(db, 900 + index, { venueId: "yumeplat" })));
+  const highschoolResults = await Promise.all(Array.from({ length: 3 }, (_, index) => createVisitor(db, 1000 + index, { venueId: "highschool" })));
+  const universityResults = await Promise.all(Array.from({ length: 2 }, (_, index) => createVisitor(db, 1100 + index, { venueId: "university" })));
+
+  assert.equal(parkResults.filter((result) => result.result === "win").length, 10, "小城公園は10本を超えて当選しない");
+  assert.equal(sakuraokaResults.filter((result) => result.result === "win").length, 5, "桜岡小学校は5本を超えて当選しない");
+  assert.equal(yumeplatResults.filter((result) => result.result === "win").length, 3, "ゆめぷらっと小城は3本を超えて当選しない");
+  assert.equal(highschoolResults.filter((result) => result.result === "win").length, 2, "小城高校は2本を超えて当選しない");
+  assert.equal(universityResults.filter((result) => result.result === "win").length, 1, "西九州大学は1本を超えて当選しない");
+  assert.equal(sakuraokaResults[0].result, "win", "小城公園が上限に達しても桜岡小学校の抽選には影響しない");
+
+  const summary = await getAdminSummary(db, "live");
+  assert.deepEqual(
+    Object.fromEntries(summary.prizes[0].venue_limits.map((venue) => [venue.venue_id, venue.total_winners])),
+    {
+      park: 10,
+      yumeplat: 3,
+      highschool: 2,
+      university: 1,
+      sakuraoka: 5
+    },
+    "5会場それぞれ独立した設定当選数を管理できる"
+  );
+  assert.equal(prizeVenueLimit(summary, "prize-a", "park").win_count, 10, "管理画面集計で小城公園の当選済み数を確認できる");
+  assert.equal(prizeVenueLimit(summary, "prize-a", "park").remaining_count, 0, "管理画面集計で小城公園の残り当選数を確認できる");
+  assert.equal(prizeVenueLimit(summary, "prize-a", "sakuraoka").win_count, 5, "管理画面集計で桜岡小学校の当選済み数を確認できる");
+  assert.equal(prizeVenueLimit(summary, "prize-a", "sakuraoka").remaining_count, 0, "管理画面集計で桜岡小学校の残り当選数を確認できる");
 }
 
 async function testResultRedisplay() {
@@ -559,7 +712,7 @@ async function testPrizeTotalChanges() {
 
   const summary = await getAdminSummary(db, "live");
   assert.equal(summary.prizes[0].win_count, 2, "既存当選は保持される");
-  assert.equal(summary.prizes[0].remaining_count, 0, "残り本数はマイナスにならない");
+  assert.equal(prizeVenueLimit(summary, "prize-a", "park").remaining_count, 0, "対象会場の残り本数はマイナスにならない");
 }
 
 async function testSettingsAreModeScoped() {
@@ -615,7 +768,7 @@ async function testVenueStatsAndValidation() {
 async function testRequestedVenueCountingAndLocalStorageFlow() {
   const db = new MockD1();
   const browserStorage = new Map();
-  db.addPrize({ id: "prize-a", name: "全体抽選景品", totalWinners: 2 });
+  db.addPrize({ id: "prize-a", name: "会場別抽選景品", totalWinners: 2 });
   db.setSetting("live", "win_rate_percent", "100");
 
   const park = await simulateBrowserCheckin(db, browserStorage, 600, {
@@ -678,9 +831,12 @@ async function testRequestedVenueCountingAndLocalStorageFlow() {
   assert.equal(summary.venueTotal.checkinCount, 5, "全会場チェックイン件数は実チェックイン件数と一致する");
 
   const wins = summary.winners.length;
-  assert.equal(wins, 2, "会場をまたいでも抽選の当選本数は全体上限を超えない");
-  assert.equal(summary.prizes[0].win_count, 2, "景品の当選済み数も全体上限どおり");
-  assert.equal(summary.prizes[0].remaining_count, 0, "景品残数は0で止まる");
+  assert.equal(wins, 5, "同じ端末でも5会場それぞれで1回ずつ抽選できる");
+  for (const venue of CHECKIN_VENUES) {
+    const limit = prizeVenueLimit(summary, "prize-a", venue.id);
+    assert.equal(limit.win_count, 1, `${venue.id}の当選数は他会場に影響されず集計される`);
+    assert.equal(limit.remaining_count, 1, `${venue.id}の残り当選数は会場別に残る`);
+  }
 }
 
 function testCheckinPageHasSafeMissingVenueHandling() {
@@ -695,6 +851,29 @@ function testCheckinPageHasSafeMissingVenueHandling() {
   assert.match(source, /customInput\.disabled = !isCustomCount/, "1〜4名選択時は5名以上入力欄を無効化する");
   assert.match(source, /const minVisitorCount = isCustomCount \? 5 : 1/, "5名以上だけ5〜99名の入力を許可する");
   assert.match(styles, /\.checkin-custom-count\[hidden\]\s*\{\s*display:\s*none;/s, "5名以上入力欄のhidden表示をCSSで確実に非表示にする");
+  assert.match(source, /残念！今回はハズレです/, "ハズレ画面は明確にハズレと表示する");
+  assert.match(source, /ご参加ありがとうございます！<br \/>引き続きお楽しみください。/, "ハズレ画面に指定メッセージを表示する");
+  assert.match(source, /🎉 当選！/, "当選画面はハズレと明確に区別する");
+  assert.match(source, /景品：/, "当選画面に景品名を分かりやすく表示する");
+  assert.doesNotMatch(source, /抽選番号/, "来場者向け結果画面に抽選番号を表示しない");
+  assert.doesNotMatch(source, /氏名・電話番号・メールアドレス/, "来場者向け画面に個人情報を取得しない旨の文章を表示しない");
+}
+
+function testAdminPageHasVenueLimitUi() {
+  const source = readFileSync(new URL("../src/pages/admin/checkin.astro", import.meta.url), "utf8");
+  assert.match(source, /会場ごとの当選本数/, "管理画面で会場ごとの当選本数を入力できる");
+  assert.match(source, /設定当選数：/, "管理画面で会場別の設定当選数を表示する");
+  assert.match(source, /当選済み：/, "管理画面で会場別の当選済み数を表示する");
+  assert.match(source, /残り：/, "管理画面で会場別の残り当選数を表示する");
+  assert.match(source, /venueLimits/, "景品保存APIへ会場別当選本数を送信する");
+}
+
+function testMigrationAddsVenueLimitsSafely() {
+  const migration = readFileSync(new URL("../migrations/0002_prize_venue_limits.sql", import.meta.url), "utf8");
+  assert.match(migration, /CREATE TABLE IF NOT EXISTS prize_venue_limits/, "追加migrationで会場別当選上限テーブルを作成する");
+  assert.match(migration, /INSERT OR IGNORE INTO prize_venue_limits/, "既存景品に5会場分の初期行を安全に追加する");
+  assert.doesNotMatch(migration, /DROP TABLE/i, "追加migrationで既存テーブルを削除しない");
+  assert.doesNotMatch(migration, /DELETE FROM/i, "追加migrationで既存データを削除しない");
 }
 
 async function testAdminPageRequiresAuth() {
@@ -720,6 +899,7 @@ async function testAdminPageRequiresAuth() {
 
 testVisitorCountSelectionRules();
 await testConcurrentWinnerCap();
+await testVenueSpecificWinnerCaps();
 await testResultRedisplay();
 await testClaimedResultRedisplay();
 await testClaimIsVenueScoped();
@@ -728,6 +908,8 @@ await testSettingsAreModeScoped();
 await testVenueStatsAndValidation();
 await testRequestedVenueCountingAndLocalStorageFlow();
 testCheckinPageHasSafeMissingVenueHandling();
+testAdminPageHasVenueLimitUi();
+testMigrationAddsVenueLimitsSafely();
 await testAdminPageRequiresAuth();
 
 console.log("checkin lottery tests passed");

@@ -6,6 +6,9 @@ const DB_BINDING_NAME = "CHECKIN_DB";
 export { CHECKIN_VENUES };
 
 const VENUE_MAP = new Map(CHECKIN_VENUES.map((venue) => [venue.id, venue]));
+const VENUE_SELECT_SQL = CHECKIN_VENUES
+  .map((venue, index) => `${index === 0 ? "SELECT" : "UNION ALL SELECT"} '${venue.id.replaceAll("'", "''")}' AS venue_id`)
+  .join("\n");
 
 export class HttpError extends Error {
   constructor(status, message) {
@@ -123,6 +126,39 @@ export function normalizeTotalWinners(value) {
   return count;
 }
 
+export function normalizeVenueLimits(value, fallbackTotalWinners = 0) {
+  const fallback = normalizeTotalWinners(fallbackTotalWinners);
+  const rawLimits = new Map();
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const venueId = typeof item?.venueId === "string" ? item.venueId : item?.venue_id;
+      if (typeof venueId === "string") {
+        rawLimits.set(venueId, item.totalWinners ?? item.total_winners);
+      }
+    }
+  } else if (value && typeof value === "object") {
+    for (const [venueId, totalWinners] of Object.entries(value)) {
+      rawLimits.set(venueId, totalWinners);
+    }
+  }
+
+  for (const venueId of rawLimits.keys()) {
+    if (!VENUE_MAP.has(venueId)) {
+      throw new HttpError(400, "指定された会場別当選本数に不正な会場が含まれています。");
+    }
+  }
+
+  return CHECKIN_VENUES.map((venue) => ({
+    venueId: venue.id,
+    totalWinners: normalizeTotalWinners(rawLimits.has(venue.id) ? rawLimits.get(venue.id) : fallback)
+  }));
+}
+
+export function sumVenueLimits(venueLimits) {
+  return venueLimits.reduce((sum, venue) => sum + Number(venue.totalWinners ?? 0), 0);
+}
+
 export function normalizeSortOrder(value) {
   const order = Number.parseInt(String(value ?? 0), 10);
   return Number.isInteger(order) ? order : 0;
@@ -176,6 +212,38 @@ export async function getSettings(db, mode = "live") {
   };
 }
 
+export async function ensurePrizeVenueLimits(db) {
+  const now = nowIso();
+  await db.batch([
+    db.prepare(
+      `CREATE TABLE IF NOT EXISTS prize_venue_limits (
+        prize_id TEXT NOT NULL,
+        venue_id TEXT NOT NULL,
+        total_winners INTEGER NOT NULL DEFAULT 0 CHECK (total_winners >= 0),
+        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (prize_id, venue_id),
+        FOREIGN KEY (prize_id) REFERENCES prizes (id)
+      )`
+    ),
+    db.prepare(
+      `CREATE INDEX IF NOT EXISTS idx_prize_venue_limits_venue
+        ON prize_venue_limits (venue_id)`
+    ),
+    db
+      .prepare(
+        `INSERT OR IGNORE INTO prize_venue_limits
+          (prize_id, venue_id, total_winners, created_at, updated_at)
+        SELECT p.id, venues.venue_id, p.total_winners, ?, ?
+        FROM prizes p
+        CROSS JOIN (
+          ${VENUE_SELECT_SQL}
+        ) venues`
+      )
+      .bind(now, now)
+  ]);
+}
+
 export async function getResult(db, anonymousIdValue, venueId, mode) {
   return db
     .prepare(
@@ -203,7 +271,7 @@ export async function getResult(db, anonymousIdValue, venueId, mode) {
     .first();
 }
 
-async function availablePrizes(db, mode) {
+async function availablePrizes(db, mode, venueId) {
   const rows = await db
     .prepare(
       `SELECT *
@@ -211,23 +279,25 @@ async function availablePrizes(db, mode) {
         SELECT
           p.id,
           p.name,
-          p.total_winners,
+          l.total_winners,
           p.enabled,
           p.sort_order,
-          p.total_winners - COALESCE(w.win_count, 0) AS remaining
+          l.total_winners - COALESCE(w.win_count, 0) AS remaining
         FROM prizes p
+        JOIN prize_venue_limits l
+          ON l.prize_id = p.id AND l.venue_id = ?
         LEFT JOIN (
           SELECT prize_id, COUNT(*) AS win_count
           FROM draw_results
-          WHERE result = 'win' AND mode = ?
+          WHERE result = 'win' AND mode = ? AND venue_id = ?
           GROUP BY prize_id
         ) w ON w.prize_id = p.id
-        WHERE p.enabled = 1 AND p.total_winners > 0
+        WHERE p.enabled = 1 AND l.total_winners > 0
       )
       WHERE remaining > 0
       ORDER BY sort_order ASC, name ASC`
     )
-    .bind(mode)
+    .bind(venueId, mode, venueId)
     .all();
 
   return rows.results ?? [];
@@ -267,15 +337,18 @@ async function insertWinIfRemaining(db, anonymousIdValue, checkinId, venueId, mo
         (id, anonymous_id, checkin_id, venue_id, prize_id, result, mode, drawn_at)
       SELECT ?, ?, ?, ?, p.id, 'win', ?, ?
       FROM prizes p
+      JOIN prize_venue_limits l
+        ON l.prize_id = p.id
       WHERE p.id = ?
         AND p.enabled = 1
-        AND p.total_winners > (
+        AND l.venue_id = ?
+        AND l.total_winners > (
           SELECT COUNT(*)
           FROM draw_results
-          WHERE prize_id = p.id AND result = 'win' AND mode = ?
+          WHERE prize_id = p.id AND result = 'win' AND mode = ? AND venue_id = ?
         )`
     )
-    .bind(randomId("draw"), anonymousIdValue, checkinId, venueId, mode, drawnAt, prizeId, mode)
+    .bind(randomId("draw"), anonymousIdValue, checkinId, venueId, mode, drawnAt, prizeId, venueId, mode, venueId)
     .run();
 
   return Number(result?.meta?.changes ?? 0) === 1;
@@ -290,8 +363,9 @@ async function drawForCheckin(db, anonymousIdValue, checkinId, venueId, mode) {
     return getResult(db, anonymousIdValue, venueId, mode);
   }
 
+  await ensurePrizeVenueLimits(db);
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    const prizes = await availablePrizes(db, mode);
+    const prizes = await availablePrizes(db, mode, venueId);
     const prize = pickWeightedPrize(prizes);
     if (!prize) {
       break;
@@ -346,7 +420,9 @@ export async function createCheckin(db, request, body) {
 }
 
 export async function getAdminSummary(db, mode) {
-  const [stats, prizeRows, winnerRows, venueRows, settingsRows] = await Promise.all([
+  await ensurePrizeVenueLimits(db);
+
+  const [stats, prizeRows, prizeVenueRows, winnerRows, venueRows, settingsRows] = await Promise.all([
     db
       .prepare(
         `SELECT
@@ -362,25 +438,68 @@ export async function getAdminSummary(db, mode) {
         `SELECT
           p.id,
           p.name,
-          p.total_winners,
+          COALESCE(SUM(l.total_winners), p.total_winners, 0) AS total_winners,
           p.enabled,
           p.sort_order,
           p.created_at,
           p.updated_at,
-          COALESCE(w.win_count, 0) AS win_count,
-          COALESCE(w.claimed_count, 0) AS claimed_count,
-          MAX(p.total_winners - COALESCE(w.win_count, 0), 0) AS remaining_count
+          COALESCE(SUM(w.win_count), 0) AS win_count,
+          COALESCE(SUM(w.claimed_count), 0) AS claimed_count,
+          COALESCE(SUM(
+            CASE
+              WHEN l.total_winners - COALESCE(w.win_count, 0) > 0
+              THEN l.total_winners - COALESCE(w.win_count, 0)
+              ELSE 0
+            END
+          ), 0) AS remaining_count
         FROM prizes p
+        LEFT JOIN prize_venue_limits l
+          ON l.prize_id = p.id
         LEFT JOIN (
           SELECT
             prize_id,
+            venue_id,
             COUNT(*) AS win_count,
             SUM(CASE WHEN claimed_at IS NOT NULL THEN 1 ELSE 0 END) AS claimed_count
           FROM draw_results
           WHERE result = 'win' AND mode = ?
-          GROUP BY prize_id
-        ) w ON w.prize_id = p.id
+          GROUP BY prize_id, venue_id
+        ) w ON w.prize_id = p.id AND w.venue_id = l.venue_id
+        GROUP BY p.id
         ORDER BY p.sort_order ASC, p.name ASC`
+      )
+      .bind(mode)
+      .all(),
+    db
+      .prepare(
+        `SELECT
+          p.id AS prize_id,
+          venues.venue_id,
+          COALESCE(l.total_winners, 0) AS total_winners,
+          COALESCE(w.win_count, 0) AS win_count,
+          COALESCE(w.claimed_count, 0) AS claimed_count,
+          CASE
+            WHEN COALESCE(l.total_winners, 0) - COALESCE(w.win_count, 0) > 0
+            THEN COALESCE(l.total_winners, 0) - COALESCE(w.win_count, 0)
+            ELSE 0
+          END AS remaining_count
+        FROM prizes p
+        CROSS JOIN (
+          ${VENUE_SELECT_SQL}
+        ) venues
+        LEFT JOIN prize_venue_limits l
+          ON l.prize_id = p.id AND l.venue_id = venues.venue_id
+        LEFT JOIN (
+          SELECT
+            prize_id,
+            venue_id,
+            COUNT(*) AS win_count,
+            SUM(CASE WHEN claimed_at IS NOT NULL THEN 1 ELSE 0 END) AS claimed_count
+          FROM draw_results
+          WHERE result = 'win' AND mode = ?
+          GROUP BY prize_id, venue_id
+        ) w ON w.prize_id = p.id AND w.venue_id = venues.venue_id
+        ORDER BY p.sort_order ASC, p.name ASC, venues.venue_id ASC`
       )
       .bind(mode)
       .all(),
@@ -454,6 +573,20 @@ export async function getAdminSummary(db, mode) {
     { checkinCount: 0, visitorTotal: 0 }
   );
 
+  const prizeVenueLimits = new Map();
+  for (const row of prizeVenueRows.results ?? []) {
+    const limits = prizeVenueLimits.get(row.prize_id) ?? [];
+    limits.push({
+      venue_id: row.venue_id,
+      venue_name: getVenueLabel(row.venue_id),
+      total_winners: Number(row.total_winners ?? 0),
+      win_count: Number(row.win_count ?? 0),
+      claimed_count: Number(row.claimed_count ?? 0),
+      remaining_count: Number(row.remaining_count ?? 0)
+    });
+    prizeVenueLimits.set(row.prize_id, limits);
+  }
+
   return {
     mode,
     stats: {
@@ -466,7 +599,8 @@ export async function getAdminSummary(db, mode) {
       total_winners: Number(prize.total_winners ?? 0),
       win_count: Number(prize.win_count ?? 0),
       claimed_count: Number(prize.claimed_count ?? 0),
-      remaining_count: Number(prize.remaining_count ?? 0)
+      remaining_count: Number(prize.remaining_count ?? 0),
+      venue_limits: prizeVenueLimits.get(prize.id) ?? []
     })),
     winners: winnerRows.results ?? [],
     venueStats,

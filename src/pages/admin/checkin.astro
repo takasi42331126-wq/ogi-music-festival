@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@components/layout/BaseLayout.astro";
+import { CHECKIN_VENUES } from "../../data/checkinVenues.js";
 ---
 
 <BaseLayout
@@ -70,10 +71,15 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
             <span>景品名</span>
             <input name="name" type="text" maxlength="80" required />
           </label>
-          <label>
-            <span>当選本数</span>
-            <input name="totalWinners" type="number" min="0" max="100000" value="0" required />
-          </label>
+          <div class="checkin-venue-limit-fields" data-venue-limit-fields>
+            <p>会場ごとの当選本数</p>
+            {CHECKIN_VENUES.map((venue) => (
+              <label>
+                <span>{venue.label}</span>
+                <input name={`venueLimit:${venue.id}`} type="number" min="0" max="100000" value="0" required />
+              </label>
+            ))}
+          </div>
           <label>
             <span>表示順</span>
             <input name="sortOrder" type="number" value="0" />
@@ -137,7 +143,7 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
     </div>
   </section>
 
-  <script>
+  <script define:vars={{ checkinVenues: CHECKIN_VENUES }}>
     const adminRoot = document.querySelector("[data-checkin-admin]");
     const tokenInput = adminRoot?.querySelector("[data-admin-token]");
     const loginButton = adminRoot?.querySelector("[data-admin-login]");
@@ -187,6 +193,8 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
     };
 
     const getMode = () => modeSelect instanceof HTMLSelectElement ? modeSelect.value : "live";
+
+    const venueName = (venueId) => checkinVenues.find((venue) => venue.id === venueId)?.label || venueId;
 
     const adminRequest = async (url, options = {}) => {
       const token = getToken();
@@ -239,12 +247,21 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
       if (!(prizeTable instanceof HTMLTableElement)) {
         return;
       }
+      const venueLimitRows = (prize) => (prize.venue_limits ?? []).map((venue) => `
+        <div class="checkin-venue-limit-row">
+          <strong>${escapeHtml(venue.venue_name || venueName(venue.venue_id))}</strong>
+          <span>設定当選数：${Number(venue.total_winners).toLocaleString("ja-JP")}本</span>
+          <span>当選済み：${Number(venue.win_count).toLocaleString("ja-JP")}本</span>
+          <span>残り：${Number(venue.remaining_count).toLocaleString("ja-JP")}本</span>
+        </div>
+      `).join("");
       const rows = data.prizes.map((prize) => `
         <tr>
           <td>${escapeHtml(prize.name)}</td>
-          <td>${Number(prize.total_winners).toLocaleString("ja-JP")}</td>
-          <td>${Number(prize.win_count).toLocaleString("ja-JP")}</td>
-          <td>${Number(prize.remaining_count).toLocaleString("ja-JP")}</td>
+          <td><div class="checkin-venue-limit-list">${venueLimitRows(prize)}</div></td>
+          <td>${Number(prize.total_winners).toLocaleString("ja-JP")}本</td>
+          <td>${Number(prize.win_count).toLocaleString("ja-JP")}本</td>
+          <td>${Number(prize.remaining_count).toLocaleString("ja-JP")}本</td>
           <td>${Number(prize.claimed_count).toLocaleString("ja-JP")}</td>
           <td>${prize.enabled ? "有効" : "無効"}</td>
           <td><button class="button button-outline button-small" type="button" data-edit-prize="${escapeHtml(prize.id)}">編集</button></td>
@@ -252,8 +269,8 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
       `).join("");
 
       prizeTable.innerHTML = `
-        <thead><tr><th>景品</th><th>当選本数</th><th>当選済み</th><th>残り</th><th>受取済み</th><th>状態</th><th></th></tr></thead>
-        <tbody>${rows || '<tr><td colspan="7">景品が未設定です。</td></tr>'}</tbody>
+        <thead><tr><th>景品</th><th>会場別当選状況</th><th>設定合計</th><th>当選済み合計</th><th>残り合計</th><th>受取済み</th><th>状態</th><th></th></tr></thead>
+        <tbody>${rows || '<tr><td colspan="8">景品が未設定です。</td></tr>'}</tbody>
       `;
 
       prizeTable.querySelectorAll("[data-edit-prize]").forEach((button) => {
@@ -267,12 +284,17 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
           }
           const id = formField(prizeForm, "id");
           const name = formField(prizeForm, "name");
-          const totalWinners = formField(prizeForm, "totalWinners");
           const sortOrder = formField(prizeForm, "sortOrder");
           const enabled = formField(prizeForm, "enabled");
           if (id) id.value = prize.id;
           if (name) name.value = prize.name;
-          if (totalWinners) totalWinners.value = prize.total_winners;
+          const limits = new Map((prize.venue_limits ?? []).map((venue) => [venue.venue_id, venue.total_winners]));
+          for (const venue of checkinVenues) {
+            const field = formField(prizeForm, `venueLimit:${venue.id}`);
+            if (field) {
+              field.value = String(limits.get(venue.id) ?? 0);
+            }
+          }
           if (sortOrder) sortOrder.value = prize.sort_order;
           if (enabled) enabled.value = prize.enabled ? "true" : "false";
           prizeForm.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -429,9 +451,12 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
       try {
         const id = formField(prizeForm, "id");
         const name = formField(prizeForm, "name");
-        const totalWinners = formField(prizeForm, "totalWinners");
         const sortOrder = formField(prizeForm, "sortOrder");
         const enabled = formField(prizeForm, "enabled");
+        const venueLimits = Object.fromEntries(checkinVenues.map((venue) => [
+          venue.id,
+          formField(prizeForm, `venueLimit:${venue.id}`)?.value ?? "0"
+        ]));
         setAdminStatus("景品を保存しています...");
         const data = await adminRequest("/api/checkin/admin/prizes", {
           method: "POST",
@@ -439,7 +464,7 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
             mode: getMode(),
             id: id?.value,
             name: name?.value,
-            totalWinners: totalWinners?.value,
+            venueLimits,
             sortOrder: sortOrder?.value,
             enabled: enabled?.value === "true"
           })

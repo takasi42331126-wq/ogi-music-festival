@@ -29,6 +29,19 @@ CREATE TABLE IF NOT EXISTS prizes (
 CREATE INDEX IF NOT EXISTS idx_prizes_enabled_sort
   ON prizes (enabled, sort_order);
 
+CREATE TABLE IF NOT EXISTS prize_venue_limits (
+  prize_id TEXT NOT NULL,
+  venue_id TEXT NOT NULL,
+  total_winners INTEGER NOT NULL DEFAULT 0 CHECK (total_winners >= 0),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (prize_id, venue_id),
+  FOREIGN KEY (prize_id) REFERENCES prizes (id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_prize_venue_limits_venue
+  ON prize_venue_limits (venue_id);
+
 CREATE TABLE IF NOT EXISTS draw_results (
   id TEXT PRIMARY KEY,
   anonymous_id TEXT NOT NULL,

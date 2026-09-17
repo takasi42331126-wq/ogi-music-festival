@@ -45,7 +45,6 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
           <button class="button button-primary checkin-submit" type="submit" data-checkin-submit>
             チェックインして抽選する
           </button>
-          <p class="checkin-note">氏名・電話番号・メールアドレスなどの個人情報は取得しません。</p>
         </form>
 
         <div class="checkin-result" data-checkin-result hidden></div>
@@ -128,12 +127,10 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
         return `
           <div class="checkin-result-hero checkin-result-win">
             <p class="eyebrow">Lottery Result</p>
-            <h2>おめでとうございます！</h2>
-            <p class="checkin-result-title">当選</p>
+            <h2 class="checkin-result-title">🎉 当選！</h2>
+            ${result.prize_name ? `<p class="checkin-prize-name">景品：${escapeHtml(result.prize_name)}</p>` : ""}
           </div>
           <dl class="checkin-result-list">
-            <div><dt>景品名</dt><dd>${escapeHtml(result.prize_name)}</dd></div>
-            <div><dt>抽選番号</dt><dd>${escapeHtml(result.anonymous_id)}</dd></div>
             <div><dt>会場</dt><dd>${escapeHtml(venueLabel(result.venue_id))}</dd></div>
             <div><dt>受付人数</dt><dd>${Number(result.visitor_count).toLocaleString("ja-JP")}名</dd></div>
           </dl>
@@ -146,11 +143,10 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
       return `
         <div class="checkin-result-hero">
           <p class="eyebrow">Lottery Result</p>
-          <h2>ご参加ありがとうございました！</h2>
-          <p>また次回の音楽祭もお楽しみください。</p>
+          <h2>残念！今回はハズレです</h2>
+          <p>ご参加ありがとうございます！<br />引き続きお楽しみください。</p>
         </div>
         <dl class="checkin-result-list">
-          <div><dt>抽選番号</dt><dd>${escapeHtml(result.anonymous_id)}</dd></div>
           <div><dt>会場</dt><dd>${escapeHtml(venueLabel(result.venue_id))}</dd></div>
           <div><dt>受付人数</dt><dd>${Number(result.visitor_count).toLocaleString("ja-JP")}名</dd></div>
         </dl>

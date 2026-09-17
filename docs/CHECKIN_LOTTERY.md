@@ -25,6 +25,12 @@ npx wrangler d1 create ogi-dx2026-checkin
 npx wrangler d1 execute ogi-dx2026-checkin --file=./migrations/0001_checkin_lottery.sql --remote
 ```
 
+既存のD1に会場別当選上限を追加する場合は、追加migrationを適用します。
+
+```sh
+npx wrangler d1 execute ogi-dx2026-checkin --file=./migrations/0002_prize_venue_limits.sql --remote
+```
+
 ## Cloudflare Pages設定
 
 Cloudflare Dashboardで対象Pagesプロジェクトを開き、以下を設定します。
@@ -48,7 +54,8 @@ Cloudflare Dashboardで対象Pagesプロジェクトを開き、以下を設定�
 - 総来場者数、チェックイン件数の確認
 - 会場別集計の確認
 - 会場別チェックインURLの確認とコピー
-- 景品名、当選本数、有効/無効、表示順の設定
+- 景品名、会場ごとの当選本数、有効/無効、表示順の設定
+- 景品ごとの会場別当選済み数、残り当選数の確認
 - 抽選受付ON/OFF、当選確率の設定（本番/テストで別管理）
 - 当選者一覧の確認
 - 景品受取済み/未受取の変更
@@ -61,7 +68,8 @@ Cloudflare Dashboardで対象Pagesプロジェクトを開き、以下を設定�
 - 同じ端末でも、会場が異なれば各会場で1回ずつチェックイン・抽選できます。
 - 同じ端末・同じ会場・同じモードでは、2回目以降は新しいチェックインや再抽選を行わず、最初の結果を再表示します。
 - 5会場すべてを回った場合、同じ端末でも最大5回、各会場1回ずつ抽選できます。
-- 景品の `total_winners` は会場別ではなくイベント全体の上限です。例えば10本なら、全5会場合計で最大10本です。
+- 景品の当選上限は `prize_venue_limits` で会場ごとに管理します。例えば小城公園10本、桜岡小学校5本、ゆめぷらっと小城3本のように、各会場で独立した上限を設定できます。
+- 既存の `win_rate_percent` は当選確率として維持します。上限数は「必ず当てる数」ではなく、確率抽選で当選した結果を会場ごとの上限で止めるための設定です。
 - live/testモードは別集計です。
 
 ## QRコード用URL
