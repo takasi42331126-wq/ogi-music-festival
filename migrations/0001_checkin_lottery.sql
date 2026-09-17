@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS checkins (
   id TEXT PRIMARY KEY,
   anonymous_id TEXT NOT NULL,
-  venue_id TEXT NOT NULL DEFAULT 'main',
+  venue_id TEXT NOT NULL,
   visitor_count INTEGER NOT NULL CHECK (visitor_count BETWEEN 1 AND 99),
   mode TEXT NOT NULL DEFAULT 'live' CHECK (mode IN ('live', 'test')),
   user_agent_hash TEXT,
   checked_in_at TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE (anonymous_id, mode)
+  UNIQUE (anonymous_id, venue_id, mode)
 );
 
 CREATE INDEX IF NOT EXISTS idx_checkins_mode_created_at
@@ -33,13 +33,14 @@ CREATE TABLE IF NOT EXISTS draw_results (
   id TEXT PRIMARY KEY,
   anonymous_id TEXT NOT NULL,
   checkin_id TEXT NOT NULL,
+  venue_id TEXT NOT NULL,
   prize_id TEXT,
   result TEXT NOT NULL CHECK (result IN ('win', 'lose')),
   mode TEXT NOT NULL DEFAULT 'live' CHECK (mode IN ('live', 'test')),
   drawn_at TEXT NOT NULL,
   claimed_at TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE (anonymous_id, mode),
+  UNIQUE (anonymous_id, venue_id, mode),
   FOREIGN KEY (checkin_id) REFERENCES checkins (id),
   FOREIGN KEY (prize_id) REFERENCES prizes (id)
 );
@@ -49,6 +50,9 @@ CREATE INDEX IF NOT EXISTS idx_draw_results_mode_result
 
 CREATE INDEX IF NOT EXISTS idx_draw_results_mode_prize
   ON draw_results (mode, prize_id);
+
+CREATE INDEX IF NOT EXISTS idx_draw_results_mode_venue
+  ON draw_results (mode, venue_id);
 
 CREATE INDEX IF NOT EXISTS idx_draw_results_claimed
   ON draw_results (mode, claimed_at);

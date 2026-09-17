@@ -6,6 +6,7 @@ import {
   json,
   normalizeBoolean,
   normalizeMode,
+  normalizeVenueId,
   readJson,
   requireAdmin,
   nowIso
@@ -17,6 +18,7 @@ export async function onRequestPost(context) {
     const db = getDb(context.env);
     const body = await readJson(context.request);
     const anonymousId = typeof body.anonymousId === "string" ? body.anonymousId.trim() : "";
+    const venueId = normalizeVenueId(body.venueId);
     const mode = normalizeMode(body.mode);
 
     if (!anonymousId) {
@@ -28,9 +30,9 @@ export async function onRequestPost(context) {
       .prepare(
         `UPDATE draw_results
         SET claimed_at = ?
-        WHERE anonymous_id = ? AND mode = ? AND result = 'win'`
+        WHERE anonymous_id = ? AND venue_id = ? AND mode = ? AND result = 'win'`
       )
-      .bind(claimedAt, anonymousId, mode)
+      .bind(claimedAt, anonymousId, venueId, mode)
       .run();
 
     if (Number(result?.meta?.changes ?? 0) === 0) {

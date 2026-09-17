@@ -67,6 +67,7 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
     const rawVenueId = params.get("venue") || params.get("venue_id") || "";
     const venue = venues.get(rawVenueId);
     const venueId = venue?.id || "";
+    const visitorStorageKey = `ogi-dx2026-visitor:${mode}`;
     const storageKey = venueId ? `ogi-dx2026-checkin:${mode}:${venueId}` : "";
 
     const escapeHtml = (value) =>
@@ -98,6 +99,27 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
     };
 
     const venueLabel = (venueIdValue) => venues.get(venueIdValue)?.label || venueIdValue;
+
+    const generateAnonymousId = () => {
+      const bytes = new Uint8Array(4);
+      window.crypto.getRandomValues(bytes);
+      const value = Array.from(bytes, (byte) => byte.toString(36).padStart(2, "0"))
+        .join("")
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "")
+        .slice(0, 6);
+      return `A-${value}`;
+    };
+
+    const getOrCreateAnonymousId = () => {
+      const existing = window.localStorage.getItem(visitorStorageKey);
+      if (existing && /^A-[A-Z0-9]{6,24}$/.test(existing)) {
+        return existing;
+      }
+      const id = generateAnonymousId();
+      window.localStorage.setItem(visitorStorageKey, id);
+      return id;
+    };
 
     const resultMarkup = (result) => {
       const isWin = result.result === "win";
@@ -178,7 +200,7 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
 
       setStatus("チェックイン済み情報を確認しています...");
       try {
-        const data = await requestJson(`/api/checkin/result?anonymousId=${encodeURIComponent(anonymousId)}&mode=${mode}`);
+        const data = await requestJson(`/api/checkin/result?anonymousId=${encodeURIComponent(anonymousId)}&venue=${encodeURIComponent(venueId)}&mode=${mode}`);
         showResult(data.result, true);
       } catch (error) {
         window.localStorage.removeItem(storageKey);
@@ -223,9 +245,10 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
       setStatus("チェックインと抽選を行っています...");
 
       try {
+        const anonymousId = getOrCreateAnonymousId();
         const data = await requestJson("/api/checkin", {
           method: "POST",
-          body: JSON.stringify({ visitorCount, venueId, mode })
+          body: JSON.stringify({ anonymousId, visitorCount, venueId, mode })
         });
         window.localStorage.setItem(storageKey, data.result.anonymous_id);
         showResult(data.result, false);

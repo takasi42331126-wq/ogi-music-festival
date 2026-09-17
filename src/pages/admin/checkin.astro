@@ -292,7 +292,7 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
           <td>${new Date(winner.drawn_at).toLocaleString("ja-JP")}</td>
           <td>${winner.claimed_at ? "受取済み" : "未受取"}</td>
           <td>
-            <button class="button button-outline button-small" type="button" data-claim="${escapeHtml(winner.anonymous_id)}" data-claimed="${winner.claimed_at ? "false" : "true"}">
+            <button class="button button-outline button-small" type="button" data-claim="${escapeHtml(winner.anonymous_id)}" data-venue="${escapeHtml(winner.venue_id)}" data-claimed="${winner.claimed_at ? "false" : "true"}">
               ${winner.claimed_at ? "未受取に戻す" : "景品受取済み"}
             </button>
           </td>
@@ -313,6 +313,7 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
               body: JSON.stringify({
                 mode: getMode(),
                 anonymousId: button.getAttribute("data-claim"),
+                venueId: button.getAttribute("data-venue"),
                 claimed: button.getAttribute("data-claimed") === "true"
               })
             });

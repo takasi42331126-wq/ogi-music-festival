@@ -92,6 +92,17 @@ export function normalizeVisitorCount(value) {
   return count;
 }
 
+export function normalizeAnonymousId(value) {
+  const id = typeof value === "string" ? value.trim().toUpperCase() : "";
+  if (!id) {
+    return null;
+  }
+  if (!/^A-[A-Z0-9]{6,24}$/.test(id)) {
+    throw new HttpError(400, "匿名チェックインIDが不正です。");
+  }
+  return id;
+}
+
 export function normalizeBoolean(value) {
   return value === true || value === 1 || value === "1" || value === "true";
 }
@@ -165,7 +176,7 @@ export async function getSettings(db, mode = "live") {
   };
 }
 
-export async function getResult(db, anonymousIdValue, mode) {
+export async function getResult(db, anonymousIdValue, venueId, mode) {
   return db
     .prepare(
       `SELECT
@@ -182,13 +193,13 @@ export async function getResult(db, anonymousIdValue, mode) {
         p.name AS prize_name
       FROM checkins c
       LEFT JOIN draw_results d
-        ON d.anonymous_id = c.anonymous_id AND d.mode = c.mode
+        ON d.checkin_id = c.id
       LEFT JOIN prizes p
         ON p.id = d.prize_id
-      WHERE c.anonymous_id = ? AND c.mode = ?
+      WHERE c.anonymous_id = ? AND c.venue_id = ? AND c.mode = ?
       LIMIT 1`
     )
-    .bind(anonymousIdValue, mode)
+    .bind(anonymousIdValue, venueId, mode)
     .first();
 }
 
@@ -238,23 +249,23 @@ function pickWeightedPrize(prizes) {
   return prizes[prizes.length - 1] ?? null;
 }
 
-async function insertLose(db, anonymousIdValue, checkinId, mode, drawnAt) {
+async function insertLose(db, anonymousIdValue, checkinId, venueId, mode, drawnAt) {
   await db
     .prepare(
       `INSERT OR IGNORE INTO draw_results
-        (id, anonymous_id, checkin_id, prize_id, result, mode, drawn_at)
-      VALUES (?, ?, ?, NULL, 'lose', ?, ?)`
+        (id, anonymous_id, checkin_id, venue_id, prize_id, result, mode, drawn_at)
+      VALUES (?, ?, ?, ?, NULL, 'lose', ?, ?)`
     )
-    .bind(randomId("draw"), anonymousIdValue, checkinId, mode, drawnAt)
+    .bind(randomId("draw"), anonymousIdValue, checkinId, venueId, mode, drawnAt)
     .run();
 }
 
-async function insertWinIfRemaining(db, anonymousIdValue, checkinId, mode, drawnAt, prizeId) {
+async function insertWinIfRemaining(db, anonymousIdValue, checkinId, venueId, mode, drawnAt, prizeId) {
   const result = await db
     .prepare(
       `INSERT OR IGNORE INTO draw_results
-        (id, anonymous_id, checkin_id, prize_id, result, mode, drawn_at)
-      SELECT ?, ?, ?, p.id, 'win', ?, ?
+        (id, anonymous_id, checkin_id, venue_id, prize_id, result, mode, drawn_at)
+      SELECT ?, ?, ?, ?, p.id, 'win', ?, ?
       FROM prizes p
       WHERE p.id = ?
         AND p.enabled = 1
@@ -264,19 +275,19 @@ async function insertWinIfRemaining(db, anonymousIdValue, checkinId, mode, drawn
           WHERE prize_id = p.id AND result = 'win' AND mode = ?
         )`
     )
-    .bind(randomId("draw"), anonymousIdValue, checkinId, mode, drawnAt, prizeId, mode)
+    .bind(randomId("draw"), anonymousIdValue, checkinId, venueId, mode, drawnAt, prizeId, mode)
     .run();
 
   return Number(result?.meta?.changes ?? 0) === 1;
 }
 
-async function drawForCheckin(db, anonymousIdValue, checkinId, mode) {
+async function drawForCheckin(db, anonymousIdValue, checkinId, venueId, mode) {
   const drawnAt = nowIso();
   const settings = await getSettings(db, mode);
 
   if (!settings.drawOpen || settings.winRatePercent <= 0 || Math.random() * 100 >= settings.winRatePercent) {
-    await insertLose(db, anonymousIdValue, checkinId, mode, drawnAt);
-    return getResult(db, anonymousIdValue, mode);
+    await insertLose(db, anonymousIdValue, checkinId, venueId, mode, drawnAt);
+    return getResult(db, anonymousIdValue, venueId, mode);
   }
 
   for (let attempt = 0; attempt < 3; attempt += 1) {
@@ -286,25 +297,26 @@ async function drawForCheckin(db, anonymousIdValue, checkinId, mode) {
       break;
     }
 
-    if (await insertWinIfRemaining(db, anonymousIdValue, checkinId, mode, drawnAt, prize.id)) {
-      return getResult(db, anonymousIdValue, mode);
+    if (await insertWinIfRemaining(db, anonymousIdValue, checkinId, venueId, mode, drawnAt, prize.id)) {
+      return getResult(db, anonymousIdValue, venueId, mode);
     }
   }
 
-  await insertLose(db, anonymousIdValue, checkinId, mode, drawnAt);
-  return getResult(db, anonymousIdValue, mode);
+  await insertLose(db, anonymousIdValue, checkinId, venueId, mode, drawnAt);
+  return getResult(db, anonymousIdValue, venueId, mode);
 }
 
 export async function createCheckin(db, request, body) {
   const visitorCount = normalizeVisitorCount(body.visitorCount);
   const mode = normalizeMode(body.mode);
   const venueId = normalizeVenueId(body.venueId);
+  const providedAnonymousId = normalizeAnonymousId(body.anonymousId);
   const hash = await userAgentHash(request);
   const checkedInAt = nowIso();
 
   for (let attempt = 0; attempt < 8; attempt += 1) {
     const id = randomId("checkin");
-    const generatedAnonymousId = anonymousId();
+    const generatedAnonymousId = providedAnonymousId ?? anonymousId();
     try {
       await db
         .prepare(
@@ -315,9 +327,15 @@ export async function createCheckin(db, request, body) {
         .bind(id, generatedAnonymousId, venueId, visitorCount, mode, hash, checkedInAt)
         .run();
 
-      return drawForCheckin(db, generatedAnonymousId, id, mode);
+      return drawForCheckin(db, generatedAnonymousId, id, venueId, mode);
     } catch (error) {
       if (String(error?.message ?? "").includes("UNIQUE")) {
+        if (providedAnonymousId) {
+          const existing = await getResult(db, generatedAnonymousId, venueId, mode);
+          if (existing) {
+            return existing;
+          }
+        }
         continue;
       }
       throw error;
@@ -375,10 +393,10 @@ export async function getAdminSummary(db, mode) {
           d.claimed_at,
           p.name AS prize_name,
           c.visitor_count,
-          c.venue_id
+          d.venue_id
         FROM draw_results d
         JOIN prizes p ON p.id = d.prize_id
-        LEFT JOIN checkins c ON c.anonymous_id = d.anonymous_id AND c.mode = d.mode
+        LEFT JOIN checkins c ON c.id = d.checkin_id
         WHERE d.result = 'win' AND d.mode = ?
         ORDER BY d.drawn_at DESC
         LIMIT 500`
