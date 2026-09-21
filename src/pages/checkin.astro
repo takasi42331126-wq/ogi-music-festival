@@ -98,6 +98,15 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
     };
 
     const venueLabel = (venueIdValue) => venues.get(venueIdValue)?.label || venueIdValue;
+    const prizePickupLocations = new Map([
+      ["park", "本部テント"],
+      ["yumeplat", "１F受付"],
+      ["highschool", "近くのスタッフまでお声がけください。"],
+      ["university", "近くのスタッフ（青色のポロシャツ）までお声がけください。"],
+      ["sakuraoka", "近くのスタッフ（青色のポロシャツ）までお声がけください。"]
+    ]);
+
+    const prizePickupLocation = (venueIdValue) => prizePickupLocations.get(venueIdValue) || "近くのスタッフまでお声がけください。";
 
     const generateAnonymousId = () => {
       const bytes = new Uint8Array(4);
@@ -133,6 +142,7 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
           <dl class="checkin-result-list">
             <div><dt>会場</dt><dd>${escapeHtml(venueLabel(result.venue_id))}</dd></div>
             <div><dt>受付人数</dt><dd>${Number(result.visitor_count).toLocaleString("ja-JP")}名</dd></div>
+            <div><dt>受け取り場所</dt><dd>${escapeHtml(prizePickupLocation(result.venue_id))}</dd></div>
           </dl>
           <p class="checkin-staff-message ${claimed ? "is-claimed" : ""}">
             ${claimed ? "この賞品は受取済みです。" : "この画面をスタッフにお見せください。"}
