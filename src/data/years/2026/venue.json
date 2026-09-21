@@ -385,18 +385,6 @@
           "sortOrder": 3,
           "markers": [
             {
-              "id": "kyudo-experience",
-              "markerLabel": "N",
-              "title": "弓道体験",
-              "room": "3階会議室5",
-              "scheduleEventId": "kyudo-experience",
-              "position": {
-                "x": 27.2,
-                "y": 57.0
-              },
-              "sortOrder": 1
-            },
-            {
               "id": "saga-industrial-technology-exhibit",
               "markerLabel": "O",
               "title": "佐賀県立産業技術学院（展示）",
@@ -539,8 +527,20 @@
               "sortOrder": 5
             },
             {
-              "id": "working-vehicles",
+              "id": "kyudo-experience",
               "markerLabel": "F",
+              "title": "弓道体験",
+              "room": "桜岡小学校体育館",
+              "scheduleEventId": "kyudo-experience",
+              "position": {
+                "x": 90.4,
+                "y": 58.9
+              },
+              "sortOrder": 6
+            },
+            {
+              "id": "working-vehicles",
+              "markerLabel": "G",
               "title": "働く車（警察・自衛隊・消防）",
               "room": "桜岡小学校校舎前駐車場",
               "scheduleEventId": "working-vehicles",
@@ -548,7 +548,7 @@
                 "x": 24.3,
                 "y": 12.1
               },
-              "sortOrder": 6
+              "sortOrder": 7
             }
           ]
         }

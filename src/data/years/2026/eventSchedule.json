@@ -79,20 +79,6 @@
         "sessions": []
       },
       {
-        "id": "kyudo-experience",
-        "title": "弓道体験",
-        "category": "体験",
-        "description": "",
-        "timeText": "10:00～14:50",
-        "participationText": "事前申込",
-        "feeText": "無料",
-        "applicationId": "",
-        "formUrl": "",
-        "status": "scheduled",
-        "sortOrder": 6,
-        "sessions": []
-      },
-      {
         "id": "carpenter-experience",
         "title": "大工体験",
         "category": "体験",
@@ -336,6 +322,20 @@
         "sessions": []
       },
       {
+        "id": "kyudo-experience",
+        "title": "弓道体験",
+        "category": "体験",
+        "description": "",
+        "timeText": "10:00～14:50",
+        "participationText": "事前申込",
+        "feeText": "無料",
+        "applicationId": "kyudo-experience-2026",
+        "formUrl": "https://forms.gle/z5BdnoT2VGnpVg9t9",
+        "status": "open",
+        "sortOrder": 6,
+        "sessions": []
+      },
+      {
         "id": "working-vehicles",
         "title": "働く車（警察・自衛隊・消防）",
         "category": "展示・体験",
@@ -346,7 +346,7 @@
         "applicationId": "",
         "formUrl": "",
         "status": "scheduled",
-        "sortOrder": 6,
+        "sortOrder": 7,
         "sessions": []
       }
     ]
