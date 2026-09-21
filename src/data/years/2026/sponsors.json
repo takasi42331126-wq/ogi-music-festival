@@ -320,6 +320,16 @@
     "sortOrder": 32
   },
   {
+    "id": "special-sponsor-033",
+    "name": "株式会社OSエンジニアリング",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 33
+  },
+  {
     "id": "nominal-sponsor-001",
     "name": "小城商工会議所",
     "category": "名義協賛",
