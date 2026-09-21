@@ -2622,6 +2622,34 @@ select {
   border: 0;
 }
 
+.access-shuttle-section {
+  display: grid;
+  gap: 22px;
+  margin-top: 20px;
+  border-top: 1px solid var(--color-line);
+  padding-top: 34px;
+}
+
+.access-shuttle-section .section-header {
+  margin-bottom: 0;
+}
+
+.access-shuttle-figure {
+  overflow: hidden;
+  width: min(900px, 100%);
+  margin: 0 auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.access-shuttle-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .access-note-panel {
   margin-top: 28px;
 }
