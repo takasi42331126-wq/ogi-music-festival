@@ -4,6 +4,8 @@ import PageHero from "@components/layout/PageHero.astro";
 import SectionHeader from "@components/layout/SectionHeader.astro";
 import SponsorGrid from "@components/sponsor/SponsorGrid.astro";
 import { sponsors } from "@lib/content/repository";
+
+const generalSponsorNote = "一般協賛でご協力いただいた方は後日「おぎなう」に掲載させていただきます。";
 ---
 
 <BaseLayout title="特別協賛・名義協賛・名義後援" description="第35回おぎアマチュア音楽祭DX2026を支える特別協賛企業、名義協賛、名義後援を紹介します。">
@@ -11,6 +13,7 @@ import { sponsors } from "@lib/content/repository";
     eyebrow="Sponsors"
     title="特別協賛・名義協賛・名義後援"
     lead="第35回おぎアマチュア音楽祭DX2026の開催を支えてくださる企業・団体の皆さまです。"
+    note={generalSponsorNote}
   />
 
   <section class="section">
@@ -19,6 +22,7 @@ import { sponsors } from "@lib/content/repository";
         eyebrow="Partners"
         title="ご支援企業・団体一覧"
         lead="地域のにぎわいと音楽祭の開催を支えてくださる企業・団体の皆さまです。"
+        note={generalSponsorNote}
       />
       <SponsorGrid sponsors={sponsors} />
     </div>
