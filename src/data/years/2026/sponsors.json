@@ -380,6 +380,16 @@
     "sortOrder": 38
   },
   {
+    "id": "special-sponsor-039",
+    "name": "西九州トステム株式会社",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "/assets/years/2026/sponsors/nishikyushu-tostem.png",
+    "url": "",
+    "message": "",
+    "sortOrder": 39
+  },
+  {
     "id": "nominal-sponsor-001",
     "name": "小城商工会議所",
     "category": "名義協賛",
