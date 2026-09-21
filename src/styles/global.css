@@ -1582,6 +1582,14 @@ select {
   align-items: stretch;
 }
 
+.partner-grid-bronze {
+  grid-auto-rows: 1fr;
+}
+
+.partner-grid-bronze .sponsor-card {
+  align-content: start;
+}
+
 .partner-grid-premium {
   grid-template-columns: minmax(0, 1fr);
 }
