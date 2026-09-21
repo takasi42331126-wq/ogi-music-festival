@@ -330,6 +330,26 @@
     "sortOrder": 33
   },
   {
+    "id": "special-sponsor-034",
+    "name": "川口設備",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 34
+  },
+  {
+    "id": "special-sponsor-035",
+    "name": "三親電設",
+    "category": "特別協賛",
+    "amount": 50000,
+    "logo": "",
+    "url": "",
+    "message": "",
+    "sortOrder": 35
+  },
+  {
     "id": "nominal-sponsor-001",
     "name": "小城商工会議所",
     "category": "名義協賛",
