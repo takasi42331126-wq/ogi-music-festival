@@ -147,6 +147,7 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
           <p class="checkin-staff-message ${claimed ? "is-claimed" : ""}">
             ${claimed ? "この賞品は受取済みです。" : "この画面をスタッフにお見せください。"}
           </p>
+          ${claimed ? "" : '<button class="button button-primary checkin-claim" type="button" data-result-claim>受け取り済みにする</button>'}
         `;
       }
 
@@ -180,6 +181,30 @@ import { CHECKIN_VENUES } from "../data/checkinVenues.js";
       `;
       resultEl.hidden = false;
       resultEl.querySelector("[data-result-refresh]")?.addEventListener("click", loadExistingResult);
+      resultEl.querySelector("[data-result-claim]")?.addEventListener("click", async (event) => {
+        const button = event.currentTarget;
+        if (!(button instanceof HTMLButtonElement) || !window.confirm("景品を受け取り済みにしますか？")) {
+          return;
+        }
+
+        button.disabled = true;
+        button.textContent = "更新しています...";
+        try {
+          const data = await requestJson("/api/checkin/claim", {
+            method: "POST",
+            body: JSON.stringify({
+              anonymousId: result.anonymous_id,
+              venueId: result.venue_id,
+              mode: result.mode
+            })
+          });
+          showResult(data.result, checkedIn);
+        } catch (error) {
+          setStatus(error instanceof Error ? error.message : "受取状況を更新できませんでした。", true);
+          button.disabled = false;
+          button.textContent = "受け取り済みにする";
+        }
+      });
     };
 
     const requestJson = async (url, options = {}) => {
